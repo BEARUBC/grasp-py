@@ -6,6 +6,7 @@ from GRASP_Input_TS import GRASP_Input_TS
 from GRASP_Input_Voice import GRASP_Input_Voice
 import threading
 from queue import Queue
+from time import sleep
 
 class GRASP_Manager():
     def __init__(self):
@@ -16,9 +17,11 @@ class GRASP_Manager():
     def manage(self):
         self.ts.start()
         self.voice.start()
+        try:
+            while(True):
+                grip = self.gripQueue.get(block=True)
+                print(grip)
+        except KeyboardInterrupt:
+            print("Cancelled")
         self.ts.join()
         self.voice.join()
-        while(True):
-            if not self.gripQueue.empty():
-                grip = self.gripQueue.get()
-                print(grip)
