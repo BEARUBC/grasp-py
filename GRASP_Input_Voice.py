@@ -1,3 +1,21 @@
 #!/usr/bin/python
 
-import GRASP_Input
+from GRASP_Input import GRASP_Input
+from time import sleep
+
+class GRASP_Input_Voice(GRASP_Input):
+    def received_grip_callback(self, grip):
+        print("callback")
+        self.queue.put(grip)
+
+    def setup(self):
+        pass
+
+    def run(self):
+        print("start Voice")
+        while(True):
+            self.received_grip_callback("ball")
+            sleep(1)
+
+    def deactivate(self):
+        pass

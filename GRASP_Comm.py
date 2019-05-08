@@ -1,17 +1,17 @@
 #!/usr/bin/python
 
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
-class GRASP_Input(metaclass=ABCMeta)
+class GRASP_Input(metaclass=ABCMeta):
 
     @abstractmethod
-    def setup()
+    def setup():
         pass
 
     @abstractmethod
-    def receive_callback()
+    def receive_callback():
         pass
 
     @abstractmethod
-    def send()
+    def send():
         pass
