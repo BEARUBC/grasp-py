@@ -5,7 +5,7 @@ from threading import Thread
 
 class GRASP_Input(Thread, metaclass=ABCMeta):
     def __init__(self, threadID, name, queue):
-        Thread.__init__(self)
+        Thread.__init__(self, daemon=True)
         self.threadID = threadID
         self.name = name
         self.grip = ""

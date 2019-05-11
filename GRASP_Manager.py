@@ -23,5 +23,5 @@ class GRASP_Manager():
                 print(grip)
         except KeyboardInterrupt:
             print("Cancelled")
-        self.ts.join()
-        self.voice.join()
+        # self.ts.join()
+        # self.voice.join()
