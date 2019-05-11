@@ -24,6 +24,12 @@ class GRASP_Input(Thread, metaclass=ABCMeta):
     def received_grip_callback(self):
         pass
 
+    @staticmethod
     @abstractmethod
-    def deactivate(self):
+    def deactivate():
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def reactivate():
         pass

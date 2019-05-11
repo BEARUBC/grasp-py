@@ -5,10 +5,18 @@ from guizero import App, Text, PushButton
 from time import sleep
 
 class GRASP_Input_TS(GRASP_Input):
+    activated = True
+    @staticmethod
+    def reactivate():
+        GRASP_Input_TS.activated = True
+        pass
+
     def received_grip_callback(self, grip):
-        print("callback")
-        self.grip_message.value = grip
-        self.queue.put(grip)
+        if(GRASP_Input_TS.activated):
+            self.grip_message.value = grip
+            self.queue.put(grip)
+        else:
+            print("blocked")
     def setup(self):
         pass
 
@@ -19,5 +27,7 @@ class GRASP_Input_TS(GRASP_Input):
         grip_1 = PushButton(app, command=self.received_grip_callback, args=["Cup"], text="Cup")
         app.display()
 
-    def deactivate(self):
+    @staticmethod
+    def deactivate():
+        GRASP_Input_TS.activated = False
         pass
