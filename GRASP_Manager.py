@@ -10,7 +10,7 @@ from queue import Queue
 from time import sleep
 
 class GRASP_Manager():
-    knownGrips = ['cup', 'pincer', 'ball', 'hammer', 'vulcan']
+    knownGrips = ['mug', 'pinch', 'ball', 'hammer', 'flat']
     commTimeout = 300.0
     def __init__(self):
         self.gripQueue = Queue()
@@ -35,4 +35,4 @@ class GRASP_Manager():
         except KeyboardInterrupt:
             print("Cancelled")
         # self.ts.join()
-        # self.voice.join()
+            self.voice.join()

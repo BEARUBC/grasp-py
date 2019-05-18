@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 from threading import Thread
 from time import sleep
 
-class GRASP_Comm( metaclass=ABCMeta):
+class GRASP_Comm(metaclass=ABCMeta):
     def __init__(self):
         self.setup()
 
