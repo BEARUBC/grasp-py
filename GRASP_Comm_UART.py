@@ -4,12 +4,12 @@ from GRASP_Comm import GRASP_Comm
 import serial
 
 class GRASP_Comm_UART(GRASP_Comm):
-    
+
     ser = serial.Serial()
 
     def setup(self):
         # Configure serial port
-        self.ser.port='/dev/serial0'
+        self.ser.port='COM4'
         self.ser.baudrate=9600
         self.ser.parity=serial.PARITY_NONE
         self.ser.stopbits=serial.STOPBITS_ONE
@@ -17,15 +17,21 @@ class GRASP_Comm_UART(GRASP_Comm):
         self.ser.timeout=1
         # Open serial port
         self.ser.open()
-        super().setup()
+        super(GRASP_Comm_UART,self).setup()
         pass
 
     def receive_callback(self):
-        self.ser.read()
-        super().receive_callback()
+        x = self.ser.read(1) #reads in byte form
+        print(x)
+        g = int.from_bytes(x, byteorder='big') #converts byte to integer (Note that if timeout, then 0 is returned)
+        print(g)
+        super(GRASP_Comm_UART,self).receive_callback()
         pass
 
-    def send(self, grip):
-        self.ser.write(grip)
-        super().send(grip)
+    def send(self,grip):
+        print(grip)
+        s = bytes(grip) # encodes integer as byte
+        print(s) # should show corresponding ascii
+        self.ser.write(s)
+        super(GRASP_Comm_UART,self).send(grip)
         pass

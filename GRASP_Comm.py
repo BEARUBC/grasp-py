@@ -18,7 +18,7 @@ class GRASP_Comm(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def send(self, grip):
+    def send(self,grip):
         ## Wait for response
         #Temp:
         print("sent")
