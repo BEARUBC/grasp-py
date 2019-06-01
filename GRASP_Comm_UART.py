@@ -35,3 +35,11 @@ class GRASP_Comm_UART(GRASP_Comm):
         self.ser.write(s)
         super(GRASP_Comm_UART,self).send(grip)
         pass
+
+
+def main():
+    com = GRASP_Comm_UART()
+    com.send(0)
+
+if __name__ == '__main__':
+    main()
