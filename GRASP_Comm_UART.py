@@ -2,14 +2,14 @@
 
 from GRASP_Comm import GRASP_Comm
 import serial
-
+from time import sleep
 class GRASP_Comm_UART(GRASP_Comm):
 
     ser = serial.Serial()
 
     def setup(self):
         # Configure serial port
-        self.ser.port='COM4'
+        self.ser.port='COM3'
         self.ser.baudrate=9600
         self.ser.parity=serial.PARITY_NONE
         self.ser.stopbits=serial.STOPBITS_ONE
@@ -26,20 +26,29 @@ class GRASP_Comm_UART(GRASP_Comm):
         g = int.from_bytes(x, byteorder='big') #converts byte to integer (Note that if timeout, then 0 is returned)
         print(g)
         super(GRASP_Comm_UART,self).receive_callback()
-        pass
+        return g
 
     def send(self,grip):
         print(grip)
         s = bytes(grip) # encodes integer as byte
         print(s) # should show corresponding ascii
-        self.ser.write(s)
+        print("bytes written", self.ser.write(s))
         super(GRASP_Comm_UART,self).send(grip)
         pass
 
 
 def main():
     com = GRASP_Comm_UART()
-    com.send(0)
+    com.send([0, 255])
+    sleep(1)
+    com.receive_callback()
+    com.send([3, 255])
+    sleep(1)
+    com.receive_callback()
+    # print("received", com.ser.read(1))
+    # com.send(255)
+
+
 
 if __name__ == '__main__':
     main()

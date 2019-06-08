@@ -22,6 +22,6 @@ class GRASP_Comm(metaclass=ABCMeta):
         ## Wait for response
         #Temp:
         print("sent")
-        sleep(5)
-        self.receive_callback()
+        # sleep(5)
+        # self.receive_callback()
         pass
