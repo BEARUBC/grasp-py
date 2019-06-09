@@ -27,7 +27,7 @@ class GRASP_Input_Voice(GRASP_Input):
         pass
 
     def run(self):
-        print("start Voice")
+        print("Start Voice")
         while(True):
             try:
                 if GRASP_Input_Voice.activated:
