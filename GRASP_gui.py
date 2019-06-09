@@ -16,4 +16,4 @@ class GRASP_gui(tk.Tk):
         self.frames[StartPage] = frame
 
         frame.grid(row=0, column=0, sticky="nsew")
-        
+        frame.grid(row=1, column=1, sticky="ne")
