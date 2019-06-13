@@ -1,5 +1,7 @@
 import tkinter as tk
 
+FONT = ("Verdana", 10)
+
 class GRASP_gui(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -16,4 +18,16 @@ class GRASP_gui(tk.Tk):
         self.frames[StartPage] = frame
 
         frame.grid(row=0, column=0, sticky="nsew")
-        frame.grid(row=1, column=1, sticky="ne")
+
+        self.show_frame(StartPage)
+
+    def show_frame(self, cont):
+
+        frame = self.frames[cont]
+        frame.tkraise()
+
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Start Page", font=FONT)
+        label.pack()
