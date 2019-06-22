@@ -13,7 +13,7 @@ class GRASP_Input_Voice(GRASP_Input):
 
     def received_grip_callback(self, audio):
         try:
-            grip = self.recog.recognize_sphinx(audio, keyword_entries=[ ('pinch', 1.0), ('ball', 1.0), ('hammer', 1.0) , ('sea', 1.0), ('flat', 1.0)])
+            grip = self.recog.recognize_sphinx(audio, language="grasp-cmd")
             print("Sphinx thinks you said " + grip)
             self.queue.put(grip)
         except sr.UnknownValueError:
