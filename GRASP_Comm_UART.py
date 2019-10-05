@@ -13,7 +13,7 @@ class GRASP_Comm_UART(GRASP_Comm):
         self.ser.baudrate=9600
         self.ser.parity=serial.PARITY_NONE #default set up
         self.ser.stopbits=serial.STOPBITS_ONE
-        self.ser.bytesize=serial.EIGHTBITS
+        self.ser.bytesize=serial.EIGHTBITS  
         self.ser.timeout=1
         # Open serial port
         self.ser.open()
