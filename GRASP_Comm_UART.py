@@ -11,7 +11,7 @@ class GRASP_Comm_UART(GRASP_Comm):
         # Configure serial port
         self.ser.port='COM3'
         self.ser.baudrate=9600
-        self.ser.parity=serial.PARITY_NONE
+        self.ser.parity=serial.PARITY_NONE #default set up
         self.ser.stopbits=serial.STOPBITS_ONE
         self.ser.bytesize=serial.EIGHTBITS
         self.ser.timeout=1
