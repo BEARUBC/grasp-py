@@ -11,7 +11,6 @@ from queue             import Queue
 from time              import sleep
 
 class GRASP_Manager():
-
     #FIELDS:------------------------------------------------------------------------------------------------------------
     knownGrips = ['mug', 'pinch', 'ball', 'hammer', 'flat']
     commTimeout = 300.0
@@ -28,18 +27,20 @@ class GRASP_Manager():
 
     #METHODS:-----------------------------------------------------------------------------------------------------------
     def manage(self):
-        self.ts.start()
-        self.voice.start()
+        self.ts    .start()
+        self.voice .start()
 
         try:
             while True:
                 grip = self.gripQueue.get(block=True)
 
-                if grip.lower() in self.knownGrips:
+                print("Grip is: ", grip)
+
+                if grip.strip().lower() in GRASP_Manager.knownGrips:
                     GRASP_Input_TS    .deactivate()
                     GRASP_Input_Voice .deactivate()
 
-                    print(grip, "sending")
+                    print(grip, "Sending.")
                     self.comm.send(grip)
 
                     GRASP_Input_TS    .reactivate()

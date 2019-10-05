@@ -5,6 +5,9 @@ from GRASP_Input_TS import GRASP_Input_TS
 from GRASP_Input_Voice import GRASP_Input_Voice
 import tkinter as tk
 
+
+
+#MAIN:------------------------------------------------------------------------------------------------------------------
 def main():
     manager = GRASP_Manager()
     manager.manage()

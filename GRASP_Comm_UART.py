@@ -1,20 +1,31 @@
 #!/usr/bin/python
 
-from GRASP_Comm import GRASP_Comm
 import serial
-from time import sleep
-class GRASP_Comm_UART(GRASP_Comm):
+from GRASP_Comm import GRASP_Comm
+from time       import sleep
 
+
+
+class GRASP_Comm_UART(GRASP_Comm):
+    #FIELDS:------------------------------------------------------------------------------------------------------------
     ser = serial.Serial()
 
+
+
+    #INITIALIZER:-------------------------------------------------------------------------------------------------------
+
+
+
+    #METHODS:-----------------------------------------------------------------------------------------------------------
     def setup(self):
         # Configure serial port
-        self.ser.port='COM3'
-        self.ser.baudrate=9600
-        self.ser.parity=serial.PARITY_NONE
-        self.ser.stopbits=serial.STOPBITS_ONE
-        self.ser.bytesize=serial.EIGHTBITS
-        self.ser.timeout=1
+        self.ser.port     = 'COM3'
+        self.ser.baudrate = 9600
+        self.ser.parity   = serial.PARITY_NONE
+        self.ser.stopbits = serial.STOPBITS_ONE
+        self.ser.bytesize = serial.EIGHTBITS
+        self.ser.timeout  = 1
+
         # Open serial port
         self.ser.open()
         super(GRASP_Comm_UART,self).setup()
@@ -37,6 +48,8 @@ class GRASP_Comm_UART(GRASP_Comm):
         pass
 
 
+
+#MAIN:------------------------------------------------------------------------------------------------------------------
 def main():
     com = GRASP_Comm_UART()
     com.send([0, 255])
@@ -45,10 +58,7 @@ def main():
     com.send([3, 255])
     sleep(1)
     com.receive_callback()
-    # print("received", com.ser.read(1))
-    # com.send(255)
-
-
-
+    print("received", com.ser.read(1))
+    com.send(255)
 if __name__ == '__main__':
     main()
