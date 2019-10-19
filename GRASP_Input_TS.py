@@ -25,6 +25,7 @@ class GRASP_Input_TS(GRASP_Input):
             print("start Ts")
             app = App(title="Hello world")
             self.grip_message = Text(app, text="No Grip Selected.")
+            grip_0 = PushButton(app, command=self.received_grip_callback, args=["SAFETY_OFF"], text="SAFETY_OFF")
             grip_1 = PushButton(app, command=self.received_grip_callback, args=["Cup"], text="Cup")
             app.display()
         except KeyboardInterrupt:
