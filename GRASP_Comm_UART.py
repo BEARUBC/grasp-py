@@ -33,7 +33,7 @@ class GRASP_Comm_UART(GRASP_Comm):
         s = bytes(grip) # encodes integer as byte
         print(s) # should show corresponding ascii
         print("bytes written", self.ser.write(s))
-        super(GRASP_Comm_UART,self).send(grip)
+        super(GRASP_Comm_UART,self).send(grip) # sends -------------------------------------------------------------
         pass
 
 

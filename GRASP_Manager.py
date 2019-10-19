@@ -15,7 +15,7 @@ class GRASP_Manager():
     def __init__(self):
         self.gripQueue = Queue()
         self.commEvent = threading.Event()
-        self.ts = GRASP_Input_TS(1, "Touch Screen", self.gripQueue)
+        self.ts = GRASP_Input_TS(1, "Touch Screen", self.gripQueue) # using input super constructor goes into touchscreen -------------------------------
         self.voice = GRASP_Input_Voice(2, "Voice", self.gripQueue)
         self.comm = GRASP_Comm_UART()
     def manage(self):
@@ -29,7 +29,7 @@ class GRASP_Manager():
                     GRASP_Input_TS.deactivate()
                     GRASP_Input_Voice.deactivate()
                     print(grip, "sending")
-                    self.comm.send(grip)
+                    self.comm.send(grip)        # uses UART -------------------------------------------------------------------                       
                     GRASP_Input_TS.reactivate()
                     GRASP_Input_Voice.reactivate()
 
