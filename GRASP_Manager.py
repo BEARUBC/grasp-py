@@ -10,8 +10,7 @@ from queue import Queue
 from time import sleep
 
 class GRASP_Manager():
-    knownGrips = ['sea', 'pinch', 'ball', 'hammer', 'flat', 'SAFETY_OFF']
-    #knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency']
+    knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency']
     commTimeout = 300.0
     def __init__(self):
         self.gripQueue = Queue()
