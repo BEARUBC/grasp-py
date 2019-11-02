@@ -6,7 +6,6 @@ from time      import sleep
 
 
 
-
 class GRASP_Comm(metaclass=ABCMeta):
     #FIELDS:------------------------------------------------------------------------------------------------------------
 
@@ -20,15 +19,17 @@ class GRASP_Comm(metaclass=ABCMeta):
 
     #METHODS:-----------------------------------------------------------------------------------------------------------
     @abstractmethod
-    def setup(self):
+    def setup            (self)      :
         print("Setting up.")
         pass
+
     @abstractmethod
-    def receive_callback(self):
+    def receive_callback (self)      :
         print("Callback received.")
         pass
+
     @abstractmethod
-    def send(self,grip):
+    def send             (self,grip) :
         ## Wait for response
         #Temp:
         print("Sent.")

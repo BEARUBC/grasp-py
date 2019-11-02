@@ -33,10 +33,13 @@ class GRASP_Comm_UART(GRASP_Comm):
 
     def receive_callback(self):
         x = self.ser.read(1) #reads in byte form
-        print(x)
         g = int.from_bytes(x, byteorder='big') #converts byte to integer (Note that if timeout, then 0 is returned)
+
+        print(x)
         print(g)
+
         super(GRASP_Comm_UART,self).receive_callback()
+        
         return g
 
     def send(self,grip):
