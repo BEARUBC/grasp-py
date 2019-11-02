@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c51e08f-4a3f-43d6-b470-e3c7cab63a71" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRASP_Comm.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_Comm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRASP_Comm_UART.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_Comm_UART.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRASP_Input.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_Input.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GRASP_Input_TS.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_Input_TS.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRASP_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_gui.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -101,8 +96,8 @@
       <file leaf-file-name="GRASP_gui.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GRASP_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+            <state relative-caret-position="1560">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -213,14 +208,14 @@
     <frame x="33" y="23" width="1411" height="1002" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18417266" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18417266" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32923076" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.22983426" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.22983426" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -625,8 +620,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GRASP_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+        <state relative-caret-position="1560">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

@@ -11,37 +11,52 @@ class GRASP_gui(tk.Tk):
         root = tk.Frame(parent)
         root.pack()
 
-        actv_frame = tk.Frame(root,highlightbackground="black",highlightthickness=1)
+        actv_frame = tk.Frame(root, highlightbackground="black", highlightthickness=1)
         self.frames.append(actv_frame)
-        actv_frame.pack(side=RIGHT)
+        actv_frame.grid(column=1, row=0, rowspan=20, sticky="nsew")
 
-        stat_frame = tk.Frame(root,highlightbackground="black",highlightthickness=1)
+        stat_frame = tk.Frame(root, highlightbackground="black", highlightthickness=1)
         self.frames.append(stat_frame)
-        stat_frame.pack(side=TOP)
+        stat_frame.grid(column=0, row=0, rowspan=1, sticky="nsew")
 
-        ascr_frame = tk.Frame(root,highlightbackground="black",highlightthickness=1)
+        ascr_frame = tk.Frame(root, highlightbackground="black", highlightthickness=1)
         self.frames.append(ascr_frame)
-        ascr_frame.pack(side=LEFT)
+        ascr_frame.grid(column=0, row=1, rowspan=19, sticky="nsew")
 
         self.show_buttons()
         root.tkraise()
 
 
     def show_buttons(self):
-        height = 10
-        width = 20
-        hand_1 = Button(self.frames[0], text="hand_1", fg="red", height=height, width=width)
-        hand_2 = Button(self.frames[0], text="hand_2", fg="red", height=height, width=width)
-        hand_3 = Button(self.frames[0], text="hand_3", fg="red", height=height, width=width)
-        hand_4 = Button(self.frames[0], text="hand_4", fg="red", height=height, width=width)
-        hand_5 = Button(self.frames[0], text="hand_5", fg="red", height=height, width=width)
-        hand_6 = Button(self.frames[0], text="hand_6", fg="red", height=height, width=width)
-        hand_1.pack(side=LEFT)
-        hand_2.pack(side=LEFT)
-        hand_3.pack(side=LEFT)
-        hand_4.pack(side=LEFT)
-        hand_5.pack(side=LEFT)
-        hand_6.pack(side=LEFT)
+        height = 5
+        width = 5
+        padx = 3
+        stat_height = 2
+        stat_width = 5
+        stat_padx = 1
+        hand_1 = Button(self.frames[0], text="hand_1", fg="red", height=height, width=width, padx=padx)
+        hand_2 = Button(self.frames[0], text="hand_2", fg="red", height=height, width=width, padx=padx)
+        hand_3 = Button(self.frames[0], text="hand_3", fg="red", height=height, width=width, padx=padx)
+        hand_4 = Button(self.frames[0], text="hand_4", fg="red", height=height, width=width, padx=padx)
+        hand_5 = Button(self.frames[0], text="hand_5", fg="red", height=height, width=width, padx=padx)
+        hand_6 = Button(self.frames[0], text="hand_6", fg="red", height=height, width=width, padx=padx)
+
+        status = Button(self.frames[1], text="status", fg="red", height=stat_height, width=stat_width, padx=stat_padx)
+
+        hand_1.grid(column=0, row=0, padx=2, pady=2)
+        hand_2.grid(column=1, row=0, padx=2, pady=2)
+        hand_3.grid(column=2, row=0, padx=2, pady=2)
+        hand_4.grid(column=0, row=1, padx=2, pady=2)
+        hand_5.grid(column=1, row=1, padx=2, pady=2)
+        hand_6.grid(column=2, row=1, padx=2, pady=2)
+
+        status.grid(column=0,row=0)
+        # hand_1.pack(side=LEFT)
+        # hand_2.pack(side=LEFT)
+        # hand_3.pack(side=LEFT)
+        # hand_4.pack(side=LEFT)
+        # hand_5.pack(side=LEFT)
+        # hand_6.pack(side=LEFT)
 
 
         # self.frames = {}
