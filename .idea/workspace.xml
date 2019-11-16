@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c51e08f-4a3f-43d6-b470-e3c7cab63a71" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/GRASP_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRASP_Comm.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_Comm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GRASP_Comm_UART.py" beforeDir="false" afterPath="$PROJECT_DIR$/GRASP_Comm_UART.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GRASP_Comm_UART.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GRASP_Comm_UART.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GRASP_Comm_UART.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="73" selection-start-line="9" selection-start-column="73" selection-end-line="9" selection-end-column="73" />
+            <state relative-caret-position="553">
+              <caret line="46" column="49" lean-forward="true" selection-start-line="46" selection-start-column="49" selection-end-line="46" selection-end-column="49" />
               <folding>
                 <element signature="e#19#32#0" expanded="true" />
               </folding>
@@ -37,8 +38,8 @@
       <file leaf-file-name="GRASP_Comm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GRASP_Comm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="36" lean-forward="true" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+            <state relative-caret-position="548">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
               <folding>
                 <element signature="e#19#64#0" expanded="true" />
               </folding>
@@ -93,11 +94,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GRASP_gui.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GRASP_gui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GRASP_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1560">
-              <caret line="104" selection-start-line="104" selection-end-line="104" />
+            <state relative-caret-position="1050">
+              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -106,6 +107,11 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Serial(</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -116,11 +122,11 @@
         <option value="$PROJECT_DIR$/GRASP_Input_Voice.py" />
         <option value="$PROJECT_DIR$/__main__.py" />
         <option value="$PROJECT_DIR$/GRASP_Manager.py" />
-        <option value="$PROJECT_DIR$/GRASP_Comm_UART.py" />
         <option value="$PROJECT_DIR$/GRASP_Input_TS.py" />
         <option value="$PROJECT_DIR$/GRASP_Input.py" />
-        <option value="$PROJECT_DIR$/GRASP_Comm.py" />
         <option value="$PROJECT_DIR$/GRASP_gui.py" />
+        <option value="$PROJECT_DIR$/GRASP_Comm_UART.py" />
+        <option value="$PROJECT_DIR$/GRASP_Comm.py" />
       </list>
     </option>
   </component>
@@ -205,17 +211,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="33" y="23" width="1411" height="1002" extended-state="0" />
-    <editor active="true" />
+    <frame x="33" y="23" width="1411" height="1002" extended-state="1" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18417266" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18417266" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32923076" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.22983426" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.22983426" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -581,35 +586,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GRASP_Comm_UART.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="73" selection-start-line="9" selection-start-column="73" selection-end-line="9" selection-end-column="73" />
-          <folding>
-            <element signature="e#19#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GRASP_Input.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRASP_Comm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="36" lean-forward="true" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-          <folding>
-            <element signature="e#19#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GRASP_Comm_BT.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/GRASP_Input_TS.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -620,10 +602,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GRASP_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1560">
-          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        <state relative-caret-position="1050">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRASP_Comm_BT.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRASP_Comm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="e#19#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GRASP_Comm_UART.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="46" column="49" lean-forward="true" selection-start-line="46" selection-start-column="49" selection-end-line="46" selection-end-column="49" />
+          <folding>
+            <element signature="e#19#32#0" expanded="true" />
           </folding>
         </state>
       </provider>

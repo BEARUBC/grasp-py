@@ -19,8 +19,8 @@ class GRASP_Comm_UART(GRASP_Comm):
     #METHODS:-----------------------------------------------------------------------------------------------------------
     def setup(self):
         # Configure serial port
-        self.ser.port     = 'COM3'
-        self.ser.baudrate = 9600
+        self.ser.port     = '/dev/ttyACM0'
+        self.ser.baudrate = 115200
         self.ser.parity   = serial.PARITY_NONE
         self.ser.stopbits = serial.STOPBITS_ONE
         self.ser.bytesize = serial.EIGHTBITS
