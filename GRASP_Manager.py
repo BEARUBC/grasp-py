@@ -11,8 +11,8 @@ from queue             import Queue
 from time              import sleep
 
 class GRASP_Manager():
-    #FIELDS:------------------------------------------------------------------------------------------------------------
-    knownGrips = ['mug', 'pinch', 'ball', 'hammer', 'flat']
+
+    knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency']
     commTimeout = 300.0
 
 
@@ -24,8 +24,6 @@ class GRASP_Manager():
         self.ts        = GRASP_Input_TS    (1, "Touch Screen", self.gripQueue)
         self.voice     = GRASP_Input_Voice (2, "Voice", self.gripQueue)
         self.comm      = GRASP_Comm_UART   ()
-
-    #METHODS:-----------------------------------------------------------------------------------------------------------
     def manage(self):
         self.ts    .start()
         self.voice .start()

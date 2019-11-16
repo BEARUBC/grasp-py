@@ -7,12 +7,7 @@ from threading import Thread
 
 
 class GRASP_Input(Thread, metaclass=ABCMeta):
-    #FIELDS:------------------------------------------------------------------------------------------------------------
-
-
-
-    #INITIALIZER:-------------------------------------------------------------------------------------------------------
-    def __init__               (self, threadID, name, queue) :
+    def __init__(self, threadID, name, queue): #super constructor used for TS_input
         Thread.__init__(self, daemon=True)
 
         self.threadID = threadID
