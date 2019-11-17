@@ -3,6 +3,7 @@
 import GRASP_Comm
 import GRASP_Input
 import threading
+import serial
 
 from GRASP_Input_TS    import GRASP_Input_TS
 from GRASP_Input_Voice import GRASP_Input_Voice
@@ -14,6 +15,7 @@ class GRASP_Manager():
 
     knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency']
     commTimeout = 300.0
+    uiSafetyOn = True
 
 
 
@@ -30,6 +32,15 @@ class GRASP_Manager():
 
         try:
             while True:
+                
+                uiOnOrOff = self.comm.receive_callback()
+
+                if uiOnOrOff == 8:
+                    uiSAfetyOn = False
+
+                elif uiOnOrOff == 9:
+                    uiSafetyOn = True
+
                 grip = self.gripQueue.get(block=True)
 
                 print("Grip is: ", grip)
