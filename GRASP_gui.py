@@ -4,6 +4,24 @@ import tkinter as tk
 FONT = ("Verdana", 10)
 
 class GRASP_gui(tk.Tk):
+    def btn1(self):
+        print("Hello world!")
+    
+    def btn2(self):
+        print("Hello world!")
+    
+    def btn3(self):
+        print("Hello world!")
+    
+    def btn4(self):
+        print("Hello world!")
+    
+    def btn5(self):
+        print("Hello world!")
+    
+    def btn6(self):
+        print("Hello world!")
+
     def __init__(self, *args, **kwargs):
         parent = tk.Tk.__init__(self, *args, **kwargs)
         self.frames = []
@@ -34,12 +52,12 @@ class GRASP_gui(tk.Tk):
         stat_height = 2
         stat_width = 5
         stat_padx = 1
-        hand_1 = Button(self.frames[0], text="hand_1", fg="red", height=height, width=width, padx=padx)
-        hand_2 = Button(self.frames[0], text="hand_2", fg="red", height=height, width=width, padx=padx)
-        hand_3 = Button(self.frames[0], text="hand_3", fg="red", height=height, width=width, padx=padx)
-        hand_4 = Button(self.frames[0], text="hand_4", fg="red", height=height, width=width, padx=padx)
-        hand_5 = Button(self.frames[0], text="hand_5", fg="red", height=height, width=width, padx=padx)
-        hand_6 = Button(self.frames[0], text="hand_6", fg="red", height=height, width=width, padx=padx)
+        hand_1 = Button(self.frames[0], text="hand_1", fg="red", height=height, width=width, padx=padx, command=self.btn1)
+        hand_2 = Button(self.frames[0], text="hand_2", fg="red", height=height, width=width, padx=padx, command=self.btn2)
+        hand_3 = Button(self.frames[0], text="hand_3", fg="red", height=height, width=width, padx=padx, command=self.btn3)
+        hand_4 = Button(self.frames[0], text="hand_4", fg="red", height=height, width=width, padx=padx, command=self.btn4)
+        hand_5 = Button(self.frames[0], text="hand_5", fg="red", height=height, width=width, padx=padx, command=self.btn5)
+        hand_6 = Button(self.frames[0], text="hand_6", fg="red", height=height, width=width, padx=padx, command=self.btn6)
 
         status = Button(self.frames[1], text="status", fg="red", height=stat_height, width=stat_width, padx=stat_padx)
 

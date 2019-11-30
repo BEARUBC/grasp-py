@@ -2,7 +2,7 @@
 
 from builtins    import staticmethod, KeyboardInterrupt
 from GRASP_Input import GRASP_Input
-from guizero     import App, Text, PushButton
+# from guizero     import App, Text, PushButton
 from time        import sleep
 
 

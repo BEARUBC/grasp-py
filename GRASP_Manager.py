@@ -4,26 +4,30 @@ import GRASP_Comm
 import GRASP_Input
 import threading
 
-from GRASP_Input_TS    import GRASP_Input_TS
+# from GRASP_Input_TS import GRASP_Input_TS
+import GRASP_gui as gui
 from GRASP_Input_Voice import GRASP_Input_Voice
-from GRASP_Comm_UART   import GRASP_Comm_UART
+from GRASP_Comm_UART import GRASP_Comm_UART
 from queue             import Queue
 from time              import sleep
 
 class GRASP_Manager():
-
+    # Fields:
     knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency']
     commTimeout = 300.0
 
 
-
-    #INITIALIZER:-------------------------------------------------------------------------------------------------------
+    ## Constructor:
     def __init__(self):
         self.gripQueue = Queue()
-        self.commEvent = threading.Event   ()
-        self.ts        = GRASP_Input_TS    (1, "Touch Screen", self.gripQueue)
-        self.voice     = GRASP_Input_Voice (2, "Voice", self.gripQueue)
-        self.comm      = GRASP_Comm_UART   ()
+        self.commEvent = threading.Event()
+        # self.ts        = GRASP_Input_TS(1, "Touch Screen", self.gripQueue)
+        self.voice     = GRASP_Input_Voice(2, "Voice", self.gripQueue)
+        self.comm      = GRASP_Comm_UART()
+        self.app       = gui()
+        app.mainloop()
+
+    ## Methods:
     def manage(self):
         self.ts    .start()
         self.voice .start()

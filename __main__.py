@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
 from GRASP_Manager import GRASP_Manager
-from GRASP_Input_TS import GRASP_Input_TS
-from GRASP_Input_Voice import GRASP_Input_Voice
+import GRASP_Input_TS
+import GRASP_Input_Voice
+import GRASP_gui as gui
 import tkinter as tk
 
 
@@ -11,5 +12,10 @@ import tkinter as tk
 def main():
     manager = GRASP_Manager()
     manager.manage()
+    app = gui()
+    app.mainloop()
+
+
+
 if __name__ == "__main__":
     main()
