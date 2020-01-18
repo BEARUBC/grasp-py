@@ -20,9 +20,6 @@ class GRASP_Input_TS(GRASP_Input):
         else:
             print("blocked")
 
-    def setup(self):
-        pass
-
     def run(self):
         try:
             print("start Ts")

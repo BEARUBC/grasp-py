@@ -18,10 +18,6 @@ class GRASP_Input(Thread, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def setup(self):
-        pass
-
-    @abstractmethod
     def received_grip_callback(self):
         pass
 
