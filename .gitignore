@@ -1,2 +1,5 @@
-.vscode
-venv
+.vscode/
+.idea/
+.idea/workspace.xml
+venv/
+*.pyc
