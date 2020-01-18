@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
 from abc import ABCMeta, abstractmethod
-from threading import Thread
-from time import sleep
+
 
 class GRASP_Comm(metaclass=ABCMeta):
     def __init__(self):
@@ -18,9 +17,9 @@ class GRASP_Comm(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def send(self,grip):
+    def send(self, grip):
         ## Wait for response
-        #Temp:
+        # Temp:
         print("sent")
         # sleep(5)
         # self.receive_callback()

@@ -1,22 +1,25 @@
 #!/usr/bin/python
 
-from GRASP_Input import GRASP_Input
 from guizero import App, Text, PushButton
-from time import sleep
+from GRASP_Input import GRASP_Input
 
+
+# Input class for the touchscreen
 class GRASP_Input_TS(GRASP_Input):
     activated = True
+
     @staticmethod
     def reactivate():
         GRASP_Input_TS.activated = True
         pass
 
     def received_grip_callback(self, grip):
-        if(GRASP_Input_TS.activated):
+        if GRASP_Input_TS.activated:
             self.grip_message.value = grip
             self.queue.put(grip)
         else:
             print("blocked")
+
     def setup(self):
         pass
 
