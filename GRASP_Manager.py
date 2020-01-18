@@ -13,7 +13,7 @@ from time              import sleep
 
 class GRASP_Manager():
 
-    knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency']
+    knownGrips = ['Cup', 'Hammer', 'Pinch', 'Flat', 'Ball', 'Fist', 'Cup Cycle', 'Hammer Cycle', 'Pinch Cycle', 'Flat Cycle', 'Ball Cycle', 'Fist Cycle', 'SAFETY_OFF', 'Stop', 'Emergency','Rigid','Distance']
     commTimeout = 300.0
     uiSafetyOn = True
 

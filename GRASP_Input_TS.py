@@ -52,6 +52,8 @@ class GRASP_Input_TS(GRASP_Input):
             grip_12 = PushButton(app, command=self.received_grip_callback, args=["Flat Cycle"], text="Flat Cycle")
             grip_13 = PushButton(app, command=self.received_grip_callback, args=["Ball Cycle"], text="Ball Cycle")
             grip_14 = PushButton(app, command=self.received_grip_callback, args=["Fist Cycle"], text="Fist Cycle")
+            grip_15 = PushButton(app, command=self.received_grip_callback, args=["Rigid"], text="Rigid")
+            grip_16 = PushButton(app, command=self.received_grip_callback, args=["Distance"], text="Distance")
             app.display()
         except KeyboardInterrupt:
             pass
