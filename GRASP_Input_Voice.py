@@ -49,7 +49,7 @@ if __name__ == "__main__":
         print('Say something!')
         audio = r.listen(source)
     try:
-        print("Sphinx thinks you said " + r.recognize_sphinx(audio, keyword_entries=[ ('pinch', 1.0), ('ball', 1.0), ('hammer', 1.0) , ('mug', 1.0), ('flat', 1.0)]))
+        print("Sphinx thinks you said " + r.recognize_sphinx(audio, keyword_entries=[ ('pinch', 1.0), ('ball', 1.0), ('hammer', 1.0) , ('mug', 1.0), ('flat', 1.0), ('rigid', 1.0), ('distance', 1.0)]))
     except sr.UnknownValueError:
         print("Sphinx could not understand audio")
     except sr.RequestError as e:

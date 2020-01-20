@@ -28,35 +28,39 @@ class GRASP_gui(tk.Tk):
 
 
     def show_buttons(self):
-        height = 5
-        width = 5
+        height = 25
+        width = 25
         padx = 3
         stat_height = 2
         stat_width = 5
         stat_padx = 1
-        hand_1 = Button(self.frames[0], text="hand_1", fg="red", height=height, width=width, padx=padx)
-        hand_2 = Button(self.frames[0], text="hand_2", fg="red", height=height, width=width, padx=padx)
-        hand_3 = Button(self.frames[0], text="hand_3", fg="red", height=height, width=width, padx=padx)
-        hand_4 = Button(self.frames[0], text="hand_4", fg="red", height=height, width=width, padx=padx)
-        hand_5 = Button(self.frames[0], text="hand_5", fg="red", height=height, width=width, padx=padx)
-        hand_6 = Button(self.frames[0], text="hand_6", fg="red", height=height, width=width, padx=padx)
+        cup = Button(self.frames[0], text="cup", fg="red", height=height, width=width, padx=padx)
+        hammer = Button(self.frames[0], text="hammer", fg="red", height=height, width=width, padx=padx)
+        pinch = Button(self.frames[0], text="pinch", fg="red", height=height, width=width, padx=padx)
+        flat = Button(self.frames[0], text="flat", fg="red", height=height, width=width, padx=padx)
+        ball = Button(self.frames[0], text="ball", fg="red", height=height, width=width, padx=padx)
+        fist = Button(self.frames[0], text="fist", fg="red", height=height, width=width, padx=padx)
+        rigid = Button(self.frames[0], text="rigid", fg="red", height=height, width=width, padx=padx)
+        distance = Button(self.frames[0], text="distance", fg="red", height=height, width=width, padx=padx)
 
         status = Button(self.frames[1], text="status", fg="red", height=stat_height, width=stat_width, padx=stat_padx)
 
-        hand_1.grid(column=0, row=0, padx=2, pady=2)
-        hand_2.grid(column=1, row=0, padx=2, pady=2)
-        hand_3.grid(column=2, row=0, padx=2, pady=2)
-        hand_4.grid(column=0, row=1, padx=2, pady=2)
-        hand_5.grid(column=1, row=1, padx=2, pady=2)
-        hand_6.grid(column=2, row=1, padx=2, pady=2)
+        cup.grid(column=0, row=0, padx=2, pady=2)
+        hammer.grid(column=1, row=0, padx=2, pady=2)
+        pinch.grid(column=2, row=0, padx=2, pady=2)
+        flat.grid(column=3, row=0, padx=2, pady=2)
+        ball.grid(column=0, row=1, padx=2, pady=2)
+        fist.grid(column=1, row=1, padx=2, pady=2)
+        rigid.grid(column=2, row=1, padx=2, pady=2)
+        distance.grid(column=3, row=1, padx=2, pady=2)
 
         status.grid(column=0,row=0)
-        # hand_1.pack(side=LEFT)
-        # hand_2.pack(side=LEFT)
-        # hand_3.pack(side=LEFT)
-        # hand_4.pack(side=LEFT)
-        # hand_5.pack(side=LEFT)
-        # hand_6.pack(side=LEFT)
+        # cup.pack(side=LEFT)
+        # hammer.pack(side=LEFT)
+        # pinch.pack(side=LEFT)
+        # flat.pack(side=LEFT)
+        # ball.pack(side=LEFT)
+        # fist.pack(side=LEFT)
 
 
         # self.frames = {}

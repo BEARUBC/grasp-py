@@ -12,3 +12,5 @@ pinch cycle
 flat cycle
 ball cycle
 fist cycle
+rigid
+distance
