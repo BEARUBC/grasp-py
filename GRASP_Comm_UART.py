@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import serial
+import json
 from GRASP_Comm import GRASP_Comm
 from time       import sleep
 
@@ -41,14 +42,16 @@ class GRASP_Comm_UART(GRASP_Comm):
 
     def receive_callback(self):
         x = self.ser.read(1) #reads in byte form
-        g = int.from_bytes(x, byteorder='big') #converts byte to integer (Note that if timeout, then 0 is returned)
+        g = x.decode()
+
+        dict = json.loads(g)
 
         print(x)
         print(g)
 
         super(GRASP_Comm_UART,self).receive_callback()
         
-        return g
+        return dict
 
     def send(self,grip):
         print(grip)

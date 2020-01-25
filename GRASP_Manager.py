@@ -3,6 +3,7 @@
 import GRASP_Comm
 import GRASP_Input
 import threading
+import json
 
 # from GRASP_Input_TS import GRASP_Input_TS
 import GRASP_gui as gui
@@ -43,10 +44,19 @@ class GRASP_Manager():
                     GRASP_Input_Voice .deactivate()
 
                     print(grip, "Sending.")
-                    self.comm.send(grip)
+                    command = json.dumps('command': grip)
+                    self.comm.send(command)
 
                     GRASP_Input_TS    .reactivate()
                     GRASP_Input_Voice .reactivate()
+
+                dict = self.comm.receive_callback.keys()
+                if 'battery' in dict:
+                    print("battery percentage:", dict['battery'])
+                    if dict['battery'] < 10:
+                        
+                        
+
 
         except KeyboardInterrupt:
             print("Cancelled")

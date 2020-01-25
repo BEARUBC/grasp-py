@@ -118,5 +118,7 @@ class GRASP_gui(tk.Tk):
 # app = tk.Tk()
 # app.mainloop()
 
+    def shutdown(self)
+
 app = GRASP_gui()
 app.mainloop()
