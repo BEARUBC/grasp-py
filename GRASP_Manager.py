@@ -54,8 +54,11 @@ class GRASP_Manager():
                 if 'battery' in dict:
                     print("battery percentage:", dict['battery'])
                     if dict['battery'] < 10:
-                        
-                        
+                        self.app.shutdown()
+                        self.gripQueue.put('Stop')
+                if 'fsr' in dict:
+                    print("received fsr matrix")
+                    FSR(dict['fsr'])
 
 
         except KeyboardInterrupt:

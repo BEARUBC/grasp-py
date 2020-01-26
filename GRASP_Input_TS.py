@@ -49,7 +49,7 @@ class GRASP_Input_TS(GRASP_Input):
             grip_9 = PushButton(app, command=self.received_grip_callback, args=["Cup Cycle"], text="Cup Cycle")
             grip_10 = PushButton(app, command=self.received_grip_callback, args=["Hammer Cycle"], text="Hammer Cycle")
             grip_11 = PushButton(app, command=self.received_grip_callback, args=["Pinch Cycle"], text="Pinch Cycle")
-            grip_12 = PushButton(app, command=self.received_grip_callback, args=["Flat Cycle"], text="Flat Cycle")
+            grip_12 = PushButton(app, command=self.receivred_grip_callback, args=["Flat Cycle"], text="Flat Cycle")
             grip_13 = PushButton(app, command=self.received_grip_callback, args=["Ball Cycle"], text="Ball Cycle")
             grip_14 = PushButton(app, command=self.received_grip_callback, args=["Fist Cycle"], text="Fist Cycle")
             app.display()

@@ -44,7 +44,9 @@ class GRASP_gui(tk.Tk):
         self.show_buttons()
         root.tkraise()
 
-
+    def shutdown(self):
+        pass
+    
     def show_buttons(self):
         height = 5
         width = 5
@@ -117,8 +119,6 @@ class GRASP_gui(tk.Tk):
 
 # app = tk.Tk()
 # app.mainloop()
-
-    def shutdown(self)
 
 app = GRASP_gui()
 app.mainloop()
