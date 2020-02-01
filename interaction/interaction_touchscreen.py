@@ -1,24 +1,26 @@
 #!/usr/bin/python
 
-from GRASP_Input import GRASP_Input
+from interaction.interaction import Interaction
 from guizero import App, Text, PushButton
-from time import sleep
 
-class GRASP_Input_TS(GRASP_Input):
+
+class InteractionTouchscreen(Interaction):
     activated = True
+
+    def __init__(self, thread_id, name, queue):
+        super().__init__(thread_id, name, queue)
+        self.grip_message = None
+
     @staticmethod
     def reactivate():
-        GRASP_Input_TS.activated = True
-        pass
+        InteractionTouchscreen.activated = True
 
-    def received_grip_callback(self, grip):
-        if(GRASP_Input_TS.activated):
-            self.grip_message.value = grip
-            self.queue.put(grip)
+    def received_grip_callback(self, user_in):
+        if InteractionTouchscreen.activated:
+            self.grip_message.value = user_in
+            self.queue.put(user_in)
         else:
             print("blocked")
-    def setup(self):
-        pass
 
     def run(self):
         try:
@@ -32,5 +34,4 @@ class GRASP_Input_TS(GRASP_Input):
 
     @staticmethod
     def deactivate():
-        GRASP_Input_TS.activated = False
-        pass
+        InteractionTouchscreen.activated = False
