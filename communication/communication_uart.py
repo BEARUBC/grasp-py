@@ -1,16 +1,21 @@
 #!/usr/bin/python
+import json
+import time
 
-from communication.communication import Communication
+from communication import Communication
 import serial
-from time import sleep
 
 
 class CommunicationUART(Communication):
     ser = serial.Serial()
 
-    def setup(self):
+    # We don't require a manager in case we want to run as a standalone
+    def __init__(self, manager=None):
+        self.manager = manager
+        if self.manager is not None:
+            super().__init__(self.manager)
         # Configure serial port
-        self.ser.port = 'COM3'
+        self.ser.port = '/dev/ttyACM0'
         self.ser.baudrate = 9600
         self.ser.parity = serial.PARITY_NONE
         self.ser.stopbits = serial.STOPBITS_ONE
@@ -18,36 +23,35 @@ class CommunicationUART(Communication):
         self.ser.timeout = 1
         # Open serial port
         self.ser.open()
-        super(CommunicationUART, self).setup()
-        pass
 
-    def receive_callback(self):
-        x = self.ser.read(1)  # reads in byte form
-        print(x)
-        g = int.from_bytes(x, byteorder='big')  # converts byte to integer (Note that if timeout, then 0 is returned)
-        print(g)
-        super(CommunicationUART, self).receive_callback()
-        return g
+    # Reads data from nucleo
+    def read_data(self):
+        try:
+            data = self.ser.readline().decode()
+        except Exception as e:
+            print("Serial read failed:", e)
+            return
+        try:
+            if self.manager is not None:
+                self.manager.state = json.loads(data)
+            else:
+                data = data.replace("\'", "\"")
+                print("Data:", json.loads(data))
+        except Exception as e:
+            print("Invalid data:", data, "error:", str(e))
 
-    def send(self, grip):
-        print(grip)
-        s = bytes(grip)  # encodes integer as byte
-        print(s)  # should show corresponding ascii
-        print("bytes written", self.ser.write(s))
-        super(CommunicationUART, self).send(grip)
-        pass
+    # Send encoded grip to nucleo
+    def send(self, data: dict):
+        encoded = (str(data) + "\n").encode()
+        self.ser.write(encoded)
 
 
 def main():
     com = CommunicationUART()
-    com.send([0, 255])
-    sleep(1)
-    com.receive_callback()
-    com.send([3, 255])
-    sleep(1)
-    com.receive_callback()
-    # print("received", com.ser.read(1))
-    # com.send(255)
+    while True:
+        com.read_data()
+        com.send({"test": "ok", "asd": 45})
+        time.sleep(0.1)
 
 
 if __name__ == '__main__':
