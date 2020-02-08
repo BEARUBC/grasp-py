@@ -16,20 +16,23 @@ class Manager:
         self.commEvent = threading.Event()
         self.ts = InteractionTouchscreen(1, "Touch Screen", self.gripQueue)
         self.voice = InteractionVoice(2, "Voice", self.gripQueue)
-        self.comm = CommunicationUART()
+        self.comm = CommunicationUART(self)
+        self.state = {}
+
+    def set_state(self, state):
+        self.state = state
+        print("Set state of manager", state)
 
     def manage(self):
         self.ts.start()
         self.voice.start()
         try:
             while True:
-                grip = self.gripQueue.get(block=True)
-                print("grip is: ", grip)
-                if grip.strip().lower() in Manager.knownGrips:
+                self.state["grip"] = self.gripQueue.get(block=True)
+                if self.state["grip"].strip().lower() in Manager.knownGrips:
                     InteractionTouchscreen.deactivate()
                     InteractionVoice.deactivate()
-                    print(grip, "sending")
-                    self.comm.send(grip)
+                    self.comm.send(self.state)
                     InteractionTouchscreen.reactivate()
                     InteractionVoice.reactivate()
 
