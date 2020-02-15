@@ -2,7 +2,7 @@
 import json
 import time
 
-from communication import Communication
+from .communication import Communication
 import serial
 
 
