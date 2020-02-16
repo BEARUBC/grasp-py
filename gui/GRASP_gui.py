@@ -12,6 +12,7 @@ from kivy.core.window import Window
 import random
 
 knownGrips = ['mug', 'pinch', 'ball', 'hammer', 'flat', 'test']
+
  
  
 
@@ -31,14 +32,10 @@ class GraspGui(GridLayout):
         for i in range(len(knownGrips)):
             self.actionButton = GuiButton(label=knownGrips[i],grip=i)
             self.inside.add_widget(self.actionButton)
-            print(knownGrips[i])
-
         self.add_widget(self.inside)
-        self.submit = Label(text='[color=fffff]status[/color]', font_size='72sp', markup=True)
+
+        self.submit = Label(text='status', font_size='72sp', color=(0,0,0,1))
         self.add_widget(self.submit)
-        
-    def update(self,argument):
-        self.submit.text = knownGrips[argument]
 
 
 class GuiApp(App):

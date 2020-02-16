@@ -5,7 +5,10 @@ from kivy.uix.image import Image
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.atlas import Atlas
 
+import sys
+sys.path.append('.')
 
+from manager import Manager
 grip = ['mug', 'pinch', 'ball', 'hammer', 'flat', 'test']
 gripPress = ['mug_down', 'pinch_down', 'ball_down', 'hammer_down', 'flat_down', 'test_down']
 
@@ -21,15 +24,13 @@ class GuiButton(ButtonBehavior, Image):
         self.label = kwargs.get('label', None)
 
         self.texture = self.atlas[grip[self.argument]]
-        
 
     def on_press(self):
-        
+        manage = Manager()
         self.texture = self.atlas[gripPress[self.argument]]
-        #manage.set_state(grip[self.argument])
+        manage.set_state(grip[self.argument])
         print(grip[self.argument])
 
     def on_release(self):
         self.texture = self.atlas[grip[self.argument]]
         
-        print(" ")
