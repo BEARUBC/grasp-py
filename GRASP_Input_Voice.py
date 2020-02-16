@@ -3,7 +3,7 @@
 
 from GRASP_Input import GRASP_Input
 from voice_input import VoiceInput
-
+import speech_recognition as sr
 
 class GRASP_Input_Voice(GRASP_Input):
     activated = True
@@ -36,17 +36,17 @@ class GRASP_Input_Voice(GRASP_Input):
         GRASP_Input_Voice.activated = False
 
 
-# if __name__ == "__main__":
-#     r = sr.Recognizer()
-#     with sr.Microphone() as source:
-#         r.adjust_for_ambient_noise(source)
-#         print('Say something!')
-#         audio = r.listen(source)
-#     try:
-#         print("Sphinx thinks you said " + r.recognize_sphinx(audio, keyword_entries=[('pinch', 1.0), ('ball', 1.0),
-#                                                                                      ('hammer', 1.0), ('mug', 1.0),
-#                                                                                      ('flat', 1.0)]))
-#     except sr.UnknownValueError:
-#         print("Sphinx could not understand audio")
-#     except sr.RequestError as e:
-#         print("Sphinx error; {0}".format(e))
+if __name__ == "__main__":
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
+        print('Say something!')
+        audio = r.listen(source)
+    try:
+        print("Sphinx thinks you said " + r.recognize_sphinx(audio, keyword_entries=[('pinch', 1.0), ('ball', 1.0),
+                                                                                     ('hammer', 1.0), ('mug', 1.0),
+                                                                                     ('flat', 1.0)]))
+    except sr.UnknownValueError:
+        print("Sphinx could not understand audio")
+    except sr.RequestError as e:
+        print("Sphinx error; {0}".format(e))
