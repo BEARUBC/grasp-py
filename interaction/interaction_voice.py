@@ -6,7 +6,8 @@ import speech_recognition as sr
 
 class InteractionVoice(Interaction):
     activated = True
-
+    knownGrips = [('mug', 1.0), ('pinch', 1.0), ('ball', 1.0), 
+        ('hammer', 1.0), ('flat', 1.0), ('test', 1.0)]
     def __init__(self, thread_id, name, queue):
         super().__init__(thread_id, name, queue)
         self.mic = sr.Microphone()
@@ -18,7 +19,10 @@ class InteractionVoice(Interaction):
 
     def received_grip_callback(self, user_in):
         try:
-            grip = self.recog.recognize_sphinx(user_in, language="grasp-cmd")
+            # grip = self.recog.recognize_sphinx(user_in, language="grasp-cmd")
+            # Not using voice model, just using basic en-US model
+            grip = self.recog.recognize_sphinx(user_in, 
+                keyword_entries=InteractionVoice.knownGrips)
             print("Sphinx thinks you said " + grip)
             self.queue.put(grip)
         except sr.UnknownValueError:
@@ -50,9 +54,7 @@ if __name__ == "__main__":
         print('Say something!')
         audio = r.listen(source)
     try:
-        print("Sphinx thinks you said " + r.recognize_sphinx(audio, keyword_entries=[('pinch', 1.0), ('ball', 1.0),
-                                                                                     ('hammer', 1.0), ('mug', 1.0),
-                                                                                     ('flat', 1.0)]))
+        print("Sphinx thinks you said " + r.recognize_sphinx(audio, keyword_entries=InteractionVoice.knownGrips))
     except sr.UnknownValueError:
         print("Sphinx could not understand audio")
     except sr.RequestError as e:
