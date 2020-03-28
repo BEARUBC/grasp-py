@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+from definitions import SETTINGS
 from interaction.interaction import Interaction
 import speech_recognition as sr
 
@@ -9,6 +9,7 @@ class InteractionVoice(Interaction):
     knownGrips = [('mug', 1.0), ('pinch', 1.0), ('ball', 1.0), 
         ('hammer', 1.0), ('flat', 1.0), ('test', 1.0)]
     def __init__(self, thread_id, name, queue):
+        self.settings = SETTINGS["interaction"]["voice"]
         super().__init__(thread_id, name, queue)
         self.mic = sr.Microphone()
         self.recog = sr.Recognizer()

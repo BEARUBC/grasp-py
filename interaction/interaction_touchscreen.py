@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+from definitions import SETTINGS
 from interaction.interaction import Interaction
 from guizero import App, Text, PushButton
 
@@ -8,6 +8,7 @@ class InteractionTouchscreen(Interaction):
     activated = True
 
     def __init__(self, thread_id, name, queue):
+        self.settings = SETTINGS["interaction"]["touchscreen"]
         super().__init__(thread_id, name, queue)
         self.grip_message = None
 

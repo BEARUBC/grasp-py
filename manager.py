@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from definitions import SETTINGS
 from interaction.interaction_touchscreen import InteractionTouchscreen
 from interaction.interaction_voice import InteractionVoice
 from communication.communication_uart import CommunicationUART
@@ -12,6 +13,7 @@ class Manager:
     commTimeout = 300.0
 
     def __init__(self):
+        self.settings = SETTINGS
         self.gripQueue = Queue()
         self.commEvent = threading.Event()
         self.ts = InteractionTouchscreen(1, "Touch Screen", self.gripQueue)
