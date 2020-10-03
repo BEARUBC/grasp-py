@@ -11,3 +11,4 @@ dependencies:
   - pyaudio
   - cogsci::pygame
   - conda-forge::speechrecognition
+  - conda-forge::kivy
