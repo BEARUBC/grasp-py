@@ -1,0 +1,13 @@
+name: grasp-py
+dependencies:
+  - numpy
+  - matplotlib
+  - pandas
+  - pillow
+  - pyyaml
+  - pathlib
+  - pytest
+  - pyserial
+  - pyaudio
+  - cogsci::pygame
+  - conda-forge::speechrecognition

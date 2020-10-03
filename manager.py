@@ -5,10 +5,10 @@ from interaction.interaction_voice import InteractionVoice
 from communication.communication_uart import CommunicationUART
 import threading
 from queue import Queue
+from definitions import SETTINGS
 
 
 class Manager:
-    knownGrips = ['sea', 'pinch', 'ball', 'hammer', 'flat']
     commTimeout = 300.0
 
     def __init__(self):
@@ -29,7 +29,7 @@ class Manager:
         try:
             while True:
                 self.state["grip"] = self.gripQueue.get(block=True)
-                if self.state["grip"].strip().lower() in Manager.knownGrips:
+                if self.state["grip"].strip().lower() in SETTINGS["grips"]:
                     InteractionTouchscreen.deactivate()
                     InteractionVoice.deactivate()
                     self.comm.send(self.state)
