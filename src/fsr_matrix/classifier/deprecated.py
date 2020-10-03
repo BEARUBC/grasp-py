@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import os
-from fsr_matrix.map_raw_output import open_serial_connection, collect_reading
+from src.fsr_matrix.map_raw_output import open_serial_connection, collect_reading
 
 input_size = 160
 output_size = 4  # nothing, sphere, cyl, cube

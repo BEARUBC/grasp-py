@@ -1,7 +1,7 @@
-from fsr_matrix.data_processing.reader import DataReader
+from src.fsr_matrix import DataReader
 
 
-class UartReader(DataReader):
+class FileReader(DataReader):
     def __init__(self):
         super().__init__()
 

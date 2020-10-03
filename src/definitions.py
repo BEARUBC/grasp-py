@@ -10,5 +10,5 @@ def load_settings():
 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-SETTINGS_PATH = os.path.join(ROOT_DIR, 'settings.yaml')
+SETTINGS_PATH = os.path.join(ROOT_DIR, '../settings.yaml')
 SETTINGS = load_settings()

@@ -1,11 +1,17 @@
 # Grasp-py
 Python portion of GRASP control
 
-## Installation
+## Setup
+How to install and setup the RPi software on a pi or desktop
+
+
+### Installation
 
 Prerequisites:
 - Anaconda
 - Python 3.7
+- [PortAudio](http://portaudio.com/) for PyAudio
+
 
 ```bash
 git clone git@gitlab.com:UBCBear/grasp-rpi.git

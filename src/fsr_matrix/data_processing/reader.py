@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABCMeta
 
-from definitions import SETTINGS
+from src.definitions import SETTINGS
 
 
 class DataReader(metaclass=ABCMeta):

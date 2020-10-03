@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-from definitions import SETTINGS
+from src.definitions import SETTINGS
 
 output_map = [
     "Nothing",

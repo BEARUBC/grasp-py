@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
-from interaction.interaction_touchscreen import InteractionTouchscreen
-from interaction.interaction_voice import InteractionVoice
-from communication.communication_uart import CommunicationUART
+from src.interaction import InteractionTouchscreen
+from src.interaction.interaction_voice import InteractionVoice
+from src.communication import CommunicationUART
 import threading
 from queue import Queue
-from definitions import SETTINGS
+from src.definitions import SETTINGS
 
 
 class Manager:

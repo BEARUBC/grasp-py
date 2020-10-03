@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from interaction.interaction import Interaction
+from src.interaction import Interaction
 import speech_recognition as sr
 
 

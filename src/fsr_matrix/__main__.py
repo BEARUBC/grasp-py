@@ -1,8 +1,8 @@
 """
 Visualizer for the data coming out of the FSR matrix
 """
-from fsr_matrix.classifier.deprecated import ObjectClassifier
-from fsr_matrix.map_raw_output import open_serial_connection, collect_reading
+from src.fsr_matrix.classifier import ObjectClassifier
+from src.fsr_matrix.map_raw_output import open_serial_connection, collect_reading
 import numpy as np
 import pygame
 
