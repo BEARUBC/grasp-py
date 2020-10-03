@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from manager import Manager
+from src.manager import Manager
 
 
 def main():

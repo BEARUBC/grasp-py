@@ -6,9 +6,9 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.atlas import Atlas
 
 import sys
-sys.path.append('.')
+sys.path.append('')
 
-from manager import Manager
+from src.manager import Manager
 grip = ['mug', 'pinch', 'ball', 'hammer', 'flat', 'test']
 gripPress = ['mug_down', 'pinch_down', 'ball_down', 'hammer_down', 'flat_down', 'test_down']
 

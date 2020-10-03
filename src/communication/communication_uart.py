@@ -2,6 +2,7 @@
 import json
 import time
 
+from src.definitions import SETTINGS
 from .communication import Communication
 import serial
 
@@ -11,12 +12,13 @@ class CommunicationUART(Communication):
 
     # We don't require a manager in case we want to run as a standalone
     def __init__(self, manager=None):
+        self.settings = SETTINGS["communication"]["UART"]
         self.manager = manager
         if self.manager is not None:
             super().__init__(self.manager)
         # Configure serial port
-        self.ser.port = '/dev/ttyACM0'
-        self.ser.baudrate = 9600
+        self.ser.port = self.settings["port"]
+        self.ser.baudrate = self.settings["baud_rate"]
         self.ser.parity = serial.PARITY_NONE
         self.ser.stopbits = serial.STOPBITS_ONE
         self.ser.bytesize = serial.EIGHTBITS
