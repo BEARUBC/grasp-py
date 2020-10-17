@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from src.interaction import InteractionTouchscreen
+from src.interaction.interaction_touchscreen import InteractionTouchscreen
 from src.interaction.interaction_voice import InteractionVoice
-from src.communication import CommunicationUART
+from src.communication.communication_uart import CommunicationUART
 from src.definitions import SETTINGS
 import threading
 from queue import Queue
