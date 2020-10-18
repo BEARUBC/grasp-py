@@ -3,7 +3,7 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
-from gui_button import GuiButton
+from src.gui.gui_button import GuiButton
 from kivy.uix.button import Button
 from kivy.properties import StringProperty
 from kivy.core.window import Window

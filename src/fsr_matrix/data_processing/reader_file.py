@@ -1,4 +1,4 @@
-from src.fsr_matrix import DataReader
+from src.fsr_matrix.data_processing.reader import DataReader
 
 
 class FileReader(DataReader):
