@@ -9,6 +9,5 @@ dependencies:
   - pytest
   - pyserial
   - pyaudio
-  - cogsci::pygame
   - conda-forge::speechrecognition
   - conda-forge::kivy

@@ -1,0 +1,2 @@
+class EMGParser:
+    pass
