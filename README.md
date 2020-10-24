@@ -18,6 +18,8 @@ git clone git@gitlab.com:UBCBear/grasp-rpi.git
 cd grasp-py
 conda env create --file environment.yaml
 conda activate grasp-py
+
+python -m install pygame
 ```
 
 [Add pytorch to your conda environment](https://pytorch.org/get-started/locally/)
