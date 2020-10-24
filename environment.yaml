@@ -12,3 +12,4 @@ dependencies:
   - cogsci::pygame
   - conda-forge::speechrecognition
   - conda-forge::kivy
+  - anaconda::scipy
