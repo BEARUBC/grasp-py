@@ -20,7 +20,7 @@ class EMG:
         self.data = np.zeros((self.num_channels, self.window_size * self.num_windows))
 
     def update(self, json):  # updates data with new readings from json
-        self.data = np.roll(data, -self.window_size, axis=1)
+        self.data = np.roll(json, -self.window_size, axis=1)
         for c in self.channels[:]:
             self.data[c, -self.window_size:] = json.data[c]
 
