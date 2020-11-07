@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from serial import Serial
 
+
 def open_serial_connection():
     # COM ports are managed differently based on OS
     if sys.platform.startswith('linux'):
