@@ -2,8 +2,8 @@ import numpy as np
 
 
 class PeakDetection:
-    def __init__(self, array, lag, threshold, influence):
-        self.y = list(array)
+    def __init__(self, array: list, lag: int, threshold: float, influence: float):
+        self.y = array
         self.length = len(self.y)
         self.lag = lag
         self.threshold = threshold
@@ -12,7 +12,7 @@ class PeakDetection:
         self.filteredY = np.array(self.y).tolist()
         self.avgFilter = [0] * len(self.y)
         self.stdFilter = [0] * len(self.y)
-        self.avgFilter[self.lag - 1] = np.mean(self.y[0:self.lag]).tolist()
+        self.avgFilter[int(self.lag - 1)] = np.mean(self.y[0:self.lag]).tolist()
         self.stdFilter[self.lag - 1] = np.std(self.y[0:self.lag]).tolist()
 
     def thresholding_algo(self, new_value):
