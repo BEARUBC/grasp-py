@@ -22,5 +22,5 @@ fsr_matrix:
     file_path: "data/"
 emg:
   peak_detection:
-    default_mean: 2
+    default_mean: 0
     default_std: 3
