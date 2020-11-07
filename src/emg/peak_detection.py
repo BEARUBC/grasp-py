@@ -1,53 +1,50 @@
 import numpy as np
 
+from src.definitions import SETTINGS
+
 
 class PeakDetection:
-    def __init__(self, array: list, lag: int, threshold: float, influence: float):
-        self.y = array
-        self.length = len(self.y)
-        self.lag = lag
-        self.threshold = threshold
-        self.influence = influence
-        self.signals = [0] * len(self.y)
-        self.filteredY = np.array(self.y).tolist()
-        self.avgFilter = [0] * len(self.y)
-        self.stdFilter = [0] * len(self.y)
-        self.avgFilter[int(self.lag - 1)] = np.mean(self.y[0:self.lag]).tolist()
-        self.stdFilter[self.lag - 1] = np.std(self.y[0:self.lag]).tolist()
+    def __init__(self, lag: int, threshold: float, influence: float):
+        self.settings = SETTINGS["emg"]["peak_detection"]
+        self.lag: int = lag
+        self.length = self.lag
+        self.threshold: float = threshold
+        self.influence: float = influence
+        self.y: list = [0] * self.lag
+        self.signals: list = [0] * self.lag
+        self.filteredY = [0] * self.lag
+        self.avgFilter: list = [0] * self.lag
+        self.stdFilter: list = [0] * self.lag
+        self.avgFilter[self.lag - 1] = self.settings["default_mean"]
+        self.stdFilter[self.lag - 1] = self.settings["default_std"]
+        self.data_points_seen = 0
 
-    def thresholding_algo(self, new_value):
+    def threshold_new_val(self, new_value):
+        self.data_points_seen += 1
         self.y.append(new_value)
-        i = len(self.y) - 1
-        self.length = len(self.y)
-        if i < self.lag:
-            return 0
-        elif i == self.lag:
-            self.signals = [0] * len(self.y)
-            self.filteredY = np.array(self.y).tolist()
-            self.avgFilter = [0] * len(self.y)
-            self.stdFilter = [0] * len(self.y)
-            self.avgFilter[self.lag - 1] = np.mean(self.y[0:self.lag]).tolist()
-            self.stdFilter[self.lag - 1] = np.std(self.y[0:self.lag]).tolist()
+        self.y.pop(0)
+        if self.data_points_seen < self.lag:
             return 0
 
         self.signals += [0]
         self.filteredY += [0]
+        self.filteredY.pop(0)
         self.avgFilter += [0]
+        self.avgFilter.pop(0)
         self.stdFilter += [0]
+        self.stdFilter.pop(0)
 
-        if abs(self.y[i] - self.avgFilter[i - 1]) > self.threshold * self.stdFilter[i - 1]:
-            if self.y[i] > self.avgFilter[i - 1]:
-                self.signals[i] = 1
-            else:
-                self.signals[i] = -1
+        if abs(self.y[-1] - self.avgFilter[-2]) > self.threshold * self.stdFilter[-2]:
+            self.signals[-1] = 1
 
-            self.filteredY[i] = self.influence * self.y[i] + (1 - self.influence) * self.filteredY[i - 1]
-            self.avgFilter[i] = np.mean(self.filteredY[(i - self.lag):i])
-            self.stdFilter[i] = np.std(self.filteredY[(i - self.lag):i])
+            self.filteredY[-1] = self.influence * self.y[-1] + (1 - self.influence) * self.filteredY[-2]
+            self.avgFilter[-1] = np.mean(self.filteredY[:-1])
+            self.stdFilter[-1] = np.std(self.filteredY[:-1])
         else:
-            self.signals[i] = 0
-            self.filteredY[i] = self.y[i]
-            self.avgFilter[i] = np.mean(self.filteredY[(i - self.lag):i])
-            self.stdFilter[i] = np.std(self.filteredY[(i - self.lag):i])
+            self.signals[-1] = 0
+            self.filteredY[-1] = self.y[-1]
+            self.avgFilter[-1] = np.mean(self.filteredY[:-1])
+            self.stdFilter[-1] = np.std(self.filteredY[:-1])
 
-        return self.signals[i]
+        self.signals.pop(0)
+        return self.signals[-1]

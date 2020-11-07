@@ -2,7 +2,7 @@ import pandas
 import pathlib
 import plotly.express as px
 import plotly.io as pio
-pio.renderers.default = "svg"
+pio.renderers.default = "browser"
 
 
 class EMGParser:
