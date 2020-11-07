@@ -27,6 +27,7 @@ class PeakDetection:
             return 0
 
         self.signals += [0]
+        self.signals.pop(0)
         self.filteredY += [0]
         self.filteredY.pop(0)
         self.avgFilter += [0]
@@ -46,5 +47,4 @@ class PeakDetection:
             self.avgFilter[-1] = np.mean(self.filteredY[:-1])
             self.stdFilter[-1] = np.std(self.filteredY[:-1])
 
-        self.signals.pop(0)
         return self.signals[-1]
