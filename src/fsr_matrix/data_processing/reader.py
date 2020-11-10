@@ -14,10 +14,10 @@ class DataReader(metaclass=ABCMeta):
     def read_line(self):
         pass
 
-    def get_frame(self, normalize=True):
+    def get_frame(self, raw=False):
         line = self.read_line()
         reading = np.reshape(line, tuple(self.settings["dims"]))
 
-        if normalize:  # Normalize reading
+        if not raw:  # Normalize reading
             reading /= 1024.0
         return reading
