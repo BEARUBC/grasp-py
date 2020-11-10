@@ -1,5 +1,0 @@
-matrix:
-  rows: 7
-  columns: 11
-classifier:
-  layers: 2

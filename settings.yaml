@@ -1,0 +1,23 @@
+grips: ['sea', 'pinch', 'ball', 'hammer', 'flat']
+communication:
+  UART:
+    baud_rate: 115200
+    unix_port: '/dev/ttyACM0'
+    win_port: 'COM5'
+interaction:
+  touchscreen: ~
+  voice: ~
+fsr_matrix:
+  dims: [7, 11]
+  classifier:
+    input_channels: 1
+    output_size: 4
+  reader:
+    # Possible modes: uart, file
+    # uart:
+    #  Constant stream of data through communication_uart
+    # File:
+    #  Constant stream of data from the file until out of data in the file
+    mode: "file"
+    # Only needed if mode == "file", relative from "fsr_matrix/data_processing"
+    file_path: "data/"
