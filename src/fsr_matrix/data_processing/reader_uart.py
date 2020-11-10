@@ -6,16 +6,18 @@ from src.fsr_matrix.data_processing.reader import DataReader
 
 
 class UartReader(DataReader):
-    def __init__(self):
+    def __init__(self, port=None):
         super().__init__()
         self.settings.update(SETTINGS["communication"]["UART"])
         self.ser = self.open_serial_connection()
         self.ser.flushInput()
         self.ser.readline()  # omit garbage row
 
-    def open_serial_connection(self):
+    def open_serial_connection(self, port=None):
+        if port is not None:
+            return Serial(port, self.settings["baud_rate"], timeout=1)
         # COM ports are managed differently based on OS
-        if sys.platform.startswith('linux'):
+        elif sys.platform.startswith('linux'):
             return Serial(self.settings["unix_port"], self.settings["baud_rate"], timeout=1)
         elif sys.platform.startswith('win'):
             return Serial(self.settings["win_port"], self.settings["baud_rate"], timeout=1)
