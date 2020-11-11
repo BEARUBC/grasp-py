@@ -19,5 +19,5 @@ class DataReader(metaclass=ABCMeta):
         reading = np.reshape(line, tuple(self.settings["dims"]))
 
         if not raw:  # Normalize reading
-            reading /= 1024.0
+            reading = reading / SETTINGS["fsr_matrix"]["resolution"]
         return reading

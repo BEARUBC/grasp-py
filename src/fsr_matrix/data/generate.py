@@ -13,9 +13,12 @@ parser.add_argument("--size", type=int, default=1000, help="Number of frames of 
 
 args = parser.parse_args()
 
-
-def generate_random_frame() -> np.ndarray:
-    return np.random.rand(*SETTINGS["fsr_matrix"]["dims"])
+dims = SETTINGS["fsr_matrix"]["dims"]
+def generate_random_frame(raw=True) -> np.ndarray:
+    raw_frame = np.random.randint(0, SETTINGS["fsr_matrix"]["resolution"], dims)
+    if not raw:
+        raw_frame = raw_frame / SETTINGS["fsr_matrix"]["resolution"]
+    return raw_frame
 
 
 generation_modes = {
@@ -26,6 +29,11 @@ print("Generating", args.size, "frames using", args.mode)
 generation_function = generation_modes.get(args.mode, lambda: "random")
 generated_data = np.array([np.ndarray.flatten(generation_function()) for _ in range(args.size)])
 data_df = pd.DataFrame(generated_data)
+
+
+# Rename columns
+data_df.columns = [str(x // dims[1]) + "_" + str(x % dims[1]) for x in range(dims[0] * dims[1])]
+
 
 output_path = Path(args.out_path)
 print("Saving data to", output_path)
