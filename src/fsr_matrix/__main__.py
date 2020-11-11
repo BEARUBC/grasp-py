@@ -14,6 +14,8 @@ parser.add_argument("--file_absolute_path", type=str, default=None,
                     help="Read from a file with a specified absolute path")
 parser.add_argument("--port", type=str, default=None,
                     help="Read from a serial connection with a specified port")
+parser.add_argument("--classify", type=bool, default=False,
+                    help="Display shape classification")
 
 args = parser.parse_args()
 
@@ -26,7 +28,9 @@ elif args.file is not None:
 else:
     raise Exception("No input method specified")
 
-_classifier = MatrixClassifier()
 visualizer = MatrixVisualizer()
-
-visualizer.start(_reader, _classifier)
+if args.classify:
+    _classifier = MatrixClassifier()
+    visualizer.start(_reader, _classifier)
+else:
+    visualizer.start(_reader)

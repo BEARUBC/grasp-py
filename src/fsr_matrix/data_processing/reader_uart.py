@@ -1,5 +1,8 @@
 import sys
+from typing import Optional
+
 from serial import Serial
+import numpy as np
 
 from src.definitions import SETTINGS
 from src.fsr_matrix.data_processing.reader import DataReader
@@ -30,4 +33,12 @@ class UartReader(DataReader):
         reading = [int(x) for x in line.decode().split()]  # convert reading to 1D numpy array
         if len(reading) != self.reading_length:
             return False
+        return reading
+
+    def get_frame(self, raw=False) -> Optional[np.ndarray]:
+        line = self.read_line()
+        reading = np.reshape(line, tuple(self.settings["dims"]))
+
+        if not raw:  # Normalize reading
+            reading = reading / self.settings["resolution"]
         return reading
