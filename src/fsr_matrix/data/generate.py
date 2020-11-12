@@ -32,7 +32,7 @@ data_df = pd.DataFrame(generated_data)
 
 
 # Rename columns
-data_df.columns = [str(x // dims[1]) + "_" + str(x % dims[1]) for x in range(dims[0] * dims[1])]
+data_df.columns = [str(x // dims[0]) + "_" + str(x % dims[0]) for x in range(dims[0] * dims[1])]
 
 
 output_path = Path(args.out_path)

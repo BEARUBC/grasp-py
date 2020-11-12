@@ -39,9 +39,8 @@ class MatrixVisualizer:
     def update_screen(self, reading, shape):
         self.screen.fill(_BLACK)
         for y in range(len(reading)):
-
             for x in range(len(reading[y])):
-                col = reading[y][x]
+                col = reading[y][x] * 255
                 col = 255 if col > 255 else col
                 pygame.draw.rect(self.screen, (col, col, col),
                                  [x * self.tile_size, y * self.tile_size, self.tile_size, self.tile_size], 0)
@@ -53,7 +52,7 @@ class MatrixVisualizer:
                              self.tile_size // 2)  # row labels
         if shape is None:
             shape = "Disabled"
-        self.render_text("Prediction: " + shape, self.window_size[0] // 2, 420)
+        self.render_text("Prediction: " + shape, self.window_size[0] // 2, self.window_size[1] - 20)
         # update screen
         pygame.display.flip()
 
