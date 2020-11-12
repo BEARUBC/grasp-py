@@ -1,3 +1,5 @@
+from typing import Optional
+
 import numpy as np
 from abc import abstractmethod, ABCMeta
 
@@ -11,13 +13,5 @@ class DataReader(metaclass=ABCMeta):
         self.available = True
 
     @abstractmethod
-    def read_line(self):
+    def get_frame(self, raw=False) -> Optional[np.ndarray]:
         pass
-
-    def get_frame(self, normalize=True):
-        line = self.read_line()
-        reading = np.reshape(line, tuple(self.settings["dims"]))
-
-        if normalize:  # Normalize reading
-            reading /= 1024.0
-        return reading
