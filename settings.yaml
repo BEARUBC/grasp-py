@@ -8,7 +8,10 @@ interaction:
   touchscreen: ~
   voice: ~
 fsr_matrix:
-  dims: [7, 11]
+  dims: [11, 7]
+  resolution: 1024
+  visualizer:
+    tile_size: 40
   classifier:
     input_channels: 1
     output_size: 4

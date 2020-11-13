@@ -3,3 +3,4 @@
 venv/
 **.pyc
 src/emg/raw_emg_data_unprocessed
+src/fsr_matrix/data/*.csv

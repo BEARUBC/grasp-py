@@ -16,5 +16,6 @@ class FSRMatrix:
         self.classifier = MatrixClassifier().to(TORCH_DEVICE)
 
     def get_current_obj(self):
-        frame = self.reader.get_frame()
+        if self.reader.available:
+            frame = self.reader.get_frame()
         return self.classifier.classify(frame)
