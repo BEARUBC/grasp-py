@@ -12,3 +12,4 @@ dependencies:
   - conda-forge::speechrecognition
   - conda-forge::kivy
   - anaconda::scipy
+  - plotly::plotly

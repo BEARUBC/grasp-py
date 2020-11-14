@@ -25,6 +25,7 @@ fsr_matrix:
     # Only needed if mode == "file", relative from "fsr_matrix/data_processing"
     file_path: "data/"
 emg:
+  data_dir: "src/emg/data"
   peak_detection:
     default_mean: 0
     default_std: 3
