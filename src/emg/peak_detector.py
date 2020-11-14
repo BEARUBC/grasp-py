@@ -3,7 +3,7 @@ import numpy as np
 from src.definitions import SETTINGS
 
 
-class PeakDetection:
+class PeakDetector:
     def __init__(self, lag: int, threshold: float, influence: float):
         self.settings = SETTINGS["emg"]["peak_detection"]
         self.lag: int = lag

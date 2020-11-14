@@ -14,7 +14,7 @@ pio.renderers.default = "browser"
 
 
 def normalize_data(data: pd.Series) -> pd.Series:
-    return np.square(data) / data.max(0)
+    return np.square(data)
 
 
 class EMGParser:

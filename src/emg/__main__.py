@@ -1,41 +1,45 @@
 import argparse
-import pandas
-from src.emg.peak_detection import PeakDetection
-import numpy as np
+from pathlib import Path
+from src.emg.parser import EMGParser
+from src.emg.peak_detector import PeakDetector
 
-# lst = np.random.rand(50)
-# peak_detector = PeakDetection(5, 2, 0.1)
-#
-# peak_detector.threshold_new_val(2)
-# peak_detector.threshold_new_val(1)
-# peak_detector.threshold_new_val(20)
-#
-# print(peak_detector.signals)
+import pandas as pd
+
+import plotly.express as px
+
+
+def main(data_path: Path, limit=1000):
+    iterations = 0
+    data_parser = EMGParser(data_path)  # Initialize Parser
+    peak_detector = PeakDetector(5, 2, 0.1)  # Initialize Peak detector
+    signals = dict()  # Store signals in dict with (index: signal)
+    data = dict()
+    while data_parser.available and iterations < limit:  # Read all data in file
+        iterations += 1  # Limit iterations
+        reading_row = data_parser.get_reading()  # Get current reading
+        reading = reading_row.iloc[0][reading_row.columns[0]]
+        signal = peak_detector.threshold_new_val(reading)  # Get filtered signal from reading
+        signals[data_parser.counter] = signal  # Store signal in dictionary
+        data[data_parser.counter] = reading  # Store readings for comparison
+
+    emg_signal_df = pd.Series(signals, name="signal").to_frame()  # Signals as pandas df
+    emg_signal_df["type"] = "Signal"
+    emg_signal_df["signal"] = emg_signal_df["signal"] * emg_signal_df["signal"].max()
+    reading_df = pd.Series(data, name="signal").to_frame()  # Readings as pandas df
+    reading_df["type"] = "Reading"
+
+    emg_df = pd.concat([reading_df, emg_signal_df], axis=0)  # Concat both types into a single df
+    fig = px.line(emg_df, y="signal", color="type")
+    fig.show()
 
 
 parser = argparse.ArgumentParser(description="Peak Detection in EMG data in real time")
 parser.add_argument("--file", type=str, default=None,
-                    help="Read from a file with a specified path relative to the root directory")
-parser.add_argument("--file_absolute_path", type=str, default=None,
-                    help="Read from a file with a specified absolute path")
+                    help="Read from a file with a specified path")
 
 args = parser.parse_args()
 
-if args.file_absolute_path is not None:
-    newValues = pandas.read_csv(args.file_absolute_path)
-    peak_detector = PeakDetection(5, 2, 0.1)
-    for i in newValues:
-        peak_detector.threshold_new_val(i)
-    print(peak_detector.signals)
-
-elif args.file is not None:
-    newValues = pandas.read_csv(args.file)
-    peak_detector = PeakDetection(5, 2, 0.1)
-    for i in newValues:
-        peak_detector.threshold_new_val(i)
-    print(peak_detector.signals)
-
+if args.file is not None:
+    main(Path(args.file))
 else:
-    raise Exception("No input method specified")
-
-
+    raise Exception("No file specified")
