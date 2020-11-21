@@ -2,4 +2,6 @@
 .vscode/
 venv/
 **.pyc
-src/fsr_matrix/data/*.csv
+**.csv
+
+
