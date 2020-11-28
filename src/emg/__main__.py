@@ -8,10 +8,10 @@ import pandas as pd
 import plotly.express as px
 
 
-def main(data_path: Path, limit=1000):
+def main(data_path: Path, limit=100):
     iterations = 0
     data_parser = EMGParser(data_path)  # Initialize Parser
-    peak_detector = PeakDetector(5, 2, 0.1)  # Initialize Peak detector
+    peak_detector = PeakDetector(5, 2, 0.1, 2)  # Initialize Peak detector
     signals = dict()  # Store signals in dict with (index: signal)
     data = dict()
     while data_parser.available and iterations < limit:  # Read all data in file
@@ -30,7 +30,7 @@ def main(data_path: Path, limit=1000):
 
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
-    fig.show()
+    fig.write_html('emg_fig.html', auto_open=True)
 
 
 parser = argparse.ArgumentParser(description="Peak Detection in EMG data in real time")

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-import torch
+# import torch
 import yaml
 
 
@@ -15,4 +15,4 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_PATH = Path(ROOT_DIR)
 SETTINGS_PATH = os.path.join(ROOT_DIR, '../settings.yaml')
 SETTINGS = load_settings()
-TORCH_DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# TORCH_DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
