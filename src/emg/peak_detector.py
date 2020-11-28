@@ -40,7 +40,7 @@ class PeakDetector:
         # want to see if signals can pass lowest threshold, then increase until maximum threshold
         x = self.numthresholds
         while x > 0:
-            newthreshold = self.threshold / x
+            newthreshold = self.threshold * (x / self.numthresholds)
             if abs(self.y[-1] - self.avgFilter[-2]) > newthreshold * self.stdFilter[-2]:
                 self.signals[-1] = 1 / x
                 self.filteredY[-1] = self.influence * self.y[-1] + (1 - self.influence) * self.filteredY[-2]
