@@ -11,7 +11,7 @@ import plotly.express as px
 def main(data_path: Path, limit=100):
     iterations = 0
     data_parser = EMGParser(data_path)  # Initialize Parser
-    peak_detector = PeakDetector(5, 2, 0.1, 2)  # Initialize Peak detector
+    peak_detector = PeakDetector(5, 5, 0.1, 5)  # Initialize Peak detector
     signals = dict()  # Store signals in dict with (index: signal)
     data = dict()
     while data_parser.available and iterations < limit:  # Read all data in file
@@ -28,7 +28,8 @@ def main(data_path: Path, limit=100):
     reading_df = pd.Series(data, name="signal").to_frame()  # Readings as pandas df
     reading_df["type"] = "Reading"
 
-    emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
+    emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
+    # emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
     fig.write_html('emg_fig.html', auto_open=True)
 
