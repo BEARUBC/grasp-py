@@ -8,20 +8,25 @@ import plotly.io as pio
 import pandas as pd
 # pio.renderers.default = "browser"
 
-# class EMGVisualizer:
-#
-#     def __init__(self):
-
 import py
 
 from plotly.subplots import make_subplots
 from pygments.lexers import go
 from pathlib import Path
-from src.emg.parser import EMGParser, args, emg_parser, parser
+from src.emg.parser import EMGParser
 import numpy as np
+from src.definitions import ROOT_PATH, SETTINGS
+
+
+# class EMGVisualizer:
+#     def __init__(self, file_path: pathlib.Path):
+#         self.settings = SETTINGS["emg"]
+#         self.available = True
+#         self.df = pd.read_csv(file_path)
+
 
 fig = make_subplots(
-    rows = 4, cols = 6,
+    rows=4, cols=6,
     specs=[
             [{ "rowspan": 3, "colspan": 6}, None, None, None, None, None ],
             [    None, None, None, None, None, None],
@@ -29,9 +34,10 @@ fig = make_subplots(
             [    {"type": "indicator"}, {"type": "indicator"}, {"type": "indicator"} , None, None, None],
           ]
 )
-
+#fix file parsing
+file = pd.read_csv(r'emg/data/index_finger_motion_raw.csv')
 parser=argparse.ArgumentParser(description="Parse EMG Data")
-parser.add_argument("file", type=str, help="Read from a file with a specified path")
+parser.add_argument(file)
 args = parser.parse_args()
 emg_parser = EMGParser(pathlib.Path(args.file))
 data_df = emg_parser.get_all()
