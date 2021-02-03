@@ -60,6 +60,13 @@ if __name__ == "__main__":
     electrode_fig_1 = px.line(data_df, y=data_df.columns[0], title="Electrode 1 Graph (index)")
     electrode_fig_1.show()
 
+if __name__ == "visualizer":
+    parser = argparse.ArgumentParser(description="Parse EMG Data")
+    parser.add_argument("file", type=str, help="Read from a file with a specified path")
+    args = parser.parse_args()
+
+    emg_parser = EMGParser(pathlib.Path(args.file))
+    data_df = emg_parser.get_all()
 # index_df.columns = ["electrode_" + str(i + 1) for i in range(len(index_df.columns))]
 #
 # for col in index_df.columns:

@@ -24,33 +24,31 @@ from src.definitions import ROOT_PATH, SETTINGS
 #         self.available = True
 #         self.df = pd.read_csv(file_path)
 
+def visualizer(data_path: Path, limit=100):
 
-fig = make_subplots(
-    rows=4, cols=6,
-    specs=[
+    fig = make_subplots(
+        rows=4, cols=6,
+        specs=[
             [{ "rowspan": 3, "colspan": 6}, None, None, None, None, None ],
             [    None, None, None, None, None, None],
             [    None, None, None, None, None, None],
             [    {"type": "indicator"}, {"type": "indicator"}, {"type": "indicator"} , None, None, None],
-          ]
-)
-#fix file parsing
-file = pd.read_csv(r'emg/data/index_finger_motion_raw.csv')
-parser=argparse.ArgumentParser(description="Parse EMG Data")
-parser.add_argument(file)
-args = parser.parse_args()
-emg_parser = EMGParser(pathlib.Path(args.file))
-data_df = emg_parser.get_all()
-y = list(data_df["electrode_1"])
-x = np.arange(len(y))
-
-fig.add_trace(
-    go.Scatter(
-        x=x, y=y,
-        name="electrode 1",
-        line_color='rgba(255,255,255,0)'
+        ]
     )
-)
+
+    data_parser = EMGParser(data_path)
+    data_df = data_parser.get_all()
+    y = list(data_df["electrode_1"])
+    x = np.arange(len(y))
+
+    fig.add_trace(
+        go.Scatter(
+            x=x, y=y,
+            name="electrode 1",
+            line_color='rgba(255,255,255,0)'
+        )
+    )
+    fig.write_html('emg_live_visualization.html', auto_open=True)
 
 
 # fig.add_trace(
@@ -80,7 +78,6 @@ fig.add_trace(
 #     row=3, col=3
 # )
 
-fig.write_html('emg_live_visualization.html', auto_open=True)
 
 # import plotly.plotly as py # plotly library
 # from plotly.graph_objs import Scatter, Layout, Figure # plotly graph objects
