@@ -1,12 +1,12 @@
+import argparse
+import pathlib
 from datetime import datetime
 
 import plotly.express as px
 import plotly.io as pio
 
-import numpy as np
 import pandas as pd
 # pio.renderers.default = "browser"
-
 
 # class EMGVisualizer:
 #
@@ -16,6 +16,9 @@ import py
 
 from plotly.subplots import make_subplots
 from pygments.lexers import go
+from pathlib import Path
+from src.emg.parser import EMGParser, args, emg_parser, parser
+import numpy as np
 
 fig = make_subplots(
     rows = 4, cols = 6,
@@ -27,12 +30,23 @@ fig = make_subplots(
           ]
 )
 
+parser=argparse.ArgumentParser(description="Parse EMG Data")
+parser.add_argument("file", type=str, help="Read from a file with a specified path")
+args = parser.parse_args()
+emg_parser = EMGParser(pathlib.Path(args.file))
+data_df = emg_parser.get_all()
+y = list(data_df["electrode_1"])
+x = np.arange(len(y))
+
 fig.add_trace(
     go.Scatter(
-
+        x=x, y=y,
+        name="electrode 1",
+        line_color='rgba(255,255,255,0)'
     )
 )
-#
+
+
 # fig.add_trace(
 #     go.Indicator(
 #         mode="number",

@@ -29,7 +29,7 @@ def main(data_path: Path, limit=100):
     reading_df["type"] = "Reading"
 
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
-    # emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
+    emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
     fig.write_html('emg_fig.html', auto_open=True)
 
