@@ -29,3 +29,7 @@ emg:
   peak_detection:
     default_mean: 0
     default_std: 3
+haptic_feedback:
+  randomwalk_generator:
+    default_numdatapoints: 1000
+    default_plotsize: [10, 7.5]
