@@ -20,7 +20,6 @@ class RandomWalkGenerator:
         randomwalk = np.cumsum(steps)
 
         for i in range(len(randomwalk)):
-            randomwalk[i] *= m.sqrt(2)
             if randomwalk[i] < 0:
                 randomwalk[i] *= -1
 
