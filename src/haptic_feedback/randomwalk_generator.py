@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math as m
 
 from src.definitions import SETTINGS
 
@@ -16,7 +17,14 @@ class RandomWalkGenerator:
 
         steps = np.random.standard_normal(datapoints)
         steps[0] = 0
-        self.randomwalk = np.cumsum(steps)
+        randomwalk = np.cumsum(steps)
+
+        for i in range(len(randomwalk)):
+            randomwalk[i] *= m.sqrt(2)
+            if randomwalk[i] < 0:
+                randomwalk[i] *= -1
+
+        self.randomwalk = randomwalk
 
     def plotter(self):
         plot_size = self.plotsize
