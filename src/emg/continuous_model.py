@@ -1,6 +1,12 @@
 import pandas as pd
 from src.emg.parser import EMGParser
 import math
+from influxdb_client import InfluxDBClient, Point, WriteOptions
+
+url = "http://localhost:8086"
+token = "Rbg3aKBu-nU_wY9wXkxCVLzT9WhH725mZ6LwEQgQjrppmeLYZ1J9xrjqXlZz6-oLfDJQhJWE169pyaN9rpmDzg=="
+org = "0ed254cf3dca2b2b"
+bucket = "GRASPDB"
 
 
 class ContinuousEMGModel:
@@ -37,3 +43,16 @@ class ContinuousEMGModel:
 
         self.results.append(y)
         return y
+
+    def influx_write(self, df, measure_name):
+
+        with InfluxDBClient(url=url, token=token, org=org) as _client:
+
+            with _client.write_api(write_options=WriteOptions(batch_size=500, flush_interval=10_000,
+                                                              jitter_interval=2_000, retry_interval=5_000,
+                                                              max_retries=5, max_retry_delay=30_000,
+                                                              exponential_base=2)) as _write_client:
+
+                _write_client.write(bucket, org, record=df, data_frame_measurement_name=measure_name,
+                                    data_frame_tag_columns=['electrode'])
+

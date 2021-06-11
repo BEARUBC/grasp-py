@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 from src.emg.parser import EMGParser
 from src.emg.peak_detector import PeakDetector
+from src.emg.continuous_model import ContinuousEMGModel
 
 import pandas as pd
 
@@ -12,6 +13,7 @@ def main(data_path: Path, limit=100):
     iterations = 0
     data_parser = EMGParser(data_path)  # Initialize Parser
     peak_detector = PeakDetector(5, 5, 0.1, 5)  # Initialize Peak detector
+    cont_model = ContinuousEMGModel()  # Initialize continuous model
     signals = dict()  # Store signals in dict with (index: signal)
     data = dict()
     while data_parser.available and iterations < limit:  # Read all data in file
@@ -27,7 +29,9 @@ def main(data_path: Path, limit=100):
     emg_signal_df["signal"] = emg_signal_df["signal"] * emg_signal_df["signal"].max()
     reading_df = pd.Series(data, name="signal").to_frame()  # Readings as pandas df
     reading_df["type"] = "Reading"
+    model_df = cont_model.apply_model_to_df(reading_df)
 
+    cont_model.influx_write(model_df,"test")
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
     emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
