@@ -21,8 +21,8 @@ class ContinuousEMGModel:
         if len(self.cache) >= self.cache_size:
             self.cache.pop(0)
 
-    def apply_model_to_df(self, data_df, electrode_col="electrode_1"):
-        y_data = list(data_df[electrode_col])
+    def apply_model_to_df(self, data_df):
+        y_data = list(data_df)
         y = [0] * len(y_data)
 
         for j in range(len(self.theta), len(y)):

@@ -31,7 +31,7 @@ def main(data_path: Path, limit=100):
     reading_df["type"] = "Reading"
     model_df = cont_model.apply_model_to_df(reading_df)
 
-    cont_model.influx_write(model_df,"test")
+    cont_model.influx_write(model_df, "test")
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
     emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
