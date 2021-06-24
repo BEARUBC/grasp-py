@@ -33,3 +33,6 @@ class RandomWalkGenerator:
         plt.plot(rw)
         plt.title("Simulated Random Walk")
         plt.show()
+
+    def rw_setter(self, new_randomwalk: list):
+        self.randomwalk = new_randomwalk
