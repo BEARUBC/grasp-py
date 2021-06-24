@@ -1,8 +1,12 @@
+from abc import ABC
+
 import numpy as np
 from scipy import ndimage
 
+from src.module import Module
 
-class EMG:
+
+class EMG (Module):
     channels = np.array([[0, 1, 2, 3], [4, 5, 6, 7]])  # each row contains channels corresponding to a muscle group
     num_channels = channels[:].size
     window_size = -1
@@ -19,10 +23,11 @@ class EMG:
         self.num_windows = num_windows  # number of past windows to keep
         self.data = np.zeros((self.num_channels, self.window_size * self.num_windows))
 
-    def update(self, json):  # updates data with new readings from json
-        self.data = np.roll(json, -self.window_size, axis=1)
+    def process(self, input_json: dict) -> dict:
+        self.data = np.roll(input_json, -self.window_size, axis=1)
         for c in self.channels[:]:
-            self.data[c, -self.window_size:] = json.data[c]
+            self.data[c, -self.window_size:] = input_json[c]
+        return {"data": self.data}
 
     def thresh_peak(self, signal):  # detect peak based on threshold
         if (signal[signal >= self.VOLT_THRESH].size >= self.SAMPLE_THRESH):
