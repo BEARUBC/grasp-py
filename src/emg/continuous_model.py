@@ -2,6 +2,7 @@ import pandas as pd
 from src.emg.parser import EMGParser
 import math
 from influxdb_client import InfluxDBClient, Point, WriteOptions
+import pandas as pd
 
 url = "http://localhost:8086"
 token = "Rbg3aKBu-nU_wY9wXkxCVLzT9WhH725mZ6LwEQgQjrppmeLYZ1J9xrjqXlZz6-oLfDJQhJWE169pyaN9rpmDzg=="
@@ -15,11 +16,13 @@ class ContinuousEMGModel:
         self.cache_size = len(self.theta)
         self.cache = []
         self.results = []
+        self.df = pd.DataFrame
 
     def add_to_cache(self, val):
         self.cache.append(val)
         if len(self.cache) >= self.cache_size:
             self.cache.pop(0)
+            self.df = pd.DataFrame(self.cache)
 
     def apply_model_to_df(self, data_df):
         y_data = list(data_df)
@@ -44,7 +47,7 @@ class ContinuousEMGModel:
         self.results.append(y)
         return y
 
-    def influx_write(self, df, measure_name):
+    def influx_write(self, measure_name):
 
         with InfluxDBClient(url=url, token=token, org=org) as _client:
 
@@ -53,6 +56,6 @@ class ContinuousEMGModel:
                                                               max_retries=5, max_retry_delay=30_000,
                                                               exponential_base=2)) as _write_client:
 
-                _write_client.write(bucket, org, record=df, data_frame_measurement_name=measure_name,
+                _write_client.write(bucket, org, record=self.df, data_frame_measurement_name=measure_name,
                                     data_frame_tag_columns=['electrode'])
 
