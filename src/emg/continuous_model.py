@@ -16,13 +16,11 @@ class ContinuousEMGModel:
         self.cache_size = len(self.theta)
         self.cache = []
         self.results = []
-        self.df = pd.DataFrame
 
     def add_to_cache(self, val):
         self.cache.append(val)
         if len(self.cache) >= self.cache_size:
             self.cache.pop(0)
-            self.df = pd.DataFrame(self.cache)
 
     def apply_model_to_df(self, data_df):
         y_data = list(data_df)
@@ -56,6 +54,6 @@ class ContinuousEMGModel:
                                                               max_retries=5, max_retry_delay=30_000,
                                                               exponential_base=2)) as _write_client:
 
-                _write_client.write(bucket, org, record=self.df, data_frame_measurement_name=measure_name,
+                _write_client.write(bucket, org, record=pd.DataFrame(self.cache), data_frame_measurement_name=measure_name,
                                     data_frame_tag_columns=['electrode'])
 
