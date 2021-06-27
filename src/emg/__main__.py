@@ -30,8 +30,10 @@ def main(data_path: Path, limit=100):
     reading_df = pd.Series(data, name="signal").to_frame()  # Readings as pandas df
     reading_df["type"] = "Reading"
     model_df = cont_model.apply_model_to_df(reading_df)
+    for row in model_df.iterrows():
+        cont_model.add_to_cache(row[1])
 
-    cont_model.influx_write(model_df, "test")
+    cont_model.influx_write("emg")
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
     emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
