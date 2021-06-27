@@ -1,4 +1,5 @@
 from abc import abstractmethod
+import json
 
 
 class Module:
@@ -8,6 +9,4 @@ class Module:
         pass
 
     def run(self, json_str: str) -> str:
-        # parse the json str into a dictionary
-        # convert dictionary back into a json string
-        return self.process(input_json)
+        return json.dumps(self.process(json.loads(json_str)))
