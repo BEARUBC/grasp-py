@@ -3,6 +3,7 @@ from pathlib import Path
 from src.emg.parser import EMGParser
 from src.emg.peak_detector import PeakDetector
 from src.emg.continuous_model import ContinuousEMGModel
+from src.emg.logger import Logger
 
 import pandas as pd
 
@@ -33,7 +34,8 @@ def main(data_path: Path, limit=100):
     for row in model_df.iterrows():
         cont_model.add_to_cache(row[1])
 
-    cont_model.influx_write("emg")
+    logger = Logger("emg1", cont_model.cache)
+    logger.influx_write()
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
     emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
