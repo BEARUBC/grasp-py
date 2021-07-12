@@ -1,5 +1,6 @@
 from src.definitions import ROOT_PATH
 import cv2
+from objects import obj_classes
 
 #img = cv2.imread('cup.jpg')
 cap = cv2.VideoCapture(0)
@@ -12,7 +13,6 @@ with open(classFile, 'rt') as f:
 
 configPath = str(ROOT_PATH/'grip_select/coco/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt')
 weightsPath = str(ROOT_PATH/'grip_select/coco/frozen_inference_graph.pb')
-
 
 net = cv2.dnn_DetectionModel(weightsPath, configPath)
 net.setInputSize(320,320)
@@ -29,6 +29,7 @@ while True:
     print(type(img))
     classIds, confs, bbox = net.detect(img,confThreshold=0.60)
     print(classIds,bbox)
+
 
     box_sizes = []
 
@@ -66,6 +67,10 @@ while True:
             cv2.rectangle(img, selected_box[2], color = (255,255,0), thickness = 2)
             cv2.putText(img, classNames[selected_box[0] - 1].upper(), (selected_box[2][0] + 10, selected_box[2][1] + 30),
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+            cv2.putText(img, str(obj_classes[classNames[selected_box[0] - 1]]),
+                        (selected_box[2][0] + 10, selected_box[2][1] + 60),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+
 
         cv2.imshow("Output", img)
         cv2.waitKey(1)
