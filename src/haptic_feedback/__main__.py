@@ -1,13 +1,16 @@
 from src.haptic_feedback.haptic_module import HapticFeedback
 from src.haptic_feedback.randomwalk_generator import RandomWalkGenerator
+import json
 
 
 def main():
     haptic_feedback = HapticFeedback()
     test_randomwalk = RandomWalkGenerator()
     test_randomwalk.generator()
+
     rw_list = test_randomwalk.randomwalk
-    haptic_feedback.process({"fsr_strengths": rw_list})
+    rw_dict = {"fsr_strengths": rw_list}
+    haptic_feedback.run(json.dumps(rw_dict))
 
 
 main()
