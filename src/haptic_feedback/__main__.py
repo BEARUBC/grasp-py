@@ -1,5 +1,5 @@
 from src.haptic_feedback.haptic_module import HapticFeedback
-from src.haptic_feedback.randomwalk_generator import RandomWalkGenerator
+from src.data_generation.randomwalk_generator import RandomWalkGenerator
 import json
 
 
