@@ -29,8 +29,8 @@ class Point:
         return Point(self.x / scalar, self.y / scalar)
 
     def __iter__(self):
-        for i in [self.x, self.y]:
-            yield i
+        yield self.x
+        yield self.y
 
     def __repr__(self):
         return "(x: " + str(self.x) + ", " + "y: " + str(self.y) + ")"
@@ -42,6 +42,13 @@ class BoundingBox:
     y: int
     w: int
     h: int
+
+
+    def __iter__(self):
+        yield self.x
+        yield self.y
+        yield self.w
+        yield self.h
 
     """from top left and bottom right corners"""
 
@@ -99,3 +106,4 @@ class BoundingBox:
         out_bx = min(self.bottom_right.x, max_box.x)
         out_by = min(self.bottom_right.y, max_box.y)
         return BoundingBox.from_corners(out_ax, out_ay, out_bx, out_by)
+
