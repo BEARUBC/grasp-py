@@ -1,8 +1,9 @@
 from src.definitions import ROOT_PATH
 import cv2
-from objects import obj_classes
 
 #img = cv2.imread('cup.jpg')
+from src.grip_select.mobilenet.objects import OBJECT_GRIP_MAP
+
 cap = cv2.VideoCapture(0)
 cap.set(3,640)
 cap.set(4,480)
@@ -67,7 +68,7 @@ while True:
             cv2.rectangle(img, selected_box[2], color = (255,255,0), thickness = 2)
             cv2.putText(img, classNames[selected_box[0] - 1].upper(), (selected_box[2][0] + 10, selected_box[2][1] + 30),
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
-            cv2.putText(img, str(obj_classes[classNames[selected_box[0] - 1]]),
+            cv2.putText(img, str(OBJECT_GRIP_MAP[classNames[selected_box[0] - 1]]),
                         (selected_box[2][0] + 10, selected_box[2][1] + 60),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
