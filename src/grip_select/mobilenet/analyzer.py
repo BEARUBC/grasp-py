@@ -58,7 +58,7 @@ class MobileNetAnalyzer:
 
         # Take min based on dist to center
         selected_box_data = min(box_data, key=lambda box: box[3])
-        selected_box: BoundingBox = selected_box_data[2].squarify()  # .clamp(image_bbox)
+        selected_box: BoundingBox = selected_box_data[2]
         selected_class_id = selected_box_data[0] - 1
 
         if not selected_box:
