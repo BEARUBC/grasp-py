@@ -4,6 +4,3 @@ class BatteryProcess:
         self.processname: str = processname
         self.batteryusage: int = batteryusage
         self.turnedon: bool = startstate
-
-    # def set_process_state(self, state: bool):
-    #     self.turnedon = state

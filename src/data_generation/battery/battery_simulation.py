@@ -1,4 +1,4 @@
-import threading
+import random
 import time
 from typing import List
 
@@ -18,25 +18,32 @@ class BatterySimulation:
             name = process.processname
 
             if is_turned_on:
-                self.batterylife -= depletion
-                print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
+                if self.batterylife - depletion < 0 and self.batterylife > 0:
+                    self.batterylife = 0
+                    print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
+                elif self.batterylife - depletion < 0 and self.batterylife <= 0:
+                    self.batterylife = 0
+                else:
+                    self.batterylife -= depletion
+                    print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
 
-    # def add_process(self, newprocess: BatteryProcess, waittime=0.0):
-    #     time.sleep(waittime)
-    #     self.processes.append(newprocess)
-    #
-    #     print(newprocess.processname + " process added!")
+    def run_simulation(self, change_frequency: float = 0.40):
+        rand_cutoff = 100 * change_frequency
 
-    # def set_state(self, process: BatteryProcess, state: bool, waittime=0.0):
-    #     time.sleep(waittime)
-    #     process.turnedon = state
-    #
-    #     print("Set " + process.processname + " to " + state)
-
-    def run_processes(self):
-        # Start a timer that will do random iterations for changing the states
-        if self.batterylife > 0:
-            threading.Timer(self.buffertime, self.run_processes).start()
+        while self.batterylife > 0:
             self.reduce_battery()
-        else:
-            print("Battery Depleted")
+
+            rand_number = random.randint(0, 100)
+            if rand_number <= rand_cutoff:
+                selected_index = random.randint(0, len(self.processes) - 1)
+                selected_process = self.processes[selected_index]
+
+                if selected_process.turnedon:
+                    selected_process.turnedon = False
+                else:
+                    selected_process.turnedon = True
+                print("Set " + str(selected_process.processname) + " to " + str(selected_process.turnedon))
+
+            time.sleep(self.buffertime)
+
+        print("Battery Depleted")
