@@ -1,14 +1,14 @@
 import random
 import time
-from typing import List
+from typing import List, Generator
 
 from src.data_generation.battery.battery_process import BatteryProcess
 
 
 class BatterySimulation:
-    def __init__(self, processeslist: List[BatteryProcess], buffertime: float):
-        self.processes = processeslist
-        self.batterylife = 100
+    def __init__(self, processes_list: List[BatteryProcess], buffertime: float):
+        self.processes = processes_list
+        self.battery_life = 100
         self.buffertime = buffertime
 
     def reduce_battery(self):
@@ -18,19 +18,20 @@ class BatterySimulation:
             name = process.processname
 
             if is_turned_on:
-                if self.batterylife - depletion < 0 and self.batterylife > 0:
-                    self.batterylife = 0
-                    print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
-                elif self.batterylife - depletion < 0 and self.batterylife <= 0:
-                    self.batterylife = 0
+                if self.battery_life - depletion < 0 and self.battery_life > 0:
+                    self.battery_life = 0
+                    print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
+                elif self.battery_life - depletion < 0 and self.battery_life <= 0:
+                    self.battery_life = 0
                 else:
-                    self.batterylife -= depletion
-                    print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
+                    self.battery_life -= depletion
+                    print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
 
-    def run_simulation(self, change_frequency: float = 0.40):
+    def run_simulation(self, real_time: bool = False, change_frequency: float = 0.40) -> Generator[int, None, None]:
         rand_cutoff = 100 * change_frequency
 
-        while self.batterylife > 0:
+        while self.battery_life > 0:
+            yield self.battery_life
             self.reduce_battery()
 
             rand_number = random.randint(0, 100)
@@ -38,12 +39,11 @@ class BatterySimulation:
                 selected_index = random.randint(0, len(self.processes) - 1)
                 selected_process = self.processes[selected_index]
 
-                if selected_process.turnedon:
-                    selected_process.turnedon = False
-                else:
-                    selected_process.turnedon = True
+                selected_process.turnedon = not selected_process.turnedon
                 print("Set " + str(selected_process.processname) + " to " + str(selected_process.turnedon))
 
-            time.sleep(self.buffertime)
+            if real_time:
+                time.sleep(self.buffertime)
 
+        yield self.battery_life
         print("Battery Depleted")

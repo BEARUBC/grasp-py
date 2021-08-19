@@ -12,7 +12,8 @@ def main():
     sleep_time = 5
 
     battery_simulation = BatterySimulation(process_list, sleep_time)
-    battery_simulation.run_simulation()
+    battery_lives = list(battery_simulation.run_simulation())
+    print(str(battery_lives))
 
 
 main()
