@@ -25,7 +25,16 @@ fsr_matrix:
     # Only needed if mode == "file", relative from "fsr_matrix/data_processing"
     file_path: "data/"
 emg:
-  data_dir: "src/emg/data"
+  data_dir: "src/emg/data/"
   peak_detection:
     default_mean: 0
     default_std: 3
+  logging:
+    url: "http://localhost:8086"
+    token: "Rbg3aKBu-nU_wY9wXkxCVLzT9WhH725mZ6LwEQgQjrppmeLYZ1J9xrjqXlZz6-oLfDJQhJWE169pyaN9rpmDzg=="
+    org: "0ed254cf3dca2b2b"
+    bucket: "GRASPDB"
+haptic_feedback:
+  randomwalk_generator:
+    default_numdatapoints: 1000
+    default_plotsize: [10, 7.5]

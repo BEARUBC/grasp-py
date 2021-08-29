@@ -4,7 +4,8 @@ from src.definitions import SETTINGS
 
 
 class PeakDetector:
-    def __init__(self, lag: int, threshold: float, influence: float):
+
+    def __init__(self, lag: int, threshold: float, influence: float, numthresholds: int):
         self.settings = SETTINGS["emg"]["peak_detection"]
         self.lag: int = lag
         self.length = self.lag
@@ -18,6 +19,7 @@ class PeakDetector:
         self.avgFilter[self.lag - 1] = self.settings["default_mean"]
         self.stdFilter[self.lag - 1] = self.settings["default_std"]
         self.data_points_seen = 0
+        self.numthresholds = numthresholds
 
     def threshold_new_val(self, new_value):
         self.data_points_seen += 1
@@ -35,16 +37,23 @@ class PeakDetector:
         self.stdFilter += [0]
         self.stdFilter.pop(0)
 
-        if abs(self.y[-1] - self.avgFilter[-2]) > self.threshold * self.stdFilter[-2]:
-            self.signals[-1] = 1
-
-            self.filteredY[-1] = self.influence * self.y[-1] + (1 - self.influence) * self.filteredY[-2]
-            self.avgFilter[-1] = np.mean(self.filteredY[:-1])
-            self.stdFilter[-1] = np.std(self.filteredY[:-1])
-        else:
-            self.signals[-1] = 0
-            self.filteredY[-1] = self.y[-1]
-            self.avgFilter[-1] = np.mean(self.filteredY[:-1])
-            self.stdFilter[-1] = np.std(self.filteredY[:-1])
+        x = 1
+        while x <= self.numthresholds:
+            newthreshold = self.threshold * (x / self.numthresholds)
+            if abs(self.y[-1] - self.avgFilter[-2]) > newthreshold * self.stdFilter[-2]:
+                self.signals[-1] = x / self.numthresholds
+                self.filteredY[-1] = self.influence * self.y[-1] + (1 - self.influence) * self.filteredY[-2]
+                self.avgFilter[-1] = np.mean(self.filteredY[:-1])
+                self.stdFilter[-1] = np.std(self.filteredY[:-1])
+            elif x == 1:
+                self.signals[-1] = 0
+                self.filteredY[-1] = self.y[-1]
+                self.avgFilter[-1] = np.mean(self.filteredY[:-1])
+                self.stdFilter[-1] = np.std(self.filteredY[:-1])
+            else:
+                self.filteredY[-1] = self.y[-1]
+                self.avgFilter[-1] = np.mean(self.filteredY[:-1])
+                self.stdFilter[-1] = np.std(self.filteredY[:-1])
+            x = x + 1
 
         return self.signals[-1]
