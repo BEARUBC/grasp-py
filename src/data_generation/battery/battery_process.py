@@ -1,6 +1,6 @@
 class BatteryProcess:
 
-    def __init__(self, processname: str, batteryusage: int, startstate: bool = False):
-        self.processname: str = processname
-        self.batteryusage: int = batteryusage
-        self.turnedon: bool = startstate
+    def __init__(self, process_name: str, battery_usage: int, start_state: bool = False):
+        self.process_name: str = process_name
+        self.battery_usage: int = battery_usage
+        self.turned_on: bool = start_state
