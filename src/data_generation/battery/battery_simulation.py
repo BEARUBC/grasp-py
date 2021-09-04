@@ -2,7 +2,7 @@ import random
 import time
 from typing import List, Generator
 
-influxdb_client import InfluxDBClient, WriteOptions
+from influxdb_client import InfluxDBClient, WriteOptions
 from datetime import datetime
 from src.data_generation.battery.battery_process import BatteryProcess
 
