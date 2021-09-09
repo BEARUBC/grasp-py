@@ -1,6 +1,7 @@
 import cv2
+import torch
 
-from src.definitions import ROOT_PATH, SETTINGS
+from src.definitions import ROOT_PATH, SETTINGS, TORCH_DEVICE
 from src.grip_select.grip_select import GripSelect, GripSelectModel
 
 img_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
