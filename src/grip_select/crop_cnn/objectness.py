@@ -1,10 +1,7 @@
 import cv2
+import numpy as np
 
 from src.definitions import SETTINGS, ROOT_PATH
-
-
-def run_bounding_boxes(source_image):
-    centre(contours_numbers(find_contour(source_image)))
 
 
 # this is inside 1
@@ -13,13 +10,6 @@ def find_contour(img1):
     thresh = cv2.threshold(grey, 128, 255, cv2.THRESH_BINARY)[1]
     return cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-
-# inside 2
-def contours_numbers(contours):
-    if len(contours) == 2:
-        return contours[0]
-    else:
-        return contours[1]
 
 
 # inside 3
@@ -46,8 +36,20 @@ if __name__ == "__main__":
     img_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
     img = cv2.imread(str(img_path))
 
-    # cv2.imshow("source", img.copy())
-    run_bounding_boxes(img)
+    objectness_model = cv2.saliency.StaticSaliencySpectralResidual_create()
+    _, saliency_map = objectness_model.computeSaliency(np.float32(img))
+    from PIL import Image
+
+    gr_im = Image.fromarray(saliency_map * 255)
+
+    gray = np.array(saliency_map * 255).astype('uint8')
+    cv2.imshow("gray", gray)
+    thresh = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY)[1]
+    contours, heirarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    centre(contours)
+    ## this is creating a object
+
+    # run_bounding_boxes(img)
     cv2.waitKey()
     cv2.destroyAllWindows()
 
