@@ -39,6 +39,7 @@ haptic_feedback:
     default_numdatapoints: 1000
     default_plotsize: [10, 7.5]
 grip_select:
-  mobilenet:
-    data_dir: "grip_select/mobilenet/data"
-    results_dir: "grip_select/mobilenet/results"
+  data_dir: "grip_select/data"
+  results_dir: "grip_select/out"
+  crop_cnn:
+

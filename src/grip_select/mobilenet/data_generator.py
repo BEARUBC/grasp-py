@@ -14,8 +14,8 @@ from src.grip_select.mobilenet.analyzer import MobileNetAnalyzer, MobileNetAnaly
 from src.utils import BoundingBox
 
 if __name__ == "__main__":
-    input_dir_path = ROOT_PATH / SETTINGS["grip_select"]["mobilenet"]["data_dir"]
-    output_dir_path = ROOT_PATH / SETTINGS["grip_select"]["mobilenet"]["results_dir"]
+    input_dir_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"]
+    output_dir_path = ROOT_PATH / SETTINGS["grip_select"]["results_dir"]
     train_image_dims = (50, 50)
 
     extensions = [".png", ".jpg", ".jpeg"]

@@ -1,14 +1,4 @@
-from enum import Enum, auto
-
-
-class GripType(Enum):
-    TIP = auto(),
-    LATERAL = auto(),
-    TRIPOD = auto(),
-    SPHERICAL = auto(),
-    POWER = auto(),
-    EXTENSION = auto()
-
+from src.grip_select.grip import GripType
 
 OBJECT_GRIP_MAP = {
     "bird": GripType.POWER,

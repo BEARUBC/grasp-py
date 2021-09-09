@@ -4,14 +4,17 @@ import cv2
 from typing import List, Optional
 
 from src.definitions import ROOT_PATH
-from src.grip_select.mobilenet.objects import GripType, OBJECT_GRIP_MAP
-from src.grip_select.mobilenet.result import MobileNetResult
-from src.utils import BoundingBox, Point
+from src.grip_select.mobilenet.objects import OBJECT_GRIP_MAP
+from src.grip_select.selector import GripSelector
+from src.utils import BoundingBox
 
 MobileNetAnalysisResult = namedtuple("MobileNetAnalysisResult", "class_name confidence bbox grip_type")
 
 
-class MobileNetAnalyzer:
+class MobileNetAnalyzer(GripSelector):
+    def classify_image(self, image):
+        pass
+
     def __init__(self, confidence_threshold: float = 0.65, classes_path: str = None, config_path: str = None,
                  weights_path: str = None):
         self._path = ROOT_PATH / "grip_select/mobilenet/"
