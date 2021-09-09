@@ -38,6 +38,7 @@ class Point:
 
 @dataclass
 class BoundingBox:
+    # Top left corner, width, and height.
     x: int
     y: int
     w: int

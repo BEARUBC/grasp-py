@@ -2,91 +2,64 @@ import cv2
 import numpy as np
 
 from src.definitions import SETTINGS, ROOT_PATH
+from src.utils import BoundingBox, Point
+
+CROP_DIMS = tuple(SETTINGS["grip_select"]["crop_cnn"]["crop_dims"])
 
 
-# this is inside 1
-def find_contour(img1):
-    grey = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-    thresh = cv2.threshold(grey, 128, 255, cv2.THRESH_BINARY)[1]
-    return cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+def _objectness_contours(img):
+    objectness_model = cv2.saliency.StaticSaliencySpectralResidual_create()
+    _, saliency_map = objectness_model.computeSaliency(np.float32(img))
+
+    gray = np.array(saliency_map * 255).astype('uint8')
+    # cv2.imshow("gray", gray)
+    thresh = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY)[1]
+    contours, heirarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    return contours
 
 
-
-# inside 3
-def centre(contours_num):
-    for cntr in contours_num:
+def _get_best_bbox_from_contours(img, ctrs):
+    img_center = Point(img.shape[0] // 2, img.shape[1] // 2)
+    boxes = []
+    for cntr in ctrs:
         x, y, w, h = cv2.boundingRect(cntr)
-        cx = x + w // 2
-        cy = y + h // 2
-        cr = max(w, h) // 2
-        dim = (200, 200)
-        dr = 10
-        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        cropped = img[y: y + h, x: x + w]
-        cv2.imshow("cropped", img)
-        r = cr + 1 * dr
-        if cy - r < 0 or cy + r >= img.shape[0] or cx - r < 0 or cx + r >= img.shape[1]:
+        centre_x = x + w // 2
+        centre_y = y + h // 2
+        max_dist_to_edge = max(w, h) // 2
+        padding = 10
+
+        r = max_dist_to_edge + padding
+
+        bbox_center = Point(centre_y, centre_x)
+        bbox = BoundingBox.from_center(bbox_center, r, r)
+        img_bbox = BoundingBox.from_corners(0, 0, *img.shape[:2])
+        if not img_bbox.contains_box(bbox):
+            cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
             continue
-        resized_cropped = img[cy - r:cy + r, cx - r:cx + r]
-        resized_cropped = cv2.resize(resized_cropped, dim)
-        # cv2.imshow("resized_cropped", resized_cropped)
+        heur = bbox_center.sqr_dist_to(img_center)
+
+        # cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        boxes.append((bbox, heur))
+
+    best_box_tuple = min(boxes, key=lambda box: box[1])
+    return best_box_tuple[0]
+
+
+def _crop_scale_image(img, box: BoundingBox):
+    center = box.center
+    d = box.w // 2
+    cropped = img[int(center.x - d):int(center.x + d), int(center.y - d):int(center.y + d)]
+    return cv2.resize(cropped, CROP_DIMS)
+
+
+def get_best_obj_img(img):
+    contours = _objectness_contours(img)
+    best_box = _get_best_bbox_from_contours(img, contours)
+    return _crop_scale_image(img, best_box)
 
 
 if __name__ == "__main__":
     img_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
-    img = cv2.imread(str(img_path))
-
-    objectness_model = cv2.saliency.StaticSaliencySpectralResidual_create()
-    _, saliency_map = objectness_model.computeSaliency(np.float32(img))
-    from PIL import Image
-
-    gr_im = Image.fromarray(saliency_map * 255)
-
-    gray = np.array(saliency_map * 255).astype('uint8')
-    cv2.imshow("gray", gray)
-    thresh = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY)[1]
-    contours, heirarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    centre(contours)
-    ## this is creating a object
-
-    # run_bounding_boxes(img)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-
-# convert to grayscale
-# grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-# threshold
-# thresh = cv2.threshold(grey, 128, 255, cv2.THRESH_BINARY)[1]
-
-# get contours
-# result = img.copy()
-# contours = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# contours = contours[0] if len(contours) == 2 else contours[1]
-# for cntr in contours:
-#    x, y, w, h = cv2.boundingRect(cntr)
-#    cv2.rectangle(result, (x, y), (x + w, y + h), (0, 0, 255), 2)
-#    cropped = img[y: y+h, x: x+w]
-#    cv2.imshow("cropped", cropped)
-
-# centre and radius
-# cx = x+w//2
-# cy = y+h//2
-# cr = max(w, h)//2
-
-# dim = (200, 200)
-# make larger region in cropped
-# dr = 10
-# for i in range(0, 1):
-#    r = cr+1*dr
-#    cv2.rectangle(result, (cx-r, cy-r), (cx+r, cy+r), (0, 255, 0), 1)
-#    cropped = img[cy-r:cy+r, cx-r:cx+r]
-#    resizeandcrop = cv2.resize(cropped, dim)
-#    cv2.imshow("resizeandcrop{}".format(i), resizeandcrop)
-
-# resize cropped1 to be proper pixels
-
-# show
-# cv2.imshow("source", result)
-# cv2.waitKey()
-# cv2.destroyAllWindows()
+    im = cv2.imread(str(img_path))
+    best_obj_img = get_best_obj_img(im)
