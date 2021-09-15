@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from typing import Optional
 
+import pickle
 import pandas as pd
 
 import cv2
@@ -14,7 +15,7 @@ from src.grip_select.mobilenet.analyzer import MobileNetAnalyzer, MobileNetAnaly
 from src.utils import BoundingBox
 
 if __name__ == "__main__":
-    input_dir_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"]
+    input_dir_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup"
     output_dir_path = ROOT_PATH / SETTINGS["grip_select"]["results_dir"]
     train_image_dims = (50, 50)
 
@@ -43,12 +44,17 @@ if __name__ == "__main__":
         crop_image = image[tl_y:br_y, tl_x:br_x]
 
         cropped_resized_image = cv2.resize(crop_image, train_image_dims)
-        out_tuple = (cropped_resized_image.tolist(), results.class_name, results.confidence, results.grip_type)
+        out_tuple = (cropped_resized_image.tolist(), results.class_name, results.confidence, int(results.grip_type))
         out_results.append(out_tuple)
 
-    out_df = pd.DataFrame(out_results, columns=["image", "object_class", "confidence", "grip_type"])
-
     timestr = time.strftime("%Y%m%d_%H%M%S")
-    out_filename = timestr + "_train_size_" + str(len(out_results)) + ".csv"
-    out_path = str(output_dir_path / out_filename)
-    out_df.to_csv(out_path)
+    out_csv_filename = timestr + "_train_size_" + str(len(out_results)) + ".csv"
+    out_pickle_filename = timestr + "_train_size_" + str(len(out_results)) + ".pickle"
+    out_csv_path = str(output_dir_path / out_csv_filename)
+    out_pickle_path = str(output_dir_path / out_pickle_filename)
+
+    out_df = pd.DataFrame(out_results, columns=["image", "object_class", "confidence", "grip_type"])
+    out_df.to_csv(out_csv_path)
+
+    with open(str(out_pickle_path), 'wb') as out_pickle_file:
+        pickle.dump(out_results, out_pickle_file)
