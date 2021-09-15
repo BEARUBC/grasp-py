@@ -1,17 +1,25 @@
 """
-[Load Data] ->    }  [Evaluate model on data] -> [Get evaluation Results]
-[Create Model] -> }
+This script currently evaluates the performance of the crop CNN model
 """
 
-import pandas as pd
+
+import pickle
+
+import numpy as np
 
 from src.definitions import ROOT_PATH, SETTINGS
 from src.grip_select.crop_cnn.crop_cnn import CropCNNSelector
 
-data_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "parsed/evaluate.csv"
+data_path = ROOT_PATH / SETTINGS["grip_select"]["results_dir"] / "20210914_235655_train_size_25.pickle"
 
-data = pd.read_csv(str(data_path))
-labels = pd[""]
+with open(str(data_path), "rb") as data_file:
+    data = pickle.load(data_file)
+
+images = [np.asarray(x[0]) for x in data]
+labels = [x[3] for x in data]
 
 selector = CropCNNSelector()
-# selector_evaluation = selector.evaluate(data)
+selector_evaluation = selector.evaluate(images, labels)
+
+# Print the returned confusion matrix of our selector
+print(selector_evaluation)
