@@ -37,8 +37,6 @@ class CropCNNSelector(GripSelector):
         return grip_type
 
     def evaluate(self, images: List[np.ndarray], labels: List[GripType]) -> sklearn.metrics.confusion_matrix:
-
-
         for image, label in zip(images, labels):
             result: GripType = self.classify_image(image)
 
