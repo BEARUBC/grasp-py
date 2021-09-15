@@ -63,3 +63,5 @@ if __name__ == "__main__":
     img_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
     im = cv2.imread(str(img_path))
     best_obj_img = get_best_obj_img(im)
+    cv2.imshow("final", best_obj_img)
+    cv2.waitKey(1)
