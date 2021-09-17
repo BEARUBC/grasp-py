@@ -1,16 +1,34 @@
-class BatteryAlgorithm:
-    # Current implementation only works for one singular process that turns on/off at any time
+from typing import List
 
-    def __init__(self, process_mean: int = 0, current_battery: int = 100):
-        self.process_mean = process_mean
-        self.current_battery = current_battery
+from src.data_generation.battery.battery_process import BatteryProcess
 
-    def calculate_mean(self, battery_life: int):
+
+class BMSAlgorithm:
+    def __init__(self, processes: List[BatteryProcess]):
+        idle_process = BatteryProcess('idle', start_state=True)
+        processes_list = [idle_process]
+
+        self.processes = processes_list.append(processes)
+        self.current_battery = 100
+        self.buckets = {0: [0]}  # initialize dictionary with idle process first
+
+
+    def bucket_values(self, battery_life: int):
+        bucket_index = 0
+
+        for process in self.processes:
+            if process.turned_on:
+                bucket_index += self.processes.index(process)
+
         depletion = self.current_battery - battery_life
-
-        if self.process_mean == 0:
-            self.process_mean = depletion
+        if bucket_index in self.buckets:
+            self.buckets[bucket_index].append(depletion)
         else:
-            self.process_mean = (self.process_mean + depletion) / 2
+            self.buckets[bucket_index] = [depletion]
 
         self.current_battery = battery_life
+
+
+    def calculate_means(self):
+        # TODO: create an algorithm that determines each average based on a set of linear equations(?)
+
