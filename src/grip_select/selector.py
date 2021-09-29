@@ -16,8 +16,8 @@ class GripSelector:
         """
         (image, true_label) -> classifier -> (predicted_label, true_label) -> are predicted_label and true_label the same?
         """
+
         y_true = [int(x) for x in labels]
-        image_classifications: List[GripType] = []
+        model_predictions: List[int] = [int(self.classify_image(x)) for x in images]
         # Cast classifications to ints
-        predicted_grip_ints: list[int] = []
-        return confusion_matrix(y_true, predicted_grip_ints)
+        return confusion_matrix(y_true, model_predictions)
