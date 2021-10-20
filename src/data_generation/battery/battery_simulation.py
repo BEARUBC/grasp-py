@@ -10,7 +10,7 @@ from src.data_generation.battery.battery_process import BatteryProcess
 class BatterySimulation:
     def __init__(self, processes_list: List[BatteryProcess], buffertime: float):
         self.processes = processes_list
-        self.battery_life = 100
+        self.battery_life: float = 100
         self.buffertime = buffertime
         self.num_processes = len(self.processes)
         # for influx:
@@ -36,20 +36,15 @@ class BatterySimulation:
                 else:
                     self.battery_life -= depletion
                     # print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
-                self.influx_write(self.battery_life, datetime.now(), name)
+                # self.influx_write(self.battery_life, datetime.now(), name)
 
     def run_simulation(self, real_time: bool = False, change_frequency: float = 0.40) -> Generator[int, None, None]:
         rand_cutoff = 100 * change_frequency
 
-        while self.battery_life > 0:
-            yield self.battery_life
-            self.reduce_battery()
 
-            for process in self.processes:
-                if process.turned_on:
-                    yield process.battery_usage
-                else:
-                    yield 0
+        while self.battery_life > 0:
+            self.reduce_battery()
+            yield self.battery_life
 
             rand_number = random.randint(0, 100)
             if rand_number <= rand_cutoff:
@@ -62,11 +57,7 @@ class BatterySimulation:
             if real_time:
                 time.sleep(self.buffertime)
 
-        yield self.battery_life
-
-        for i in range(self.num_processes):
-            yield 0
-
+        yield 0
         print("Battery Depleted")
 
     def create_tuples(self, simulation_list: List[int]) -> List:
