@@ -10,25 +10,17 @@ class BMSAlgorithm:
 
         self.processes = processes_list.append(processes)
         self.current_battery = 100
-        self.buckets = {0: [0]}  # initialize dictionary with idle process first
+        self.datapoints = []
 
 
-    def bucket_values(self, battery_life: int):
-        bucket_index = 0
-
-        for process in self.processes:
-            if process.turned_on:
-                bucket_index += self.processes.index(process)
-
+    def create_datapoint(self, battery_life: int):
         depletion = self.current_battery - battery_life
-        if bucket_index in self.buckets:
-            self.buckets[bucket_index].append(depletion)
-        else:
-            self.buckets[bucket_index] = [depletion]
-
+        features = [int(x.turned_on) for x in self.processes] + [depletion]
+        self.datapoints.append(tuple(features))
         self.current_battery = battery_life
 
 
     def calculate_means(self):
         # TODO: create an algorithm that determines each average based on a set of linear equations(?)
+
 
