@@ -1,5 +1,6 @@
 import random
 import time
+import numpy as np
 from typing import List, Generator
 
 from influxdb_client import InfluxDBClient, WriteOptions
@@ -21,17 +22,19 @@ class BatterySimulation:
 
     def reduce_battery(self):
         for process in self.processes:
-            depletion = process.battery_usage
+            mu = process.mean_usage
+            sigma = process.noise
             is_turned_on = process.turned_on
-            name = process.process_name
+
+            depletion = abs(np.random.normal(mu, sigma, 1))
 
             if is_turned_on:
                 if self.battery_life - depletion < 0 and self.battery_life > 0:
-                    process.battery_usage = self.battery_life
+                    process.mean_usage = self.battery_life
                     self.battery_life = 0
                     # print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
                 elif self.battery_life - depletion < 0 and self.battery_life <= 0:
-                    process.battery_usage = 0
+                    process.mean_usage = 0
                     self.battery_life = 0
                 else:
                     self.battery_life -= depletion
