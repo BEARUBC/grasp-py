@@ -23,7 +23,3 @@ for battery_life in battery_simulation.run_simulation():
 print(bms_solver.get_process_usages())
 print(rand_means)
 print(rand_stdev)
-
-# To-do
-# Create noise per process and in the battery simulation to create variability in data
-# Numpy normal distribution using gaussian
