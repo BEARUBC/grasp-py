@@ -23,10 +23,10 @@ class BatterySimulation:
     def reduce_battery(self):
         for process in self.processes:
             mu = process.mean_usage
-            sigma = process.noise
+            sigma = process.usage_stdev
             is_turned_on = process.turned_on
 
-            depletion = abs(np.random.normal(mu, sigma, 1))
+            depletion = abs(np.random.normal(mu, sigma))
 
             if is_turned_on:
                 if self.battery_life - depletion < 0 and self.battery_life > 0:
