@@ -7,18 +7,12 @@ from sklearn.linear_model import LinearRegression
 
 
 class BMSAlgorithm:
-    def __init__(self):
-        self.processes = []
-        self.current_battery: float = 100
+    def __init__(self, processes: List[BatteryProcess], battery_life: float):
+        self.processes = processes
+        self.current_battery: float = battery_life
         self.model = LinearRegression()
         self.features = []
         self.labels = []
-
-    def set_processes(self, processes: List[BatteryProcess]):
-        self.processes = processes
-
-    def set_battery(self, battery_life: float):
-        self.current_battery = battery_life
 
     def create_datapoint(self, battery_life: int):
         depletion = self.current_battery - battery_life

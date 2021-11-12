@@ -5,12 +5,7 @@ from src.bms.bms_algorithm import BMSAlgorithm
 class BMS(Module):
 
     def __init__(self, input_json: dict):
-        self.bms_solver = BMSAlgorithm()
-        self.battery_life: float = input_json["current_battery"]
-        self.processes: list = input_json["processes_list"]
-
-        self.bms_solver.set_battery(self.battery_life)
-        self.bms_solver.set_processes(self.processes)
+        self.bms_solver = BMSAlgorithm(input_json["processes_list"], input_json["current_battery"])
 
     def _process(self, input_json: dict) -> dict:
         current_battery = input_json["current_battery"]

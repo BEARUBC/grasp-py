@@ -15,8 +15,7 @@ camera_3d_process = BatteryProcess('Camera3D', mean_usage=rand_means[3], start_s
 process_list = [emg_process, hapticfeedback_process, camera_process, camera_3d_process]
 sleep_time = 5
 
-bms_solver = BMSAlgorithm()
-bms_solver.set_processes(process_list)
+bms_solver = BMSAlgorithm(process_list, 100)
 battery_simulation = BatterySimulation(process_list, sleep_time)
 for battery_life in battery_simulation.run_simulation():
     bms_solver.create_datapoint(battery_life)
