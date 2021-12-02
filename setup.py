@@ -1,5 +1,5 @@
 from setuptools import setup
 
 setup(
-    name="grasp-analytics",
+    name="grasp_analytics",
 )
