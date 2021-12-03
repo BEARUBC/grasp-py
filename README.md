@@ -4,28 +4,29 @@ Python portion of GRASP control
 ## Setup
 How to install and setup the RPi software on a pi or desktop
 
-
 ### Installation
 
 Prerequisites:
 - Anaconda
-- Python 3.7
-- [PortAudio](http://portaudio.com/) for PyAudio
-
+- Python >= 3.7
 
 ```bash
-git clone git@gitlab.com:UBCBear/grasp-rpi.git
+git clone git@gitlab.com:UBCBear/grasp-py.git
 cd grasp-py
 conda env create --file environment.yaml
-conda activate grasp-py
+conda activate grasp-analytics
+```
 
-python -m install pygame
+If you would like to enable linting as a pre-commit hook, run:
+```
+pre-commit install
 ```
 
 [Add pytorch to your conda environment](https://pytorch.org/get-started/locally/)
 
 Be sure to select `Conda` as your package.
-If you have a powerful GPU, it's also recommended to install and use CUDA. Once that's done be sure to select the correct version to use with pytorch. Right now all of the pytorch is written to use CUDA 10.1, so that is the recommended version right now.
+If you have a GPU that is CUDA-enabled, it's also recommended to install and use CUDA. Once that's done be sure to select the correct version to use with pytorch.
+
 
 ## Updating the Environment
  

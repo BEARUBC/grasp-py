@@ -1,4 +1,4 @@
-{% set name = "grasp-analytics" %}
+{% set name = "grasp_analytics" %}
 {% set version = "1.0.0" %}
 
 package:
