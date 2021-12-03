@@ -1,15 +1,13 @@
-name: grasp-py
+name: grasp-analytics
 dependencies:
   - numpy
   - matplotlib
   - pandas
+  - scipy
   - pillow
   - pyyaml
   - pathlib
   - pytest
   - pyserial
-  - pyaudio
-  - conda-forge::speechrecognition
-  - conda-forge::kivy
-  - anaconda::scipy
+  - conda-forge::pre_commit
   - plotly::plotly
