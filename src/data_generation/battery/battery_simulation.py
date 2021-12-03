@@ -9,7 +9,7 @@ from src.data_generation.battery.battery_process import BatteryProcess
 
 
 class BatterySimulation:
-    def __init__(self, processes_list: List[BatteryProcess], buffertime: float):
+    def __init__(self, processes_list: List[BatteryProcess], buffertime: float = 0):
         self.processes = processes_list
         self.battery_life: float = 100
         self.buffertime = buffertime
@@ -41,7 +41,7 @@ class BatterySimulation:
                     # print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
                 # self.influx_write(self.battery_life, datetime.now(), name)
 
-    def run_simulation(self, real_time: bool = False, change_frequency: float = 0.40) -> Generator[int, None, None]:
+    def run_simulation(self, change_frequency: float = 0.40) -> Generator[int, None, None]:
         rand_cutoff = 100 * change_frequency
 
 
@@ -57,9 +57,8 @@ class BatterySimulation:
                 selected_process.turned_on = not selected_process.turned_on
                 # print("Set " + str(selected_process.process_name) + " to " + str(selected_process.turned_on))
 
-            if real_time:
+            if self.buffertime > 0:
                 time.sleep(self.buffertime)
-
         yield 0
         print("Battery Depleted")
 
