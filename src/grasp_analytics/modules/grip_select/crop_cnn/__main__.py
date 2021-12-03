@@ -10,7 +10,11 @@ import numpy as np
 from src.grasp_analytics.definitions import ROOT_PATH, SETTINGS
 from .crop_cnn import CropCNNSelector
 
-data_path = ROOT_PATH / SETTINGS["grip_select"]["results_dir"] / "20210914_235655_train_size_25.pickle"
+data_path = (
+    ROOT_PATH
+    / SETTINGS["grip_select"]["results_dir"]
+    / "20210914_235655_train_size_25.pickle"
+)
 
 with open(str(data_path), "rb") as data_file:
     data = pickle.load(data_file)

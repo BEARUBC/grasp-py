@@ -44,7 +44,6 @@ class BoundingBox:
     w: int
     h: int
 
-
     def __iter__(self):
         yield self.x
         yield self.y
@@ -86,25 +85,35 @@ class BoundingBox:
         return self.top_left + self._size_as_point / 2
 
     def contains_point(self, point: Point) -> bool:
-        return point.x > self.top_left.x and point.x < self.bottom_right.x and point.y > self.top_left.y and point.y < self.bottom_right.y
+        return (
+            point.x > self.top_left.x
+            and point.x < self.bottom_right.x
+            and point.y > self.top_left.y
+            and point.y < self.bottom_right.y
+        )
 
     def contains_box(self, other_box) -> bool:
-        return self.contains_point(other_box.top_left) and self.contains_point(other_box.bottom_right)
+        return self.contains_point(other_box.top_left) and self.contains_point(
+            other_box.bottom_right
+        )
 
     def _contains_either_corner(self, other_box) -> bool:
-        return self.contains_point(other_box.top_left) or self.contains_point(other_box.bottom_right)
+        return self.contains_point(other_box.top_left) or self.contains_point(
+            other_box.bottom_right
+        )
 
     def intersects(self, other_box) -> bool:
-        return self._contains_either_corner(other_box) or other_box._contains_either_corner(self)
+        return self._contains_either_corner(
+            other_box
+        ) or other_box._contains_either_corner(self)
 
     def squarify(self):
         s = max([self.w, self.h])
         return BoundingBox.from_center(self.center, s, s)
-    
+
     def clamp(self, max_box):
         out_ax = max(self.top_left.x, max_box.x)
         out_ay = max(self.top_left.y, max_box.y)
         out_bx = min(self.bottom_right.x, max_box.x)
         out_by = min(self.bottom_right.y, max_box.y)
         return BoundingBox.from_corners(out_ax, out_ay, out_bx, out_by)
-

@@ -14,12 +14,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 model_path = script_dir + sep + "models" + sep + "model.hdf5"
 print(model_path)
 
-output_map = [
-    "Nothing",
-    "Foam Sphere",
-    "Wood Cube",
-    "Wood cylinder"
-]
+output_map = ["Nothing", "Foam Sphere", "Wood Cube", "Wood cylinder"]
 
 
 def get_output(inference):
@@ -71,11 +66,11 @@ class ObjectClassifier:
 
         print("formatting train data")
         train_y = train.label.to_numpy()
-        train_x = normalize(train.drop('label', axis=1).to_numpy())
+        train_x = normalize(train.drop("label", axis=1).to_numpy())
 
         print("formatting test data")
         test_y = test.label.to_numpy()
-        test_x = normalize(test.drop('label', axis=1).to_numpy())
+        test_x = normalize(test.drop("label", axis=1).to_numpy())
 
         return train_x, train_y, test_x, test_y
 
@@ -85,7 +80,7 @@ class ObjectClassifier:
             tf.keras.layers.Dense(160),
             tf.keras.layers.Dropout(0.2),
             tf.keras.layers.Dense(100),
-            tf.keras.layers.Dense(4, activation=tf.nn.softmax)
+            tf.keras.layers.Dense(4, activation=tf.nn.softmax),
         ]
 
     def create_model(self):
@@ -93,9 +88,10 @@ class ObjectClassifier:
         for layer in self.create_layers():
             m.add(layer)
         m.compile(
-            optimizer='adam',
+            optimizer="adam",
             loss="sparse_categorical_crossentropy",
-            metrics=['accuracy'])
+            metrics=["accuracy"],
+        )
         return m
 
     def train_model(self):

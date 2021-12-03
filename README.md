@@ -15,6 +15,10 @@ git clone git@gitlab.com:UBCBear/grasp-py.git
 cd grasp-py
 conda env create --file environment.yaml
 conda activate grasp-analytics
+```
+
+If you would like to enable linting as a pre-commit hook, run:
+```
 pre-commit install
 ```
 

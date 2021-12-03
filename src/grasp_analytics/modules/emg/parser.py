@@ -57,7 +57,9 @@ if __name__ == "__main__":
 
     emg_parser = EMGParser(pathlib.Path(args.file))
     data_df = emg_parser.get_all()
-    electrode_fig_1 = px.line(data_df, y=data_df.columns[0], title="Electrode 1 Graph (index)")
+    electrode_fig_1 = px.line(
+        data_df, y=data_df.columns[0], title="Electrode 1 Graph (index)"
+    )
     electrode_fig_1.show()
 
 if __name__ == "visualizer":

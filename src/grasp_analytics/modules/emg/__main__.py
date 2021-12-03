@@ -21,7 +21,9 @@ def main(data_path: Path, limit=100):
         iterations += 1  # Limit iterations
         reading_row = data_parser.get_reading()  # Get current reading
         reading = reading_row.iloc[0][reading_row.columns[0]]
-        signal = peak_detector.threshold_new_val(reading)  # Get filtered signal from reading
+        signal = peak_detector.threshold_new_val(
+            reading
+        )  # Get filtered signal from reading
         signals[data_parser.counter] = signal  # Store signal in dictionary
         data[data_parser.counter] = reading  # Store readings for comparison
 
@@ -39,12 +41,13 @@ def main(data_path: Path, limit=100):
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
     emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
-    fig.write_html('emg_fig.html', auto_open=True)
+    fig.write_html("emg_fig.html", auto_open=True)
 
 
 parser = argparse.ArgumentParser(description="Peak Detection in EMG data in real time")
-parser.add_argument("--file", type=str, default=None,
-                    help="Read from a file with a specified path")
+parser.add_argument(
+    "--file", type=str, default=None, help="Read from a file with a specified path"
+)
 
 args = parser.parse_args()
 

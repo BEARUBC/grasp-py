@@ -7,11 +7,10 @@ from influxdb_client import InfluxDBClient, WriteOptions
 from src.grasp_analytics.module import Module
 
 
-class EMG (Module):
+class EMG(Module):
     # Two EMG channels, 0: bicep, 1: tricep
     num_channels = 2
     data = np.array([])
-
 
     def __init__(self, sensitivity=10):
         self.sensor_cache_length = 1000
@@ -39,7 +38,7 @@ class EMG (Module):
 
     def add_to_cache(self, val: np.array):
         self.data = np.concatenate(self.data, val, axis=0)
-        self.data = self.data[-self.sensor_cache_length:, :]
+        self.data = self.data[-self.sensor_cache_length :, :]
 
     def apply_model_to_df(self, data_df):
         y_data = list(data_df)
@@ -71,11 +70,25 @@ class EMG (Module):
         with InfluxDBClient(url=self.url, token=self.token, org=self.org) as _client:
             # change write options params based on data batching
             # see https://github.com/influxdata/influxdb-client-python#writes
-            with _client.write_api(write_options=WriteOptions(batch_size=500, flush_interval=10_000,
-                                                              jitter_interval=2_000, retry_interval=5_000,
-                                                              max_retries=5, max_retry_delay=30_000,
-                                                              exponential_base=2)) as _write_client:
+            with _client.write_api(
+                write_options=WriteOptions(
+                    batch_size=500,
+                    flush_interval=10_000,
+                    jitter_interval=2_000,
+                    retry_interval=5_000,
+                    max_retries=5,
+                    max_retry_delay=30_000,
+                    exponential_base=2,
+                )
+            ) as _write_client:
 
-                _write_client.write(self.bucket, self.org,
-                                    {"measurement": "emg contractions", "tags": [],
-                                     "fields": {"contractions": measurement}, "time": time})
+                _write_client.write(
+                    self.bucket,
+                    self.org,
+                    {
+                        "measurement": "emg contractions",
+                        "tags": [],
+                        "fields": {"contractions": measurement},
+                        "time": time,
+                    },
+                )

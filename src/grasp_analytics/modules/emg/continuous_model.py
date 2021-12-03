@@ -47,11 +47,22 @@ class ContinuousEMGModel:
 
         with InfluxDBClient(url=url, token=token, org=org) as _client:
 
-            with _client.write_api(write_options=WriteOptions(batch_size=500, flush_interval=10_000,
-                                                              jitter_interval=2_000, retry_interval=5_000,
-                                                              max_retries=5, max_retry_delay=30_000,
-                                                              exponential_base=2)) as _write_client:
+            with _client.write_api(
+                write_options=WriteOptions(
+                    batch_size=500,
+                    flush_interval=10_000,
+                    jitter_interval=2_000,
+                    retry_interval=5_000,
+                    max_retries=5,
+                    max_retry_delay=30_000,
+                    exponential_base=2,
+                )
+            ) as _write_client:
 
-                _write_client.write(bucket, org, record=pd.DataFrame(self.cache), data_frame_measurement_name=measure_name,
-                                    data_frame_tag_columns=['electrode'])
-
+                _write_client.write(
+                    bucket,
+                    org,
+                    record=pd.DataFrame(self.cache),
+                    data_frame_measurement_name=measure_name,
+                    data_frame_tag_columns=["electrode"],
+                )

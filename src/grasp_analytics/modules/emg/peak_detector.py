@@ -4,8 +4,9 @@ from src.grasp_analytics.definitions import SETTINGS
 
 
 class PeakDetector:
-
-    def __init__(self, lag: int, threshold: float, influence: float, numthresholds: int):
+    def __init__(
+        self, lag: int, threshold: float, influence: float, numthresholds: int
+    ):
         self.settings = SETTINGS["emg"]["peak_detection"]
         self.lag: int = lag
         self.length = self.lag
@@ -42,7 +43,10 @@ class PeakDetector:
             newthreshold = self.threshold * (x / self.numthresholds)
             if abs(self.y[-1] - self.avgFilter[-2]) > newthreshold * self.stdFilter[-2]:
                 self.signals[-1] = x / self.numthresholds
-                self.filteredY[-1] = self.influence * self.y[-1] + (1 - self.influence) * self.filteredY[-2]
+                self.filteredY[-1] = (
+                    self.influence * self.y[-1]
+                    + (1 - self.influence) * self.filteredY[-2]
+                )
                 self.avgFilter[-1] = np.mean(self.filteredY[:-1])
                 self.stdFilter[-1] = np.std(self.filteredY[:-1])
             elif x == 1:

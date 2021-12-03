@@ -5,7 +5,6 @@ import json
 
 
 class Module:
-
     @abstractmethod
     def _process(self, input_json: dict) -> dict:
         pass

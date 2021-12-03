@@ -9,7 +9,6 @@ from ..selector import GripSelector
 
 
 class CropCNNSelector(GripSelector):
-
     def __init__(self, model: GripConvNet = None):
         self.model = model
         if self.model is None:

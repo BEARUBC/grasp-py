@@ -7,23 +7,31 @@ from kivy.atlas import Atlas
 
 import sys
 
-sys.path.append('')
+sys.path.append("")
 
 from src.grasp_analytics.manager import Manager
 
-grip = ['mug', 'pinch', 'ball', 'hammer', 'flat', 'test']
-gripPress = ['mug_down', 'pinch_down', 'ball_down', 'hammer_down', 'flat_down', 'test_down']
+grip = ["mug", "pinch", "ball", "hammer", "flat", "test"]
+gripPress = [
+    "mug_down",
+    "pinch_down",
+    "ball_down",
+    "hammer_down",
+    "flat_down",
+    "test_down",
+]
 
 
 class GuiButton(ButtonBehavior, Image):
-
     def __init__(self, *args, **kwargs):
         super(GuiButton, self).__init__()
         self.working_dir = Path(os.path.dirname(os.path.abspath(__file__)))
-        self.atlas = Atlas(str(Path(self.working_dir) / "components/images/guiatlas.atlas"))
+        self.atlas = Atlas(
+            str(Path(self.working_dir) / "components/images/guiatlas.atlas")
+        )
 
-        self.argument = kwargs.get('grip', 404)
-        self.label = kwargs.get('label', None)
+        self.argument = kwargs.get("grip", 404)
+        self.label = kwargs.get("label", None)
 
         self.texture = self.atlas[grip[self.argument]]
 

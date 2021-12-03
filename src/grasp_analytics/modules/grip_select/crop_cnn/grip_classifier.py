@@ -13,9 +13,13 @@ class GripConvNet(nn.Module):
         super().__init__()
         # RGB image, 3 channels. Could potentially do grayscale for fewer channels -> higher speed
         n_channels = 3
-        self.conv1 = nn.Conv2d(in_channels=n_channels, out_channels=n_channels * 2, kernel_size=(12, 12))
+        self.conv1 = nn.Conv2d(
+            in_channels=n_channels, out_channels=n_channels * 2, kernel_size=(12, 12)
+        )
         self.pool = nn.MaxPool2d(4)
-        self.conv2 = nn.Conv2d(in_channels=n_channels * 2, out_channels=n_channels * 3, kernel_size=(6, 6))
+        self.conv2 = nn.Conv2d(
+            in_channels=n_channels * 2, out_channels=n_channels * 3, kernel_size=(6, 6)
+        )
         self.fc1 = nn.Linear(1296, 120)
         self.fc2 = nn.Linear(120, len(GripType))
 

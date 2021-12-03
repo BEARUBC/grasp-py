@@ -11,10 +11,12 @@ def _objectness_contours(img):
     objectness_model = cv2.saliency.StaticSaliencySpectralResidual_create()
     _, saliency_map = objectness_model.computeSaliency(np.float32(img))
 
-    gray = np.array(saliency_map * 255).astype('uint8')
+    gray = np.array(saliency_map * 255).astype("uint8")
     # cv2.imshow("gray", gray)
     thresh = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY)[1]
-    contours, heirarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, heirarchy = cv2.findContours(
+        thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
     return contours
 
 
@@ -49,7 +51,9 @@ def _get_best_bbox_from_contours(img, ctrs):
 def _crop_scale_image(img, box: BoundingBox):
     center = box.center
     d = box.w // 2
-    cropped = img[int(center.x - d):int(center.x + d), int(center.y - d):int(center.y + d)]
+    cropped = img[
+        int(center.x - d) : int(center.x + d), int(center.y - d) : int(center.y + d)
+    ]
     return cv2.resize(cropped, CROP_DIMS)
 
 
@@ -60,7 +64,9 @@ def get_best_obj_img(img):
 
 
 if __name__ == "__main__":
-    img_path = ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
+    img_path = (
+        ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
+    )
     im = cv2.imread(str(img_path))
     best_obj_img = get_best_obj_img(im)
     cv2.imshow("final", best_obj_img)

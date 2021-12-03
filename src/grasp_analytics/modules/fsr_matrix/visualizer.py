@@ -20,8 +20,10 @@ class MatrixVisualizer:
         self.settings = SETTINGS["fsr_matrix"]["visualizer"]
         self.fsr_dims = SETTINGS["fsr_matrix"]["dims"]
         self.tile_size = self.settings["tile_size"]
-        self.window_size = (self.fsr_dims[0] * self.tile_size,
-                            (self.fsr_dims[1] + 1) * self.tile_size)
+        self.window_size = (
+            self.fsr_dims[0] * self.tile_size,
+            (self.fsr_dims[1] + 1) * self.tile_size,
+        )
         self.screen = pygame.display.set_mode(self.window_size)
         pygame.display.set_caption("Visualizer")
         self.font = pygame.font.SysFont("arial", 15)
@@ -42,17 +44,34 @@ class MatrixVisualizer:
             for x in range(len(reading[y])):
                 col = reading[y][x] * 255
                 col = 255 if col > 255 else col
-                pygame.draw.rect(self.screen, (col, col, col),
-                                 [x * self.tile_size, y * self.tile_size, self.tile_size, self.tile_size], 0)
-            self.render_text(str(chr(65 + y)), self.tile_size // 3,
-                             (self.tile_size // 2 + self.tile_size * y))  # column labels
+                pygame.draw.rect(
+                    self.screen,
+                    (col, col, col),
+                    [
+                        x * self.tile_size,
+                        y * self.tile_size,
+                        self.tile_size,
+                        self.tile_size,
+                    ],
+                    0,
+                )
+            self.render_text(
+                str(chr(65 + y)),
+                self.tile_size // 3,
+                (self.tile_size // 2 + self.tile_size * y),
+            )  # column labels
 
         for x in range(len(reading[0])):
-            self.render_text(str(x + 1), 2 + self.tile_size // 2 + x * self.tile_size,
-                             self.tile_size // 2)  # row labels
+            self.render_text(
+                str(x + 1),
+                2 + self.tile_size // 2 + x * self.tile_size,
+                self.tile_size // 2,
+            )  # row labels
         if shape is None:
             shape = "Disabled"
-        self.render_text("Prediction: " + shape, self.window_size[0] // 2, self.window_size[1] - 20)
+        self.render_text(
+            "Prediction: " + shape, self.window_size[0] // 2, self.window_size[1] - 20
+        )
         # update screen
         pygame.display.flip()
 

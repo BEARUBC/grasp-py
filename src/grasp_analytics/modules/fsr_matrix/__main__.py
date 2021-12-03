@@ -8,14 +8,27 @@ from .data_processing.reader_uart import UartReader
 from .visualizer import MatrixVisualizer
 
 parser = argparse.ArgumentParser(description="Visualize FSR data in real time")
-parser.add_argument("--file", type=str, default=None,
-                    help="Read from a file with a specified path relative to the root directory")
-parser.add_argument("--file_absolute_path", type=str, default=None,
-                    help="Read from a file with a specified absolute path")
-parser.add_argument("--port", type=str, default=None,
-                    help="Read from a serial connection with a specified port")
-parser.add_argument("--classify", type=bool, default=False,
-                    help="Display shape classification")
+parser.add_argument(
+    "--file",
+    type=str,
+    default=None,
+    help="Read from a file with a specified path relative to the root directory",
+)
+parser.add_argument(
+    "--file_absolute_path",
+    type=str,
+    default=None,
+    help="Read from a file with a specified absolute path",
+)
+parser.add_argument(
+    "--port",
+    type=str,
+    default=None,
+    help="Read from a serial connection with a specified port",
+)
+parser.add_argument(
+    "--classify", type=bool, default=False, help="Display shape classification"
+)
 
 args = parser.parse_args()
 

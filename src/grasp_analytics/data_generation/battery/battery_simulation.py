@@ -20,12 +20,28 @@ class BatterySimulation:
             if is_turned_on:
                 if self.batterylife - depletion < 0 and self.batterylife > 0:
                     self.batterylife = 0
-                    print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
+                    print(
+                        "Battery = "
+                        + str(self.batterylife)
+                        + " ("
+                        + name
+                        + " -"
+                        + str(depletion)
+                        + ")"
+                    )
                 elif self.batterylife - depletion < 0 and self.batterylife <= 0:
                     self.batterylife = 0
                 else:
                     self.batterylife -= depletion
-                    print("Battery = " + str(self.batterylife) + " (" + name + " -" + str(depletion) + ")")
+                    print(
+                        "Battery = "
+                        + str(self.batterylife)
+                        + " ("
+                        + name
+                        + " -"
+                        + str(depletion)
+                        + ")"
+                    )
 
     def run_simulation(self, change_frequency: float = 0.40):
         rand_cutoff = 100 * change_frequency
@@ -42,7 +58,12 @@ class BatterySimulation:
                     selected_process.turnedon = False
                 else:
                     selected_process.turnedon = True
-                print("Set " + str(selected_process.processname) + " to " + str(selected_process.turnedon))
+                print(
+                    "Set "
+                    + str(selected_process.processname)
+                    + " to "
+                    + str(selected_process.turnedon)
+                )
 
             time.sleep(self.buffertime)
 

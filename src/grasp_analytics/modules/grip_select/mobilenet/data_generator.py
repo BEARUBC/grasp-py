@@ -22,7 +22,12 @@ if __name__ == "__main__":
     for ext in extensions:
         files.extend(input_dir_path.glob("**/*" + ext))
 
-    print("Generating training data from", len(files), "images in directory", input_dir_path)
+    print(
+        "Generating training data from",
+        len(files),
+        "images in directory",
+        input_dir_path,
+    )
 
     analyzer = MobileNetAnalyzer(confidence_threshold=0.5)
 
@@ -42,7 +47,12 @@ if __name__ == "__main__":
         crop_image = image[tl_y:br_y, tl_x:br_x]
 
         cropped_resized_image = cv2.resize(crop_image, train_image_dims)
-        out_tuple = (cropped_resized_image.tolist(), results.class_name, results.confidence, int(results.grip_type))
+        out_tuple = (
+            cropped_resized_image.tolist(),
+            results.class_name,
+            results.confidence,
+            int(results.grip_type),
+        )
         out_results.append(out_tuple)
 
     timestr = time.strftime("%Y%m%d_%H%M%S")
@@ -51,8 +61,10 @@ if __name__ == "__main__":
     out_csv_path = str(output_dir_path / out_csv_filename)
     out_pickle_path = str(output_dir_path / out_pickle_filename)
 
-    out_df = pd.DataFrame(out_results, columns=["image", "object_class", "confidence", "grip_type"])
+    out_df = pd.DataFrame(
+        out_results, columns=["image", "object_class", "confidence", "grip_type"]
+    )
     out_df.to_csv(out_csv_path)
 
-    with open(str(out_pickle_path), 'wb') as out_pickle_file:
+    with open(str(out_pickle_path), "wb") as out_pickle_file:
         pickle.dump(out_results, out_pickle_file)

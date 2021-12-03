@@ -8,25 +8,41 @@ from .objects import OBJECT_GRIP_MAP
 from ..selector import GripSelector
 from src.grasp_analytics.utils import BoundingBox
 
-MobileNetAnalysisResult = namedtuple("MobileNetAnalysisResult", "class_name confidence bbox grip_type")
+MobileNetAnalysisResult = namedtuple(
+    "MobileNetAnalysisResult", "class_name confidence bbox grip_type"
+)
 
 
 class MobileNetAnalyzer(GripSelector):
     def classify_image(self, image):
         pass
 
-    def __init__(self, confidence_threshold: float = 0.65, classes_path: str = None, config_path: str = None,
-                 weights_path: str = None):
+    def __init__(
+        self,
+        confidence_threshold: float = 0.65,
+        classes_path: str = None,
+        config_path: str = None,
+        weights_path: str = None,
+    ):
         self._path = ROOT_PATH / "grip_select/mobilenet/"
 
-        self._classes_path = classes_path if classes_path else str(self._path / "coco.names")
-        self._config_path = config_path if config_path else str(
-            self._path / "ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt")
-        self._weights_path = weights_path if weights_path else str(self._path / "frozen_inference_graph.pb")
+        self._classes_path = (
+            classes_path if classes_path else str(self._path / "coco.names")
+        )
+        self._config_path = (
+            config_path
+            if config_path
+            else str(self._path / "ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt")
+        )
+        self._weights_path = (
+            weights_path
+            if weights_path
+            else str(self._path / "frozen_inference_graph.pb")
+        )
         self.confidence_threshold = confidence_threshold
 
-        with open(str(self._classes_path), 'rt') as f:
-            self._class_names = f.read().rstrip('\n').split('\n')
+        with open(str(self._classes_path), "rt") as f:
+            self._class_names = f.read().rstrip("\n").split("\n")
 
         self._model = self._create_model()
 
@@ -55,7 +71,9 @@ class MobileNetAnalyzer(GripSelector):
             return None
 
         box_data = list(zip(classIds.flatten(), confs.flatten(), bbox, dists))
-        box_data = [x for x in box_data if self._class_names[x[0] - 1] in OBJECT_GRIP_MAP]
+        box_data = [
+            x for x in box_data if self._class_names[x[0] - 1] in OBJECT_GRIP_MAP
+        ]
         if len(box_data) == 0:
             return None
 
@@ -72,4 +90,6 @@ class MobileNetAnalyzer(GripSelector):
             return None
 
         class_name = self._class_names[selected_class_id]
-        return MobileNetAnalysisResult(class_name, confidence, selected_box_data[2], OBJECT_GRIP_MAP[class_name])
+        return MobileNetAnalysisResult(
+            class_name, confidence, selected_box_data[2], OBJECT_GRIP_MAP[class_name]
+        )

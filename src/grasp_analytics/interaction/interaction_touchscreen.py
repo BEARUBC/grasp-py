@@ -27,7 +27,9 @@ class InteractionTouchscreen(Interaction):
             print("start Ts")
             app = App(title="Hello world")
             self.grip_message = Text(app, text="No Grip Selected.")
-            grip_1 = PushButton(app, command=self.received_grip_callback, args=["Cup"], text="Cup")
+            grip_1 = PushButton(
+                app, command=self.received_grip_callback, args=["Cup"], text="Cup"
+            )
             app.display()
         except KeyboardInterrupt:
             pass

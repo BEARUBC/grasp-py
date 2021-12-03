@@ -13,16 +13,25 @@ import numpy as np
 #         self.available = True
 #         self.df = pd.read_csv(file_path)
 
+
 def visualizer(data_path: Path, limit=100):
 
     fig = make_subplots(
-        rows=4, cols=6,
+        rows=4,
+        cols=6,
         specs=[
-            [{ "rowspan": 3, "colspan": 6}, None, None, None, None, None ],
-            [    None, None, None, None, None, None],
-            [    None, None, None, None, None, None],
-            [    {"type": "indicator"}, {"type": "indicator"}, {"type": "indicator"} , None, None, None],
-        ]
+            [{"rowspan": 3, "colspan": 6}, None, None, None, None, None],
+            [None, None, None, None, None, None],
+            [None, None, None, None, None, None],
+            [
+                {"type": "indicator"},
+                {"type": "indicator"},
+                {"type": "indicator"},
+                None,
+                None,
+                None,
+            ],
+        ],
     )
 
     data_parser = EMGParser(data_path)
@@ -31,13 +40,9 @@ def visualizer(data_path: Path, limit=100):
     x = np.arange(len(y))
 
     fig.add_trace(
-        go.Scatter(
-            x=x, y=y,
-            name="electrode 1",
-            line_color='rgba(255,255,255,0)'
-        )
+        go.Scatter(x=x, y=y, name="electrode 1", line_color="rgba(255,255,255,0)")
     )
-    fig.write_html('emg_live_visualization.html', auto_open=True)
+    fig.write_html("emg_live_visualization.html", auto_open=True)
 
 
 # fig.add_trace(
@@ -93,5 +98,3 @@ def visualizer(data_path: Path, limit=100):
 # 	stream.write({'x': datetime.datetime.now(), 'y': sensor_data})
 # 	time.sleep(0.1) # delay between stream posts
 #
-
-

@@ -37,7 +37,7 @@ class CommunicationUART(Communication):
             if self.manager is not None:
                 self.manager.state = json.loads(data)
             else:
-                data = data.replace("\'", "\"")
+                data = data.replace("'", '"')
                 print("Data:", json.loads(data))
         except Exception as e:
             print("Invalid data:", data, "error:", str(e))
@@ -56,5 +56,5 @@ def main():
         time.sleep(0.1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

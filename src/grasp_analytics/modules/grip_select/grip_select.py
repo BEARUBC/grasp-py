@@ -7,7 +7,7 @@ from .mobilenet.analyzer import MobileNetAnalyzer
 
 
 class GripSelectModel(IntEnum):
-    CROP_CNN = 0,
+    CROP_CNN = (0,)
     MOBILENET = 1
 
 

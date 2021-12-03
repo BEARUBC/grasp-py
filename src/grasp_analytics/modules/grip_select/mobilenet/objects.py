@@ -60,4 +60,5 @@ OBJECT_GRIP_MAP = {
     "teddy bear": GripType.POWER,
     "hair drier": GripType.POWER,
     "toothbrush": GripType.POWER,
-    "hair brush": GripType.POWER}
+    "hair brush": GripType.POWER,
+}
