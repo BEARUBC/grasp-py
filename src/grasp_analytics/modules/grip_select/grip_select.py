@@ -19,5 +19,5 @@ class GripSelect(Module):
         else:
             self._selector: GripSelector = MobileNetAnalyzer()
 
-    def _process(self, input_json: dict) -> dict:
+    def run(self, input_json: dict) -> dict:
         pass

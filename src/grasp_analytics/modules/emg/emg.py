@@ -23,7 +23,7 @@ class EMG(Module):
         self.org = "0ed254cf3dca2b2b"
         self.bucket = "GRASPDB"
 
-    def _process(self, input_json: dict) -> dict:
+    def run(self, input_json: dict) -> dict:
         new_data = input_json["emg_buffer"]
 
         out_contractions = []
