@@ -16,3 +16,7 @@ ROOT_PATH = Path(ROOT_DIR)
 SETTINGS_PATH = os.path.join(ROOT_DIR, "../../settings.yaml")
 SETTINGS = load_settings()
 TORCH_DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+INFLUX_URL = ""
+INFLUX_TOKEN = ""
+INFLUX_ORG = ""

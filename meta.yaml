@@ -1,4 +1,4 @@
-{% set name = "grasp_analytics" %}
+{% set name = "grasp-analytics" %}
 {% set version = "1.0.0" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   git_rev: "{{ version }}"
-  git_url: "{{ https://gitlab.com/UBCBear/grasp-py.git }}"
+  git_url: "git@gitlab.com:UBCBear/grasp-py.git"
 
 build:
   number: 0
@@ -22,7 +22,7 @@ requirements:
 
 test:
   imports:
-    - grasp_analytics
+    - grasp-analytics
 
 about:
   home: https://gitlab.com/UBCBear/grasp-py/
