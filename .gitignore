@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 venv/
+instructions.txt
 **.pyc
 **.csv
 **.pickle
