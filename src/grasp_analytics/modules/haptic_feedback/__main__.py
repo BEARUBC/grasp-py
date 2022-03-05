@@ -1,4 +1,4 @@
-from .haptic_module import HapticFeedback
+from haptic_module import HapticFeedback
 from src.grasp_analytics.data_generation.randomwalk_generator import RandomWalkGenerator
 import json
 
