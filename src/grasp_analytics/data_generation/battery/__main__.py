@@ -1,5 +1,5 @@
-from .battery_process import BatteryProcess
-from .battery_simulation import BatterySimulation
+from battery_process import BatteryProcess
+from battery_simulation import BatterySimulation
 
 
 def main():
@@ -9,9 +9,9 @@ def main():
     test_process = BatteryProcess("Test", 10)
 
     process_list = [emg_process, hapticfeedback_process, camera_process, test_process]
-    sleep_time = 5
+    sleep_time = 0
 
-    battery_simulation = BatterySimulation(process_list, sleep_time)
+    battery_simulation = BatterySimulation(process_list, sleep_time, True)
     battery_simulation.run_simulation()
 
 

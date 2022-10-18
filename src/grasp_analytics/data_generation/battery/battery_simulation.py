@@ -1,15 +1,19 @@
 import random
 import time
+import pandas as pd
 from typing import List
 
-from .battery_process import BatteryProcess
+from battery_process import BatteryProcess
 
 
 class BatterySimulation:
-    def __init__(self, processeslist: List[BatteryProcess], buffertime: float):
+    def __init__(self, processeslist: List[BatteryProcess], buffertime: float, create_csv: bool):
         self.processes = processeslist
         self.batterylife = 100
         self.buffertime = buffertime
+        self.create_csv = create_csv
+        if self.create_csv:
+            self.csv_data = []
 
     def reduce_battery(self):
         for process in self.processes:
@@ -43,6 +47,18 @@ class BatterySimulation:
                         + ")"
                     )
 
+                if self.create_csv:
+                    data = [0] * (len(self.processes) + 1)
+                    index = self.processes.index(process)
+                    data[0] = self.batterylife
+
+                    if self.batterylife == 0:
+                        data[index + 1] = self.csv_data[len(self.csv_data)-1][0]
+                    else:
+                        data[index + 1] = depletion
+
+                    self.csv_data.append(data)
+
     def run_simulation(self, change_frequency: float = 0.40):
         rand_cutoff = 100 * change_frequency
 
@@ -68,3 +84,10 @@ class BatterySimulation:
             time.sleep(self.buffertime)
 
         print("Battery Depleted")
+
+        if self.create_csv:
+            cols = ["Battery"]
+            for process in self.processes:
+                cols.append(process.processname)
+            df = pd.DataFrame(self.csv_data, columns=cols)
+            df.to_csv('csv_outputs/output.csv', index=False)
