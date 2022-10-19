@@ -1,13 +1,14 @@
 import json
-from src.grasp_analytics.modules.grip_select.mobilenet  import objects
+from src.grasp_analytics.modules.grip_select.mobilenet import objects
 
 from itertools import compress
+
 print(objects.OBJECT_GRIP_MAP)
 
 with open("coco_labels.json", "r") as f:
     data = json.load(f)
 
-#data_cat = data["categories"]
+# data_cat = data["categories"]
 
 # Verifying that there are two locations in the dataframe with the same category info
 # print(data_cat == data["info"]["categories"])
@@ -39,15 +40,15 @@ data["temp_annotations"] = data['annotations'].copy()
 # data["category_copy"] = data["categories"]
 # acc = 0
 mask = [category["name"] in objects.OBJECT_GRIP_MAP.keys() for category in data["categories"]]
-masked_cat = [cat for cat,msk in zip(data["categories"],mask) if msk]
+masked_cat = [cat for cat, msk in zip(data["categories"], mask) if msk]
 data["masked_cat"] = masked_cat
 for category in data["masked_cat"]:
     for anot in data["temp_annotations"]:
         if anot["category_id"] == category["id"]:
-                anot["new_category_id"] = objects.OBJECT_GRIP_MAP[category["name"]].value
-
+            anot["new_category_id"] = objects.OBJECT_GRIP_MAP[category["name"]].value
 
 data["new_annotations"] = [an for an in data["temp_annotations"] if ("new_category_id" in an.keys())]
+
 
 def clean_annotations(df: list):
     for item in df["new_annotations"]:
@@ -56,23 +57,27 @@ def clean_annotations(df: list):
         del item["new_category_id"]
     del df["masked_cat"]
     del df["temp_annotations"]
+
+
 clean_annotations(data)
+
 
 # del data["category_copy"]
 # del data["masked_cat"]
 # del data["temp_annotations"]
 
 
-#rndm = {"a": 32, "b": 2321}
-#del rndm["a"]
+# rndm = {"a": 32, "b": 2321}
+# del rndm["a"]
 def check_range(df):
     acc = []
     for i in df["new_annotations"]:
         acc.append(i["category_id"])
     print(f"Category ranges from {min(acc)} to {max(acc)}")
+
+
 check_range(data)
 data["categories"] = data["new_category"]
 data["annotations"] = data["new_annotations"]
 del data["new_annotations"]
 del data["new_category"]
-
