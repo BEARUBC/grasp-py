@@ -34,3 +34,10 @@ In the case of an update that adds, removes, or updates packages, run:
 ```bash
 conda env update --file environment.yaml
 ```
+
+## Installing Package Locally
+
+Run the following command in the root directory of the repository:
+```
+pip install .
+```
