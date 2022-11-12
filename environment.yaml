@@ -1,4 +1,4 @@
-name: grasp-analytics
+name: grasp_analytics
 dependencies:
   - numpy
   - matplotlib

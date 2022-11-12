@@ -1,4 +1,4 @@
-{% set name = "grasp-analytics" %}
+{% set name = "grasp_analytics" %}
 {% set version = "1.0.0" %}
 
 package:
@@ -22,7 +22,7 @@ requirements:
 
 test:
   imports:
-    - grasp-analytics
+    - grasp_analytics
 
 about:
   home: https://gitlab.com/UBCBear/grasp-py/
