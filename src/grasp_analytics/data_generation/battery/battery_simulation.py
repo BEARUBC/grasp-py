@@ -1,93 +1,77 @@
 import random
 import time
-import pandas as pd
-from typing import List
+import numpy as np
+from typing import List, Generator
 
+from influxdb_client import InfluxDBClient, WriteOptions
 from battery_process import BatteryProcess
 
 
 class BatterySimulation:
-    def __init__(self, processeslist: List[BatteryProcess], buffertime: float, create_csv: bool):
-        self.processes = processeslist
-        self.batterylife = 100
+    def __init__(self, processes_list: List[BatteryProcess], buffertime: float = 0):
+        self.processes = processes_list
+        self.battery_life: float = 100
         self.buffertime = buffertime
-        self.create_csv = create_csv
-        if self.create_csv:
-            self.csv_data = []
+        self.num_processes = len(self.processes)
+        # for influx:
+        self.url = "http://localhost:8086"
+        self.token = "Rbg3aKBu-nU_wY9wXkxCVLzT9WhH725mZ6LwEQgQjrppmeLYZ1J9xrjqXlZz6-oLfDJQhJWE169pyaN9rpmDzg=="
+        self.org = "0ed254cf3dca2b2b"
+        self.bucket = "GRASPDB"
 
     def reduce_battery(self):
         for process in self.processes:
-            depletion = process.batteryusage
-            is_turned_on = process.turnedon
-            name = process.processname
+            mu = process.mean_usage
+            sigma = process.usage_stdev
+            is_turned_on = process.turned_on
+
+            depletion = abs(np.random.normal(mu, sigma))
 
             if is_turned_on:
-                if self.batterylife - depletion < 0 and self.batterylife > 0:
-                    self.batterylife = 0
-                    print(
-                        "Battery = "
-                        + str(self.batterylife)
-                        + " ("
-                        + name
-                        + " -"
-                        + str(depletion)
-                        + ")"
-                    )
-                elif self.batterylife - depletion < 0 and self.batterylife <= 0:
-                    self.batterylife = 0
+                if self.battery_life - depletion < 0 and self.battery_life > 0:
+                    process.mean_usage = self.battery_life
+                    self.battery_life = 0
+                    # print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
+                elif self.battery_life - depletion < 0 and self.battery_life <= 0:
+                    process.mean_usage = 0
+                    self.battery_life = 0
                 else:
-                    self.batterylife -= depletion
-                    print(
-                        "Battery = "
-                        + str(self.batterylife)
-                        + " ("
-                        + name
-                        + " -"
-                        + str(depletion)
-                        + ")"
-                    )
+                    self.battery_life -= depletion
+                    # print("Battery = " + str(self.battery_life) + " (" + name + " -" + str(depletion) + ")")
+                # self.influx_write(self.battery_life, datetime.now(), name)
 
-                if self.create_csv:
-                    data = [0] * (len(self.processes) + 1)
-                    index = self.processes.index(process)
-                    data[0] = self.batterylife
-
-                    if self.batterylife == 0:
-                        data[index + 1] = self.csv_data[len(self.csv_data)-1][0]
-                    else:
-                        data[index + 1] = depletion
-
-                    self.csv_data.append(data)
-
-    def run_simulation(self, change_frequency: float = 0.40):
+    def run_simulation(self, change_frequency: float = 0.40) -> Generator[int, None, None]:
         rand_cutoff = 100 * change_frequency
 
-        while self.batterylife > 0:
+        while self.battery_life > 0:
             self.reduce_battery()
+            yield self.battery_life
 
             rand_number = random.randint(0, 100)
             if rand_number <= rand_cutoff:
                 selected_index = random.randint(0, len(self.processes) - 1)
                 selected_process = self.processes[selected_index]
 
-                if selected_process.turnedon:
-                    selected_process.turnedon = False
-                else:
-                    selected_process.turnedon = True
-                print(
-                    "Set "
-                    + str(selected_process.processname)
-                    + " to "
-                    + str(selected_process.turnedon)
-                )
+                selected_process.turned_on = not selected_process.turned_on
+                # print("Set " + str(selected_process.process_name) + " to " + str(selected_process.turned_on))
 
-            time.sleep(self.buffertime)
-
+            if self.buffertime > 0:
+                time.sleep(self.buffertime)
+        yield 0
         print("Battery Depleted")
 
-        if self.create_csv:
-            cols = ["Battery"]
-            for process in self.processes:
-                cols.append(process.processname)
-            df = pd.DataFrame(self.csv_data, columns=cols)
-            df.to_csv('csv_outputs/output.csv', index=False)
+    def create_tuples(self, simulation_list: List[int]) -> List:
+        num = self.num_processes + 1
+        return list(zip(*[iter(simulation_list)] * num))
+
+    def influx_write(self, measurement, current_time, tag):
+        with InfluxDBClient(url=self.url, token=self.token, org=self.org) as _client:
+            # change write options params based on data batching
+            # see https://github.com/influxdata/influxdb-client-python#writes
+            with _client.write_api(write_options=WriteOptions(batch_size=500, flush_interval=10_000,
+                                                              jitter_interval=2_000, retry_interval=5_000,
+                                                              max_retries=5, max_retry_delay=30_000,
+                                                              exponential_base=2)) as _write_client:
+                _write_client.write(self.bucket, self.org,
+                                    {"measurement": "current battery level", "tags": {"current process": tag},
+                                     "fields": {"battery": measurement}, "time": current_time})
