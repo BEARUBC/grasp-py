@@ -1,11 +1,14 @@
 import argparse
+import sys
 from pathlib import Path
 
-from src.definitions import ROOT_PATH
-from .classifier.matrix_classifier import MatrixClassifier
-from .data_processing.reader_file import FileReader
-from .data_processing.reader_uart import UartReader
-from .visualizer import MatrixVisualizer
+from src.grasp_analytics.definitions import ROOT_PATH
+from grasp_analytics.modules.fsr_matrix.classifier.matrix_classifier import MatrixClassifier
+# import classifier.matrix_classifier.MatrixClassifier
+from grasp_analytics.modules.fsr_matrix.data_processing.reader_file import FileReader
+from grasp_analytics.modules.fsr_matrix.data_processing.reader_uart import UartReader
+from grasp_analytics.modules.fsr_matrix.data_processing.reader_pipe import PipeReader
+from grasp_analytics.modules.fsr_matrix.visualizer import MatrixVisualizer
 
 parser = argparse.ArgumentParser(description="Visualize FSR data in real time")
 parser.add_argument(
@@ -27,6 +30,9 @@ parser.add_argument(
     help="Read from a serial connection with a specified port",
 )
 parser.add_argument(
+    "--pipe", type=bool, default=False, help="Read data from stdin"
+)
+parser.add_argument(
     "--classify", type=bool, default=False, help="Display shape classification"
 )
 
@@ -38,6 +44,8 @@ elif args.file_absolute_path is not None:
     _reader = FileReader(Path(args.file_absolute_path))
 elif args.file is not None:
     _reader = FileReader(ROOT_PATH / args.file)
+elif args.pipe:
+    _reader = PipeReader()
 else:
     raise Exception("No input method specified")
 

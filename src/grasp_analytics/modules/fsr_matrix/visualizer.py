@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 import numpy as np
 
@@ -85,6 +87,7 @@ class MatrixVisualizer:
             current_reading = None
             if reader.available:
                 current_reading = reader.get_frame()
+                print("HERE: ", current_reading, " :END")
             if current_reading is not None:
                 prediction = None
                 if classifier is not None:
