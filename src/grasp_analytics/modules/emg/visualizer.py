@@ -3,7 +3,7 @@
 from plotly.subplots import make_subplots
 from pygments.lexers import go
 from pathlib import Path
-from .parser import EMGParser
+from .emg_parser import EMGParser
 import numpy as np
 
 

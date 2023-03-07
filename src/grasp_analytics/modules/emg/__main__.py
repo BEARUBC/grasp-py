@@ -1,9 +1,9 @@
 import argparse
 from pathlib import Path
-from .parser import EMGParser
-from .peak_detector import PeakDetector
-from .continuous_model import ContinuousEMGModel
-from .logger import Logger
+from emg_parser import EMGParser
+from peak_detector import PeakDetector
+from continuous_model import ContinuousEMGModel
+from logger import Logger
 
 import pandas as pd
 
