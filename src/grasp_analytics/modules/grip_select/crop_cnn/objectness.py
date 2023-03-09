@@ -65,7 +65,7 @@ def get_best_obj_img(img):
 
 if __name__ == "__main__":
     img_path = (
-        ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/cup/cup_001.jpg"
+        ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "apple.jpg"
     )
     im = cv2.imread(str(img_path))
     best_obj_img = get_best_obj_img(im)

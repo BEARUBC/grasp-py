@@ -39,7 +39,7 @@ haptic_feedback:
     default_numdatapoints: 1000
     default_plotsize: [10, 7.5]
 grip_select:
-  data_dir: "grip_select/data"
+  data_dir: "data/grip_select"
   results_dir: "grip_select/out"
   crop_cnn:
     crop_dims: [80, 80]
