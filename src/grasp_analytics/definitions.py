@@ -11,10 +11,12 @@ def load_settings():
     return settings
 
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_PATH = Path(ROOT_DIR)
-SETTINGS_PATH = os.path.join(ROOT_DIR, "../../settings.yaml")
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+SRC_PATH = Path(SRC_DIR)
+SETTINGS_PATH = os.path.join(SRC_DIR, "../../settings.yaml")
 SETTINGS = load_settings()
+ROOT_PATH = (SRC_PATH / "../..").resolve()
+DATA_PATH = (ROOT_PATH / "{0}".format(SETTINGS["emg"]["data_dir"])).resolve()
 # TORCH_DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 INFLUX_URL = ""

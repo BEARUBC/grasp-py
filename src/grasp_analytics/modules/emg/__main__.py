@@ -9,11 +9,13 @@ import pandas as pd
 
 import plotly.express as px
 
+from src.grasp_analytics.definitions import DATA_PATH
 
-def main(data_path: Path, limit=100):
+
+def main(data_path: Path, limit=2000):
     iterations = 0
     data_parser = EMGParser(data_path)  # Initialize Parser
-    peak_detector = PeakDetector(5, 5, 0.1, 5)  # Initialize Peak detector
+    peak_detector = PeakDetector(5, 50, 0.1, 5)  # Initialize Peak detector
     cont_model = ContinuousEMGModel()  # Initialize continuous model
     signals = dict()  # Store signals in dict with (index: signal)
     data = dict()
@@ -36,8 +38,8 @@ def main(data_path: Path, limit=100):
     for row in model_df.iterrows():
         cont_model.add_to_cache(row[1])
 
-    logger = Logger("emg1", cont_model.cache)
-    logger.influx_write()
+#    logger = Logger("emg1", cont_model.cache)
+#    logger.influx_write()
     emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
     emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
@@ -52,6 +54,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 if args.file is not None:
-    main(Path(args.file))
+    main(DATA_PATH / Path(args.file))
 else:
     raise Exception("No file specified")

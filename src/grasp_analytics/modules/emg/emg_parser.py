@@ -21,7 +21,7 @@ class EMGParser:
     def __init__(self, file_path: pathlib.Path):
         self.settings = SETTINGS["emg"]
         self.available = True
-        self.df = pd.read_csv(file_path)
+        self.df = pd.read_csv(file_path, sep=' ')
         self.counter = 0
 
     def _read(self):
