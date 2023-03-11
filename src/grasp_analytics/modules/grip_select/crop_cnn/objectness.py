@@ -65,9 +65,9 @@ def get_best_obj_img(img):
 
 if __name__ == "__main__":
     img_path = (
-        ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "apple.jpg"
+        ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "airplane.jpg"
     )
     im = cv2.imread(str(img_path))
     best_obj_img = get_best_obj_img(im)
-    cv2.imshow("final", best_obj_img)
+    cv2.imwrite(str(ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "airplane_box.jpg"), best_obj_img)
     cv2.waitKey(1)
