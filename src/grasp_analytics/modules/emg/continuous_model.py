@@ -9,7 +9,7 @@ bucket = "GRASPDB"
 
 
 class ContinuousEMGModel:
-    def __init__(self, sensitivity=10):
+    def __init__(self, sensitivity=20):
         self.theta = [x / sensitivity for x in range(sensitivity, 0, -1)]
         self.cache_size = len(self.theta)
         self.cache = []
@@ -29,7 +29,7 @@ class ContinuousEMGModel:
                 y[j] += self.theta[i] * y_data[j - i]
 
         pd_df = pd.DataFrame([(i, y[i]) for i in range(len(y))], columns=["x", "y"])
-        pd_df["y"] = pd_df["y"].map(lambda x: ((1 / (1 + math.exp(-x))) - 0.5) * 2)
+#        pd_df["y"] = pd_df["y"].map(lambda x: ((1 / (1 + math.exp(-x))) - 0.5) * 2)
         return pd_df
 
     def next_value(self, val):

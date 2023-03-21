@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
+from sklearn import preprocessing
 
 from src.grasp_analytics.definitions import ROOT_PATH, SETTINGS
 
@@ -14,7 +15,7 @@ pio.renderers.default = "browser"
 
 
 def normalize_data(data: pd.Series) -> pd.Series:
-    return np.square(data)
+    return pd.Series(preprocessing.normalize(data, axis=0)[:, 0])
 
 
 class EMGParser:
@@ -41,13 +42,14 @@ class EMGParser:
         if reading is None:
             raise Exception("Read from EMG data failed.")
 
-        if not raw:  # Square and normalize reading
-            reading = normalize_data(reading)
+#        if not raw:  # Square and normalize reading
+#            reading = normalize_data(reading)
         return reading
 
     def get_all(self, raw=False):
         if not raw:
             return normalize_data(self.df)
+
 
 
 if __name__ == "__main__":

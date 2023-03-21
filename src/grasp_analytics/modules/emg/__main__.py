@@ -15,7 +15,7 @@ from src.grasp_analytics.definitions import DATA_PATH
 def main(data_path: Path, limit=2000):
     iterations = 0
     data_parser = EMGParser(data_path)  # Initialize Parser
-    peak_detector = PeakDetector(5, 50, 0.1, 5)  # Initialize Peak detector
+    peak_detector = PeakDetector(5, 6000, 0.2, 10)  # Initialize Peak detector
     cont_model = ContinuousEMGModel()  # Initialize continuous model
     signals = dict()  # Store signals in dict with (index: signal)
     data = dict()
@@ -29,19 +29,23 @@ def main(data_path: Path, limit=2000):
         signals[data_parser.counter] = signal  # Store signal in dictionary
         data[data_parser.counter] = reading  # Store readings for comparison
 
-    emg_signal_df = pd.Series(signals, name="signal").to_frame()  # Signals as pandas df
-    emg_signal_df["type"] = "Signal"
-    emg_signal_df["signal"] = emg_signal_df["signal"] * emg_signal_df["signal"].max()
     reading_df = pd.Series(data, name="signal").to_frame()  # Readings as pandas df
     reading_df["type"] = "Reading"
-    model_df = cont_model.apply_model_to_df(reading_df)
+
+    model_df = cont_model.apply_model_to_df(reading_df["signal"])
     for row in model_df.iterrows():
         cont_model.add_to_cache(row[1])
+    model_df["type"] = "Model"
+    model_df["signal"] = model_df["y"]
+
+    emg_signal_df = pd.Series(signals, name="signal").to_frame()  # Signals as pandas df
+    emg_signal_df["type"] = "Peaks"
+    emg_signal_df["signal"] = emg_signal_df["signal"] * emg_signal_df["signal"].max()
 
 #    logger = Logger("emg1", cont_model.cache)
 #    logger.influx_write()
-    emg_df = pd.concat([reading_df, emg_signal_df], axis=0)
-    emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
+    emg_df = pd.concat([reading_df, emg_signal_df, model_df], axis=0)
+#    emg_df = pd.concat([reading_df], axis=0)  # Concat both types into a single df
     fig = px.line(emg_df, y="signal", color="type")
     fig.write_html("emg_fig.html", auto_open=True)
 

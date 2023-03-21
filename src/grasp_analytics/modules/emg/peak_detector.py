@@ -41,7 +41,7 @@ class PeakDetector:
         x = 1
         while x <= self.numthresholds:
             newthreshold = self.threshold * (x / self.numthresholds)
-            if abs(self.y[-1] - self.avgFilter[-2]) > newthreshold * self.stdFilter[-2]:
+            if abs(self.y[-1] - self.avgFilter[-2]) > (newthreshold * self.stdFilter[-2]):
                 self.signals[-1] = x / self.numthresholds
                 self.filteredY[-1] = (
                     self.influence * self.y[-1]
