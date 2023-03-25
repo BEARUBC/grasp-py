@@ -122,6 +122,7 @@ if __name__ == "__main__":
     cv2.imwrite(str(ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/apple_out_out.JPG"), contours)# best_obj_img)
     # cv2.waitKey(1)
     # __________
-    # best_image = delete_later(im)
+    # best_image = delete_later(im
+    #)
     # print(type(best_image))
     # cv2.imshow("Image", im)
