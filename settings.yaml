@@ -42,5 +42,5 @@ grip_select:
   data_dir: "grip_select/data"
   results_dir: "grip_select/out"
   crop_cnn:
-    crop_dims: [80, 80]
+    crop_dims: [500, 500]
 
