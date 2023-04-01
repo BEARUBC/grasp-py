@@ -9,7 +9,7 @@ bucket = "GRASPDB"
 
 
 class ContinuousEMGModel:
-    def __init__(self, sensitivity=20):
+    def __init__(self, sensitivity=5):
         self.theta = [x / sensitivity for x in range(sensitivity, 0, -1)]
         self.cache_size = len(self.theta)
         self.cache = []

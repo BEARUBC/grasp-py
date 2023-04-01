@@ -28,7 +28,7 @@ emg:
   data_dir: "src/emg/data/"
   peak_detection:
     default_mean: 0
-    default_std: 3
+    default_std: 1
   logging:
     url: "http://localhost:8086"
     token: "Rbg3aKBu-nU_wY9wXkxCVLzT9WhH725mZ6LwEQgQjrppmeLYZ1J9xrjqXlZz6-oLfDJQhJWE169pyaN9rpmDzg=="
