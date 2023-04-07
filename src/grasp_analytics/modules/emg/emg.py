@@ -22,6 +22,10 @@ class EMG(Module):
         self.token = "Rbg3aKBu-nU_wY9wXkxCVLzT9WhH725mZ6LwEQgQjrppmeLYZ1J9xrjqXlZz6-oLfDJQhJWE169pyaN9rpmDzg=="
         self.org = "0ed254cf3dca2b2b"
         self.bucket = "GRASPDB"
+        self.lag = 20
+        self.peaks: list = [0] * self.lag
+        self.threshold: float = 6000
+        self.numthresholds = 4
 
     def run(self, input_json: dict) -> dict:
         new_data = input_json["emg_buffer"]
@@ -31,8 +35,9 @@ class EMG(Module):
         for data_point in new_data:
             time += 1
             curr_contraction = self.next_value(data_point)
-            out_contractions.append(curr_contraction)
-            self.influx_write(curr_contraction, time)
+            threshold_contraction = self.threshold_value(curr_contraction)
+            out_contractions.append(threshold_contraction)
+            self.influx_write(threshold_contraction, time)
 
         return {"contractions": out_contractions}
 
@@ -65,6 +70,20 @@ class EMG(Module):
 
         self.results.append(y)
         return y
+
+    def threshold_value(self, val):
+        if len(self.results) < self.lag:
+            return 0
+
+        self.peaks += [0]
+        self.peaks.pop(0)
+
+        for x in range(1, (self.numthresholds + 1)):
+            new_threshold = self.threshold * (x / self.numthresholds)
+            if val > new_threshold:
+                self.peaks[-1] = x / self.numthresholds
+
+        return self.peaks[-1]
 
     def influx_write(self, measurement, time):
         with InfluxDBClient(url=self.url, token=self.token, org=self.org) as _client:
