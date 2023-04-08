@@ -1,7 +1,6 @@
 import argparse
 from typing import Optional
 
-import pandas
 import pathlib
 import numpy as np
 import pandas as pd
@@ -22,10 +21,18 @@ class EMGParser:
     def __init__(self, file_path: pathlib.Path):
         self.settings = SETTINGS["emg"]
         self.available = True
-        self.df = pd.read_csv(file_path, sep=' ')
+        self.df = pd.read_csv(file_path, sep=' ', header=None)
         self.counter = 0
 
     def _read(self):
+        """Reads the current row in the data file and returns it.
+        (Also updates self.counter and self.available to reflect changes).
+
+        Returns
+        ------
+        frame_row : int
+            The current number being iterated on in the data file or None.
+        """
         if not self.available:
             return None
         frame_row = self.df.iloc[[self.counter]]
@@ -35,6 +42,18 @@ class EMGParser:
         return frame_row
 
     def get_reading(self, raw=False):
+        """Gets a reading.
+
+        Returns
+        ------
+        reading : int
+            The current number being iterated on in the data file.
+
+        Raises
+        ------
+        Exception
+            If there is no reading.
+        """
         if not self.available:
             return None
 
@@ -47,6 +66,18 @@ class EMGParser:
         return reading
 
     def get_all(self, raw=False):
+        """Gets all readings.
+
+        Parameters
+        ------
+        raw : bool
+            Idk what this is for tbh. Everytime it is called it uses False,
+            and it doesn't return anything if true.
+
+        Returns
+        ------
+        Normalized data file if no parameters given or if raw is False. Returns nothing otherwise.
+        """
         if not raw:
             return normalize_data(self.df)
 

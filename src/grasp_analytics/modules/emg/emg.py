@@ -43,9 +43,22 @@ class EMG(Module):
 
     def add_to_cache(self, val: np.array):
         self.data = np.concatenate(self.data, val, axis=0)
-        self.data = self.data[-self.sensor_cache_length :, :]
+        self.data = self.data[-self.sensor_cache_length:, :]
 
     def apply_model_to_df(self, data_df):
+        """Applies a model to the data and provides a moving average.
+
+        Parameters
+        ----------
+        data_df : str, optional
+            The sound the animal makes (default is None)
+
+        Raises
+        ------
+        NotImplementedError
+            If no sound is set for the animal or passed in as a
+            parameter.
+        """
         y_data = list(data_df)
         y = [0] * len(y_data)
 
@@ -54,7 +67,7 @@ class EMG(Module):
                 y[j] += self.theta[i] * y_data[j - i]
 
         pd_df = pd.DataFrame([(i, y[i]) for i in range(len(y))], columns=["x", "y"])
-        pd_df["y"] = pd_df["y"].map(lambda x: ((1 / (1 + math.exp(-x))) - 0.5) * 2)
+        pd_df["y"] = pd_df["y"].map(lambda x: ((1 / (1 + math.exp(-x))) - 0.5) * 2) #
         return pd_df
 
     def next_value(self, val: np.array):
@@ -85,6 +98,7 @@ class EMG(Module):
 
         return self.peaks[-1]
 
+    # Look into
     def influx_write(self, measurement, time):
         with InfluxDBClient(url=self.url, token=self.token, org=self.org) as _client:
             # change write options params based on data batching

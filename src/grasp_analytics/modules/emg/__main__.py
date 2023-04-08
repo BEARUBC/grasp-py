@@ -10,7 +10,6 @@ import plotly.express as px
 
 from src.grasp_analytics.definitions import DATA_PATH
 
-
 def main(data_path: Path, limit=2000):
     iterations = 0
     data_parser = EMGParser(data_path)  # Initialize Parser
@@ -49,14 +48,16 @@ def main(data_path: Path, limit=2000):
     fig.write_html("peaks_fig.html", auto_open=True)
 
 
-parser = argparse.ArgumentParser(description="Peak Detection in EMG data in real time")
-parser.add_argument(
-    "--file", type=str, default=None, help="Read from a file with a specified path"
-)
+# parser = argparse.ArgumentParser(description="Peak Detection in EMG data in real time")
+# parser.add_argument(
+#     "--file", type=str, default=None, help="Read from a file with a specified path"
+# )
+#
+# args = parser.parse_args()
 
-args = parser.parse_args()
+# if args.file is not None:
+#     main(DATA_PATH / Path(args.file))
+# else:
+#     raise Exception("No file specified")
 
-if args.file is not None:
-    main(DATA_PATH / Path(args.file))
-else:
-    raise Exception("No file specified")
+main((DATA_PATH / "datarun1.txt"))
