@@ -18,6 +18,7 @@ labelMap = [
 
 LABELS = OBJECT_GRIP_MAP#.copy()
 
+# Very naive, need changing later
 for item in labelMap:
     if item not in LABELS.keys():
         LABELS[item] = GripType.POWER
