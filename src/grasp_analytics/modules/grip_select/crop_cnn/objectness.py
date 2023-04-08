@@ -106,6 +106,7 @@ if __name__ == "__main__":
     img_path = (
         ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/apple.jpg"
     )
+    print(ROOT_PATH)
     im = cv2.imread(str(img_path))
 
 
@@ -118,6 +119,7 @@ if __name__ == "__main__":
     # largest_contour = max(contours, key=cv2.contourArea)
     # cv2.drawContours(im, largest_contour, -1, (0, 255, 0))
     # show_bounding(im)
+    print(ROOT_PATH)
     cv2.imwrite(str(ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/apple_contours.JPG"),im)# best_obj_img)
     cv2.imwrite(str(ROOT_PATH / SETTINGS["grip_select"]["data_dir"] / "images/apple_out_out.JPG"), contours)# best_obj_img)
     # cv2.waitKey(1)
@@ -126,3 +128,4 @@ if __name__ == "__main__":
     #)
     # print(type(best_image))
     # cv2.imshow("Image", im)
+    print()

@@ -16,12 +16,23 @@ labelMap = [
     "teddy bear", "hair drier", "toothbrush"
 ]
 
+
 LABELS = OBJECT_GRIP_MAP#.copy()
 
 # Very naive, need changing later
-for item in labelMap:
-    if item not in LABELS.keys():
-        LABELS[item] = GripType.POWER
+# for item in labelMap:
+#     if item not in LABELS.keys():
+#         LABELS[item] = GripType.POWER
+#
+# if __name__ == "__main__":
+#     print(LABELS)
+
+lab_range = list(range(len(labelMap)))
+
+label_subset = [x for x in labelMap if x in OBJECT_GRIP_MAP.keys()]
+
 
 if __name__ == "__main__":
-    print(LABELS)
+    print(lab_range)
+    print(label_subset)
+    print(len(label_subset))

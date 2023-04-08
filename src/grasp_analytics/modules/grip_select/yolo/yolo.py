@@ -1,10 +1,9 @@
 from pathlib import Path
 import sys
-from labels import LABELS
 import cv2
 import depthai as dai
 import numpy as np
-from labels import labelMap
+from labels import labelMap, label_subset
 import time
 
 nnPath = "model/yolo-v3-tiny-tf_openvino_2021.4_6shave.blob"
@@ -137,12 +136,19 @@ with dai.Device(pipeline) as device:
 
             # Sorting predictions based on confidence
             detections.sort(key=lambda d: d.confidence, reverse=True)
-
+            # print(f"detections: {detections[0].label}")
             # Picking the most confident label
+            dets = list()
             if len(detections) > 0:
-                detection = detections[0]
-                # print(labelMap[detection.label])
-                print(LABELS[detection.label])
+                for det in detections:
+                    if labelMap[det.label] in label_subset:
+                        dets.append(det)
+            if len(dets) > 0:
+
+                detection = dets[0]
+                print(labelMap[detection.label])
+
+                # print(LABELS[detection.label])
         inDisparity = q.get()
         depth_frame = inDisparity.getFrame()
         depth_frame = (depth_frame * (255 / depth.initialConfig.getMaxDisparity())).astype(np.uint8)

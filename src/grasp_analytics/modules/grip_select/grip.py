@@ -8,3 +8,8 @@ class GripType(IntEnum):
     SPHERICAL = 3
     POWER = 4
     EXTENSION = 5
+
+
+if __name__ == "__main__":
+    a = GripType.TIP
+    # print(a.)
