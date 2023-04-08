@@ -1,3 +1,6 @@
+from src.grasp_analytics.modules.grip_select.mobilenet.objects import OBJECT_GRIP_MAP, GripType
+import copy
+
 labelMap = [
     "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train",
     "truck", "boat", "traffic light", "fire hydrant", "stop sign", "parking meter", "bench",
@@ -12,3 +15,12 @@ labelMap = [
     "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors",
     "teddy bear", "hair drier", "toothbrush"
 ]
+
+LABELS = OBJECT_GRIP_MAP#.copy()
+
+for item in labelMap:
+    if item not in LABELS.keys():
+        LABELS[item] = GripType.POWER
+
+if __name__ == "__main__":
+    print(LABELS)
