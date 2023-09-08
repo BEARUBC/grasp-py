@@ -14,7 +14,7 @@ Prerequisites:
 git clone git@gitlab.com:UBCBear/grasp-py.git
 cd grasp-py
 conda env create --file environment.yaml
-conda activate grasp-analytics
+conda activate grasp_analytics
 ```
 
 If you would like to enable linting as a pre-commit hook, run:
@@ -33,4 +33,11 @@ If you have a GPU that is CUDA-enabled, it's also recommended to install and use
 In the case of an update that adds, removes, or updates packages, run:
 ```bash
 conda env update --file environment.yaml
+```
+
+## Installing Package Locally
+
+Run the following command in the root directory of the repository:
+```
+pip install .
 ```
