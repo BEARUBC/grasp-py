@@ -1,5 +1,5 @@
 # Grasp-py
-Testing
+Test
 Python portion of GRASP control
 
 ## Setup
