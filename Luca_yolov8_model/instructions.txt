@@ -1,0 +1,64 @@
+How to obtain the training and testing data:
+
+    * The csv files included contain the information for all of the images from the Open Images dataset.
+
+    1.  Look at class_is_dict.csv and decide which object you will train your model on. 
+        (at the moment, I am only aware of how to train one object for a model)
+        Copy the code for the class name. This is the class_id. Paste it into the variable class_id 
+        in create_image_list_file.py and create_dataset_yolo_format.py
+
+    2.  Run create_image_list_file.py
+        This will create an image list with the information about the images you are trying to download. 
+        You can change which images you download by changing the variable class_id to match the object
+        class you are training for according to the file class_id_dict.csv
+    
+    2.  Execute downloader.py in the terminal
+        python downloader.py image_list_file --download_folder=raw_data
+        This will actually download all of the images contained in the image list from the previous 
+        step into a folder called raw_data (these file names can be changed as long as they are consistent).
+    
+    3.  Run create_dataset_yolo_format.py 
+        This will organize the data into the appropriate folders to begin the training process.
+
+
+How to train the model:
+
+    1. change the following parameters in config.yaml
+        
+        # path to the images folder
+        path: C:\Users\lucab\OneDrive - UBC\UBC Bionics\ML small project\data
+
+        # training images path
+        train: images\train
+        val: images\train
+
+        # name of the class to be identified
+        names:
+            0: alpaca
+    
+    2. Run the following command in the terminal:
+
+        yolo detect train model=yolov8n.yaml data=config.yaml epochs=1
+
+        model = the base model to train
+        data = the labels the model will be training + file path info
+        epochs = increase to create a more precise model, but this will increase training time
+
+
+How to test the model:
+
+    Images:
+
+        yolo detect predict model=./runs/detect/<train_number>/weights/last.pt source=./data/images/test/<image_name>
+
+        <train_number> = Each time you train the model from the base yolov8n.pt, a new train folder is produced. This is the name of that folder
+        <image_name> = File name of the image.
+    
+    Videos:
+
+        create a folder called videos (if it does not already exist) and then run this command:
+
+        yolo detect predict model=./runs/detect/<train_number>/weights/last.pt source=./videos/<video_name>
+
+        <train_number> = Each time you train the model from the base yolov8n.pt, a new train folder is produced. This is the name of that folder
+        <video_name> = File name of the video.
