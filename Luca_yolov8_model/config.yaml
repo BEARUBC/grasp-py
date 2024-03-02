@@ -1,6 +1,0 @@
-path: C:\Users\lucab\OneDrive - UBC\UBC Bionics\ML small project\data
-train: images\train
-val: images\train
-
-names:
-  0: alpaca
