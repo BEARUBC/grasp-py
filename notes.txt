@@ -1,0 +1,84 @@
+Done: 
+   
+   download dataset
+   define the dataset object in python
+   download helper modules??
+   fine tune the existing resnet50 model
+   training and evaluation (main?)
+   test the new model on one image
+   Created train.py in order to implement multiprocessing on a training method
+   Implement multiprocessing
+   Push to GitHub
+   Measure the Time Difference between regular and multiprocessing
+      created benchmark.py which trains without multiprocessing
+
+
+To Do:
+
+   Find the difference between cpu and gpu with multiprocessing?
+      my guess is that GPU doesn't need it, but it allows CPU to use multiple cores at once
+      turns out there might be a DistributedSampler for GPU
+   
+   What exactly can I fine tune in the model to make it perform better?
+
+
+Resolved Issues:
+
+   conda install -c conda-forge pycocotools
+   
+   Experienced issues with multiple projects due to workers in the dataloader class. 
+      This was fixed on my machine by setting num_workers = 0 (no multiprocessing)
+      I hope to implement multiprocessing to speed up training time
+      according to video, adding 1 worker improves speed by ~20% and adding more gives diminishing returns.
+
+
+Things learned about multiprocessing:
+
+   torch.multiprocessing instead of python's multiprocessing module
+      allows tensors to be part of the shared memory between other processes
+   
+   Is there a difference between CPU and GPU Tensors??
+   
+   What is HOGWILD (Asynchronous Multi-process Training)??
+   
+   Pytorch recommends using multiprocessing.Queue for 
+      "passing all kinds of PyTorch objects between processes."
+      They say using FORK is prone to bugs and that even though the queue is less elegant, it works properly in all cases
+      also, remember to include if __name__ == '__main__' since they will be executed in all subprocesses
+
+   First Attempt:
+
+      Just ran two processes in parallel that trained the model separately (displayed twice per epoch with different regression values)
+
+   According to https://towardsdatascience.com/this-is-hogwild-7cc80cd9b944, we can use a Distributed Sampler as the sampler
+   for the dataloader. This allows for the data to be partitioned and distributed across each process. 
+   
+   They call this Hogwild++. it supposedly 
+      "decreases the amount of overhead by organizing the processes (i.e. each computer) in a ring. 
+      While training, a token is sent through that ring. The token bears the global model. 
+      Every time a token arrives at a node, the difference between the model weights are calculated 
+      and used to update the model in a non-trivial fashion."
+
+   Second Attempt:
+      Worked but took forever still so I don't know the issue from attempt one still exists.
+      The same epoch is still printed twice, but I am not sure if the model is being trained on different partitions
+      of the dataset as the article claims, so I will be comparing it to standard training.
+
+   Findings from the comparison:
+      compared 1 run of each method for 2 epochs. The performance of the model is similar between the two.
+      The goal is to determine the difference in speed between the 2 methods if there exists one at all.
+
+      Regular Training:
+         1503 s (25 mins)
+      Multithreaded Training:
+         1329 s (22 mins)
+
+      There seems to be a difference, but not very significant (12% decrease in time) 
+
+
+
+
+
+
+
+
